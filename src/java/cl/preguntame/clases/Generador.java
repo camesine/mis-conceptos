@@ -178,7 +178,7 @@ public class Generador {
     public static void main(String[] args) {
         Generador e = new Generador(44);
     
-       
+       /*
         //Seleccion de concepto a partir de una definicion
         System.out.println(e.SeleccionConceptoDefinicion().size());
         ArrayList<SeleccionConceptoDefinicion> seleccionConceptosDefinicion = e.SeleccionConceptoDefinicion();
@@ -193,7 +193,7 @@ public class Generador {
          System.out.println("Opcion : " + seleccionConceptosDefinicion.get(i).getOpcion4().getNombre());
          System.out.println("--------------------------------------------");
          }
-        
+        */
         
         
         
