@@ -1,0 +1,761 @@
+@charset "utf-8";
+/* CSS Document */
+html,body{
+    padding:0px;
+    margin:0px;
+    background-color:#F5F5F5;
+
+}
+
+#Contenedor{
+
+    height:710px;
+    width:1300px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:0px;
+}
+header{
+
+    width: 100%;
+    height: 50px;
+    margin-bottom: 0px;
+}
+
+/* BARRA DE NAVEGACION */
+header ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #2d1d00;
+}
+header ul li{
+    float: left;
+
+}
+header ul li a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: 'Agency FB';
+}
+header ul li a:hover:not(.active) {
+    background-color: #432c01;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+.active:hover{
+    background-color: #00C600;
+}
+header ul li a:hover {
+    background-color: #432c01;
+}
+
+
+ul li ul {
+    display:none;
+    position:absolute;
+}
+
+ul li:hover > ul {
+    display:block;
+}
+
+
+#TxtNuevaMateria{
+    float:left; 
+    width:200px; 
+    height:37px;
+
+}
+
+#ListaContenidos li{
+
+    cursor: pointer;
+
+}
+
+/* */
+
+
+#inicio{
+
+    margin-top:15px;
+    margin-left:auto;
+    margin-right:auto;
+    width:1000px;
+    height:auto;
+
+}
+
+#inicio article{
+
+    height:100%;
+    float:left;
+
+}
+#welcome{
+    width:65%;
+
+}
+/* FORMULARIO INICIO */
+#login{
+    width:35%;
+    text-align:center;
+    font-family: 'Agency FB';
+}
+
+#welcome h1{
+    color:#2d1d00;
+    margin:40px;
+    font-family: 'Agency FB';
+    font-size:45px;	
+}
+#welcome p{
+    color:#2d1d00;
+    margin:40px;
+    font-family: 'Agency FB';
+    font-size:30px;	
+}
+
+#Entrar{
+    margin:0px;
+    width:100%;
+    height:40%;
+    background-color:#999;
+}
+
+#Registrar{
+    margin:0px;
+    width:100%;
+    height:54%;
+    background-color:red;	
+}
+
+#login div{
+
+    margin: 0px;
+    padding: 20px 20px 20px;
+    width: 100%;
+    background: white;
+    border-radius: 3px;
+    box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);	
+}
+
+#login div h1 {
+    margin: -20px -20px 21px;
+    line-height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    background: #3498db;
+    border-bottom: 1px solid #cfcfcf;
+    border-radius: 3px 3px 0 0;
+    background-image: -webkit-linear-gradient(top, whiteffd, #eef2f5);
+    background-image: -moz-linear-gradient(top, whiteffd, #eef2f5);
+    background-image: -o-linear-gradient(top, whiteffd, #eef2f5);
+    background-image: linear-gradient(to bottom, whiteffd, #eef2f5);
+    -webkit-box-shadow: 0 1px whitesmoke;
+    box-shadow: 0 1px whitesmoke;
+}
+
+#login p {
+    margin: 20px 0 0;
+}
+
+#login p:first-child {
+    margin-top: 0;
+}
+
+#login input[type=text], #login input[type=password] {
+    width: 278px;
+}
+#login p.remember_me {
+    float: left;
+    line-height: 31px;
+}
+#login p.remember_me label {
+    font-size: 12px;
+    color: #777;
+    cursor: pointer;
+}
+
+#login p.remember_me input {
+    position: relative;
+    bottom: 1px;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+#login p.submit {
+    text-align: right;
+}
+#login-help {
+    margin: 20px 0;
+    font-size: 11px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px #2a85a1;
+}
+
+#login-help a {
+    color: #cce7fa;
+    text-decoration: none;
+}
+
+#login-help a:hover {
+    text-decoration: underline;
+}
+#login :-moz-placeholder {
+    color: #c9c9c9 !important;
+    font-size: 13px;
+}
+
+#login ::-webkit-input-placeholder {
+    color: #ccc;
+    font-size: 13px;
+}
+
+#login input {
+    font-family: 'Lucida Grande', Tahoma, Verdana, sans-serif;
+    font-size: 14px;
+}
+#login input[type=text], #login input[type=password] {
+    margin: 5px;
+    padding: 0 10px;
+    width: 200px;
+    height: 34px;
+    color: #404040;
+    background: white;
+    border: 1px solid;
+    border-color: #c4c4c4 #d1d1d1 #d4d4d4;
+    border-radius: 2px;
+    outline: 5px solid #eff4f7;
+    -moz-outline-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+#login input[type=text]:focus, #login input[type=password]:focus {
+    border-color: #7dc9e2;
+    outline-color: #dceefc;
+    outline-offset: 0;
+}
+
+#login 	input[type=submit] {
+    height:30px;
+    cursor:pointer;
+    margin-left:auto;
+    margin-right:auto;
+    background: #63d934;
+    background-image: -webkit-linear-gradient(top, #63d934, #2bb834);
+    background-image: -moz-linear-gradient(top, #63d934, #2bb834);
+    background-image: -ms-linear-gradient(top, #63d934, #2bb834);
+    background-image: -o-linear-gradient(top, #63d934, #2bb834);
+    background-image: linear-gradient(to bottom, #63d934, #2bb834);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    border-radius: 4px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 5px 20px 10px 20px;
+    text-decoration: none;
+}
+
+
+
+#login 	input[type=submit]:hover {
+    background: #83fc3c;
+    background-image: -webkit-linear-gradient(top, #83fc3c, #63d934);
+    background-image: -moz-linear-gradient(top, #83fc3c, #63d934);
+    background-image: -ms-linear-gradient(top, #83fc3c, #63d934);
+    background-image: -o-linear-gradient(top, #83fc3c, #63d934);
+    background-image: linear-gradient(to bottom, #83fc3c, #63d934);
+    text-decoration: none;
+}
+#login .lt-ie9 input[type=text], .lt-ie9 input[type=password] {
+    line-height: 34px;
+}
+
+/*----------------------------------------------------------------------*/
+
+section{
+    background-color:transparent;
+    width:auto;
+    height:700px;
+    padding:0px;
+}
+
+article{
+    margin:0px;
+    float:left;
+}
+
+#art1{
+
+    height:100%;
+    width:400px;
+    text-align:left;
+}
+
+
+#Texto{
+
+    height:100%;
+    width:900px;
+    text-align:right;
+}
+footer{
+    background-color:#002D59;
+    width:100%;
+    height:120px;
+
+}
+footer h1{
+
+    font-family: Agency FB; 
+    font-size: 60px; 
+    text-align: center;
+    color: #F4F4F4;
+}
+
+#btnAgregar {
+
+    margin-left:auto;
+    margin-top:10px;
+    margin-right:auto;
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    border-radius: 4px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+
+    cursor:pointer;
+}
+
+
+#btnAgregar:hover{
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+#b1 {
+    cursor:pointer;
+    margin-left:auto;
+    margin-top:10px;
+    margin-right:auto;
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    border-radius: 4px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+
+}
+#b1:hover{
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}	
+
+
+#Conceptos{
+    margin-top:10px;
+    overflow:scroll;
+    width:100%;
+    height:620px;
+    border:1px solid silver;
+    overflow-x:hidden;
+    background-color:#FFF;
+}
+
+#TxtMateria{
+    margin-top:10px;
+
+    width:98%;
+    height:88%;
+
+    color: #555;
+}
+.Concepto{
+
+    width:100%;
+    height:auto;
+
+
+
+
+
+}
+
+
+
+.AgregarDefinicion{
+    cursor:pointer;
+    outline: none;
+    width:100%;
+    border:none;
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    margin-top:0px;	
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 6px 21px 7px 10px;
+    text-decoration: none;
+}
+
+
+.AgregarDefinicion:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+.AgregarRelacion{
+    cursor:pointer;
+    outline: none;
+    width:100%;
+    border:none;
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    margin-top:0px;	
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 6px 21px 7px 10px;
+    text-decoration: none;
+}
+
+
+.AgregarRelacion:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+.AgregarCaracteristica {
+    cursor:pointer;
+    outline: none;
+    width:100%;
+    border:none;
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    margin-top:0px;	
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 6px 21px 7px 10px;
+    text-decoration: none;
+}
+
+.AgregarCaracteristica:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+
+
+.AgregarObservacion {
+    cursor:pointer;
+    outline: none;
+    width:100%;
+    border:none;
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    margin-top:0px;	
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 15px;
+    padding: 6px 21px 7px 10px;
+    text-decoration: none;
+}
+.AgregarObservacion:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+li{
+    list-style:none;
+}
+
+h2{
+
+
+    margin-bottom: 0px;
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: 35px; 
+    text-align: center;
+    color: #623100;
+    text-transform:uppercase;
+}
+ul{
+    margin-bottom:0px;
+    margin-top:0px;
+    padding:0px;	
+}
+
+input[type=text]{
+    padding: 3px 6px;
+    font-size: 15px;
+    text-align: left;
+    outline: none;
+    border-style: solid;
+    background-color: #ffffff;
+    border-color: #c7bdc7;
+    color: #666;
+    box-shadow: 0px 0px 1px 0px rgba(42,42,42,.75);
+    text-shadow: 0px 0px 0px rgba(42,42,42,.98);
+    font-weight: normal;
+    font-style: none;
+    font-family: sans-serif;	
+    width:337px;
+    margin:0px;
+
+}
+
+
+select{
+    padding: 2px 12px;
+    color: #555;
+    border: 1px solid #ccc;
+    height:27px;
+    width: 176.5px;
+
+}
+
+#Conceptos::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+#Conceptos::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+#Conceptos::-webkit-scrollbar-thumb
+{
+    background-color: #666;
+}
+
+#NavBar{
+    padding: 0px;
+    background-color: rgb(0, 20, 31);
+    width: 100%;
+    height: 33px;
+
+}
+
+#NavBar ul{
+    margin: 0px;
+    padding: 0px;
+    width: 100%; 
+    list-style-type: none;  
+} 
+
+#NavBar ul li{ 
+    padding: 5px; 
+    float: left; 
+    background-color: #2d1d00;  
+    margin: 0px;
+    width: 13.54%; 
+    height: 100%;
+    text-align: center; 
+    font-size: 18px;
+    font-family: 'Agency FB';
+    box-shadow: #432c01 0px 10px 30px 5px inset; 
+} 
+
+
+#NavBar ul li a{ 
+    color: #fff;
+    text-decoration: none; 
+} 
+
+
+#NavBar ul li:hover  {
+    box-shadow: #513500 0px 10px 30px 5px inset;
+}
+
+#NavBar ul li a:hover{ 
+    text-shadow: 0px 0px 2px #fff;
+} 
+a.close{
+	background-color: #414141;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 22px;
+	position: absolute;
+	margin-left: 965px;
+	margin-top: 5px;
+        
+	text-align: center;
+	text-decoration: none;
+	width: 28px;
+}
+
+a.close{
+	background-color: #000;
+}
+
+.ventana{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display:none;    
+    font-family:Arial, Helvetica, sans-serif;
+    color:black;
+    line-height:28px;
+    font-size:15px;
+    text-align:justify;
+    background-color: rgba(0,0,0,.5);
+
+    border:1px solid black;
+    padding:10px;
+    border-radius:2px;
+    //outline:none;
+    position: fixed;
+
+
+}
+#dialogo{
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1000px;
+    height: 500px;
+    
+    background: black;
+}
+
+.titulo{
+    cursor:pointer;
+    padding-top: 5px;
+    background-color: #2d1d00;  
+    width:90%; 
+    height: auto;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: #432c01 0px 10px 30px 5px inset;
+
+    font-size: 25px;
+    font-family: 'Agency FB'; 
+    color: #fff;
+    text-decoration: none;
+
+
+
+}
+.titulo:hover{
+
+
+    box-shadow: #513500 0px 10px 30px 5px inset;
+
+
+    text-shadow: 0px 0px 20px #fff;
+
+}
+.EliminarC{
+    width:10%; 
+    height:35px;
+    margin:0px;
+    cursor:pointer;
+
+
+}
+
+
+
+.Editar{
+    height:27px;
+    width:37px;
+    cursor:pointer;
+    outline:none;
+}
+.Eliminar{
+    height:27px;
+    width:37px;
+    cursor:pointer;
+    outline:none;
+}
