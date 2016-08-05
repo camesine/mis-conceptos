@@ -45,66 +45,60 @@ public class Generador {
 
         ArrayList<SeleccionDefinicionConcepto> seleccionDefinicionConceptos = new ArrayList<>();
 
+        for (int j = 0; j < ListaDefiniciones.size(); j++) {
 
+            SeleccionDefinicionConcepto pregunta = new SeleccionDefinicionConcepto();
+            pregunta.setEnunciado("Cual es la definicion de " + ListaDefiniciones.get(j).getConcepto().getNombre() + ": ");
+            pregunta.setDefCorrecta(ListaDefiniciones.get(j));
 
-            for (int j = 0; j < ListaDefiniciones.size(); j++) {
+            Definicion[] opciones = new Definicion[4];
+            opciones[0] = pregunta.getDefCorrecta();
+            Random r = new Random();
 
-                
+            int aleatorio = 0;
+            boolean sw = false;
 
-                    SeleccionDefinicionConcepto pregunta = new SeleccionDefinicionConcepto();
-                    pregunta.setEnunciado("Cual es la definicion de " + ListaDefiniciones.get(j).getConcepto().getNombre() + ": ");
-                    pregunta.setDefCorrecta(ListaDefiniciones.get(j));
+            for (int x = 1; x < 4; x++) {
 
-                    Definicion[] opciones = new Definicion[4];
-                    opciones[0] = pregunta.getDefCorrecta();
-                    Random r = new Random();
+                do {
+                    aleatorio = (int) (r.nextDouble() * (ListaDefiniciones.size()) + 0);
+                    sw = false;
+                    for (int y = 0; y < x; y++) {
+                        //cuando hay pocos
+                        if (ListaDefiniciones.size() < 4) {
+                            break;
+                        }
+                        //cuando hay uno con 2 y pocos
+                        if (ListaDefiniciones.size() <= 4 && ListaDefiniciones.get(aleatorio).getConcepto().getId().equals(pregunta.getDefCorrecta().getConcepto().getId())) {
+                            break;
+                        }
+                        //que no se repitan
+                        if (ListaDefiniciones.get(aleatorio).getId().equals(opciones[y].getId()) || ListaDefiniciones.get(aleatorio).getConcepto().getId().equals(pregunta.getDefCorrecta().getConcepto().getId())) {
+                            sw = true;
+                        }
 
-                    int aleatorio = 0;
-                    boolean sw = false;
-
-                    for (int x = 1; x < 4; x++) {
-
-                        do {
-                            aleatorio = (int) (r.nextDouble() * (ListaDefiniciones.size()) + 0);
-                            sw = false;
-                            for (int y = 0; y < x; y++) {
-                                //cuando hay pocos
-                                if (ListaDefiniciones.size() < 4) {
-                                    break;
-                                }
-                                //cuando hay uno con 2 y pocos
-                                if (ListaDefiniciones.size() <= 4 && ListaDefiniciones.get(aleatorio).getConcepto().getId().equals(pregunta.getDefCorrecta().getConcepto().getId())) {
-                                    break;
-                                }
-                                //que no se repitan
-                                if (ListaDefiniciones.get(aleatorio).getId().equals(opciones[y].getId()) || ListaDefiniciones.get(aleatorio).getConcepto().getId().equals(pregunta.getDefCorrecta().getConcepto().getId())) {
-                                    sw = true;
-                                }
-
-                            }
-                        } while (sw);
-
-                        opciones[x] = ListaDefiniciones.get(aleatorio);
                     }
+                } while (sw);
 
-                    for (int x = opciones.length - 1; x > 0; x--) {
-                        int rand = (int) (Math.random() * (x + 1));
-                        Definicion temp = opciones[x];
-                        opciones[x] = opciones[rand];
-                        opciones[rand] = temp;
-                    }
-
-                    pregunta.setOpcion1(opciones[0]);
-                    pregunta.setOpcion2(opciones[1]);
-                    pregunta.setOpcion3(opciones[2]);
-                    pregunta.setOpcion4(opciones[3]);
-
-                    seleccionDefinicionConceptos.add(pregunta);
-
-                
+                opciones[x] = ListaDefiniciones.get(aleatorio);
             }
 
-        
+            for (int x = opciones.length - 1; x > 0; x--) {
+                int rand = (int) (Math.random() * (x + 1));
+                Definicion temp = opciones[x];
+                opciones[x] = opciones[rand];
+                opciones[rand] = temp;
+            }
+
+            pregunta.setOpcion1(opciones[0]);
+            pregunta.setOpcion2(opciones[1]);
+            pregunta.setOpcion3(opciones[2]);
+            pregunta.setOpcion4(opciones[3]);
+
+            seleccionDefinicionConceptos.add(pregunta);
+
+        }
+
         return seleccionDefinicionConceptos;
     }
 
@@ -142,7 +136,7 @@ public class Generador {
                         if (ListaConceptos.size() < 4) {
                             break;
                         }
-                  
+
                         //que no se repitan
                         if (ListaConceptos.get(aleatorio).getId().equals(opciones[y].getId()) || ListaConceptos.get(aleatorio).getId().equals(pregunta.getConceptoCorrecto().getId())) {
                             sw = true;
@@ -166,41 +160,36 @@ public class Generador {
             pregunta.setOpcion2(opciones[1]);
             pregunta.setOpcion3(opciones[2]);
             pregunta.setOpcion4(opciones[3]);
-            
+
             seleccionConceptoDefinicion.add(pregunta);
 
         }
-        
+
         return seleccionConceptoDefinicion;
 
     }
 
     public static void main(String[] args) {
         Generador e = new Generador(44);
-    
-       
+
         //Seleccion de concepto a partir de una definicion
         System.out.println(e.SeleccionConceptoDefinicion().size());
         ArrayList<SeleccionConceptoDefinicion> seleccionConceptosDefinicion = e.SeleccionConceptoDefinicion();
-        
+
         for (int i = 0; i < seleccionConceptosDefinicion.size(); i++) {
-         System.out.println(seleccionConceptosDefinicion.get(i).getEnunciado());
-         System.out.println("");
-         System.out.println("Correcto : " + seleccionConceptosDefinicion.get(i).getConceptoCorrecto().getNombre());
-         System.out.println("Opcion : " + seleccionConceptosDefinicion.get(i).getOpcion1().getNombre());
-         System.out.println("Opcion : " + seleccionConceptosDefinicion.get(i).getOpcion2().getNombre());
-         System.out.println("Opcion : " + seleccionConceptosDefinicion.get(i).getOpcion3().getNombre());
-         System.out.println("Opcion : " + seleccionConceptosDefinicion.get(i).getOpcion4().getNombre());
-         System.out.println("--------------------------------------------");
-         }
-        
-        
-        
-        
-        
+            System.out.println(seleccionConceptosDefinicion.get(i).getEnunciado());
+            System.out.println("");
+            System.out.println("Correcto : " + seleccionConceptosDefinicion.get(i).getConceptoCorrecto().getNombre());
+            System.out.println("Opcion : " + seleccionConceptosDefinicion.get(i).getOpcion1().getNombre());
+            System.out.println("Opcion : " + seleccionConceptosDefinicion.get(i).getOpcion2().getNombre());
+            System.out.println("Opcion : " + seleccionConceptosDefinicion.get(i).getOpcion3().getNombre());
+            System.out.println("Opcion : " + seleccionConceptosDefinicion.get(i).getOpcion4().getNombre());
+            System.out.println("--------------------------------------------");
+        }
+
          //Seleccion de definicion a partir de un concepto
         /*
-        ArrayList<SeleccionDefinicionConcepto> seleccionDefinicionConceptos = e.SeleccionDefinicionConcepto();
+         ArrayList<SeleccionDefinicionConcepto> seleccionDefinicionConceptos = e.SeleccionDefinicionConcepto();
 
          for (int i = 0; i < seleccionDefinicionConceptos.size(); i++) {
          System.out.println(seleccionDefinicionConceptos.get(i).getEnunciado());
@@ -212,8 +201,7 @@ public class Generador {
          System.out.println("Opcion : " + seleccionDefinicionConceptos.get(i).getOpcion4().getDetalle());
          System.out.println("--------------------------------------------");
          }
-                */
-         
+         */
     }
 
 }
