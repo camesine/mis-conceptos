@@ -35,6 +35,7 @@
                 <prop key="/contenido/nuevo">contenidoController</prop>
                 <prop key="/contenido/buscar">contenidoController</prop>
                 <prop key="/contenido/editar">contenidoController</prop>
+                <prop key="/contenido/preguntas">contenidoController</prop>
                 <prop key="/concepto/nuevo">conceptoController</prop>
                 <prop key="/concepto/buscar">conceptoController</prop>
                 <prop key="/definicion/nuevo">definicionController</prop>

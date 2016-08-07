@@ -658,23 +658,23 @@ select{
     text-shadow: 0px 0px 2px #fff;
 } 
 a.close{
-	background-color: #414141;
-	border-radius: 5px;
-	color: #fff;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 22px;
-	position: absolute;
-	margin-left: 965px;
-	margin-top: 5px;
-        
-	text-align: center;
-	text-decoration: none;
-	width: 28px;
+    background-color: red;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 22px;
+    position: absolute;
+    margin-left: 965px;
+    margin-top: 5px;
+
+    text-align: center;
+    text-decoration: none;
+    width: 28px;
 }
 
 a.close{
-	background-color: #000;
+    background-color: red;
 }
 
 .ventana{
@@ -694,7 +694,7 @@ a.close{
     border:1px solid black;
     padding:10px;
     border-radius:2px;
-   
+
     position: fixed;
 
 
@@ -705,8 +705,8 @@ a.close{
     margin-right: auto;
     width: 1000px;
     height: 500px;
-    
-    background: black;
+
+    background: white;
 }
 
 .titulo{
@@ -759,3 +759,100 @@ a.close{
     cursor:pointer;
     outline:none;
 }
+
+#Preguntas{
+    border-top: 1px solid black;
+    float: left;
+    height: 340px; 
+    width: 50px;
+    margin-top: 10px;
+    width: 900px;
+    margin-left: 50px;
+
+}
+
+#BtnSiguente {
+    cursor:pointer;
+    margin-left: 800px;
+
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 4;
+    -moz-border-radius: 4;
+    border-radius: 4px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+
+}
+#BtnSiguente:hover{
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}	
+
+
+.pregunta{
+    display: none;
+    height: 370px;
+    text-align: justify;
+
+}
+
+#TituloTest{
+    border: 0px; 
+    margin: 0px; 
+    padding-top: 30px; 
+    font-family: 'Agency FB';
+    margin-left: 50px;
+    margin-top: 40px;
+}
+
+#Enunciado{
+    font-family: 'Agency FB';
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0px;
+}
+.opcion p{
+    font-family: 'Agency FB';
+    font-size: 20px;
+    position: initial;
+    margin: 0px;
+    padding: 10px;
+}
+
+.opcion{
+    margin-bottom: 10px;
+    border: 1px solid silver;
+    width: auto;
+    cursor: pointer;
+}
+
+.opcion p:hover{
+    
+    border-left: 10px solid #3498db;
+    
+
+    
+}
+
+#cantidad{
+    font-family: 'Agency FB';
+    margin-left: 870px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+

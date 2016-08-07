@@ -372,29 +372,55 @@
 // GENERACION DE PREGUNTAS
 
                 $("#b1").click(function() {
-                    $('.ventana').css('display', 'block');
-                    
-                    
-                    /*
-                    $.ajax({
-                    type: 'POST',
-                    url: '<c:url value="/concepto/buscar" />',
-                    data: {seleccionado: $('#Contenido').attr('value')},
-                })
-                        .success(function(response) {
 
-                            console.log(response);
-                        });
-*/
+
+
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '<c:url value="/contenido/preguntas" />',
+                        data: {seleccionado: $('#Contenido').attr('value')},
+                    })
+                            .success(function(response) {
+                                var etiqueta = "";
+
+                                for (var i = 0; i < response.length; i++) {
+                                    etiqueta = etiqueta + "<div class='pregunta'><p id='cantidad'>" + (i + 1) + "/" + response.length + "</p><p id='Enunciado'>" + response[i].enunciado + "</p><ul class='Alternativas' ><li class='opcion'><p>" + response[i].opcion1 + "</p></li><li  class='opcion'><p>" + response[i].opcion2 + "</p></li><li  class='opcion'><p>" + response[i].opcion3 + "</p></li><li  class='opcion'><p>" + response[i].opcion4 + "</p></li></ul></div>";
+                                }
+
+                                $('#Preguntas').html(etiqueta);
+                                $('#Preguntas').children(":first-child").css("display", "block");
+                            });
+
+                    $('.ventana').css('display', 'block');
+                    $('#dialogo').find(".close").after(("<h1 id='TituloTest'>TEST DE " + $('#seleccion').text() + "</h1> "));
+
 
 
 
                 });
 
+                $('body').on('click','.opcion',function(){
+
+                $(".Alternativas").find("li").css("background", "white");
+                $(".Alternativas li").find("p").css("color", "black");
+                $(this).css("background", "#3498db");
+                $(this).children().css("color", "white");
+
+                });
+                
+              
+
+
 
 
                 $('.close').click(function() {
                     $('.ventana').css('display', 'none');
+
+                    $('#TituloTest').remove();
+                    $('.pregunta').remove();
+
+
 
                 });
 
@@ -637,8 +663,44 @@
 
 <div class="ventana">
 
+    <script type="text/javascript">
+        function Siguiente() {
+            $('#Preguntas div').each(function(index, element) {
+
+                if ($(this).css('display') == "block") {
+
+                    if ($(this).next().attr("class") != "pregunta") {
+                        alert("El ultimo");
+                        return false;
+                    }
+
+                    $(this).css("display", "none")
+
+                    $(this).next().css("display", "block")
+
+                    return false;
+                }
+
+            });
+
+        }
+
+
+
+
+        
+
+    </script>
+
     <div id="dialogo">
+
         <a href="#close" class="close"> X </a>
+
+
+        <div id="Preguntas">
+
+        </div>
+        <input type="button" id="BtnSiguente" onclick="Siguiente()" value="SIGUENTE">
 
     </div>
 

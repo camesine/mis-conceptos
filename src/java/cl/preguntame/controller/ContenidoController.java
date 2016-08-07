@@ -1,8 +1,11 @@
 package cl.preguntame.controller;
 
+import cl.preguntame.clases.Generador;
+import cl.preguntame.clases.PreguntaSeleccion;
 import cl.preguntame.model.Contenido;
 import cl.preguntame.model.Usuario;
 import cl.preguntame.service.ContenidoService;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,5 +64,16 @@ public class ContenidoController {
 
         return "true";
     }
+    
+    
+    @ResponseBody
+    @RequestMapping(value = "/preguntas", method = RequestMethod.POST)
+    public ArrayList Preguntas(HttpServletRequest req) {
 
+        Generador AccesoPreguntas = new Generador(Integer.parseInt(req.getParameter("seleccionado")));
+        return AccesoPreguntas.PreguntasSeleccion();
+        
+    }
+    
+  
 }
