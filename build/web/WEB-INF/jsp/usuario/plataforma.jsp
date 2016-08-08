@@ -385,31 +385,35 @@
                                 var etiqueta = "";
 
                                 for (var i = 0; i < response.length; i++) {
-                                    etiqueta = etiqueta + "<div class='pregunta'><p id='cantidad'>" + (i + 1) + "/" + response.length + "</p><p id='Enunciado'>" + response[i].enunciado + "</p><ul class='Alternativas' ><li class='opcion'><p>" + response[i].opcion1 + "</p></li><li  class='opcion'><p>" + response[i].opcion2 + "</p></li><li  class='opcion'><p>" + response[i].opcion3 + "</p></li><li  class='opcion'><p>" + response[i].opcion4 + "</p></li></ul></div>";
+                                    etiqueta = etiqueta + "<div class='pregunta'><p id='cantidad'>" + (i + 1) + "/" + response.length + "</p><p id='Enunciado'>" + response[i].enunciado + "</p><input type='hidden' class='respuesta' value='" + response[i].respuesta + "' /> <ul class='Alternativas' ><li class='opcion'><p>" + response[i].opcion1 + "</p></li><li  class='opcion'><p>" + response[i].opcion2 + "</p></li><li  class='opcion'><p>" + response[i].opcion3 + "</p></li><li  class='opcion'><p>" + response[i].opcion4 + "</p></li></ul></div>";
                                 }
 
                                 $('#Preguntas').html(etiqueta);
+
                                 $('#Preguntas').children(":first-child").css("display", "block");
+                                $('#PuntajeTotal').attr("value", response.length)
                             });
 
                     $('.ventana').css('display', 'block');
                     $('#dialogo').find(".close").after(("<h1 id='TituloTest'>TEST DE " + $('#seleccion').text() + "</h1> "));
-
+                    $('#Puntaje').attr("value", "0");
 
 
 
                 });
 
-                $('body').on('click','.opcion',function(){
+                $('body').on('click', '.opcion', function() {
 
-                $(".Alternativas").find("li").css("background", "white");
-                $(".Alternativas li").find("p").css("color", "black");
-                $(this).css("background", "#3498db");
-                $(this).children().css("color", "white");
+                    $(".Alternativas").find("li").css("background", "white");
+                    $(".Alternativas").find("li").removeClass("respondido")
+                    $(".Alternativas li").find("p").css("color", "black");
+                    $(this).css("background", "#3498db");
+                    $(this).children().css("color", "white");
+                    $(this).addClass("respondido");
 
                 });
-                
-              
+
+
 
 
 
@@ -419,6 +423,7 @@
 
                     $('#TituloTest').remove();
                     $('.pregunta').remove();
+
 
 
 
@@ -665,18 +670,33 @@
 
     <script type="text/javascript">
         function Siguiente() {
+
+            //$(this).css("background", "#3498db");
+
             $('#Preguntas div').each(function(index, element) {
+
+
 
                 if ($(this).css('display') == "block") {
 
+                    if ($(this).find('.respondido').text() == $(this).find(".respuesta").attr("value")) {
+                        $("#Puntaje").attr("value", parseInt($("#Puntaje").attr("value")) + 1)
+                    }
+
+
                     if ($(this).next().attr("class") != "pregunta") {
-                        alert("El ultimo");
+                        alert("El ultimo" + " Puntaje : " + $("#Puntaje").attr("value") + " de " + $("#PuntajeTotal").attr("value"));
                         return false;
                     }
+
 
                     $(this).css("display", "none")
 
                     $(this).next().css("display", "block")
+
+
+
+
 
                     return false;
                 }
@@ -688,17 +708,65 @@
 
 
 
-        
+
 
     </script>
 
     <div id="dialogo">
+        <input type="hidden" id="Puntaje" />
+        <input type="hidden" id="PuntajeTotal" />
 
         <a href="#close" class="close"> X </a>
 
 
         <div id="Preguntas">
-
+            <table class="Pareados">
+                <tr>
+                    <th>Referencia</th>
+                    <th>Respuesta</th>
+                    <th>Alternativa</th>
+                </tr>
+                <tr>
+                    <td>1 algo</td>
+                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
+                    <td>respuesta</td>
+                </tr>
+                <tr>
+                    <td>2 algo</td>
+                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
+                    <td>respuesta</td>
+                </tr>
+                <tr>
+                    <td>3 algo</td>
+                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
+                    <td>respuesta</td>
+                </tr>
+                <tr>
+                    <td>4 algo</td>
+                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
+                    <td>respuesta</td>
+                </tr>
+                <tr>
+                    <td>5 algo</td>
+                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
+                    <td>respuesta</td>
+                </tr>
+                <tr>
+                    <td>6 algo</td>
+                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
+                    <td>respuesta</td>
+                </tr>
+                <tr>
+                    <td>7 algo</td>
+                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
+                    <td>respuesta</td>
+                </tr>
+                <tr>
+                    <td>8 algo</td>
+                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
+                    <td>respuesta</td>
+                </tr>
+            </table>
         </div>
         <input type="button" id="BtnSiguente" onclick="Siguiente()" value="SIGUENTE">
 
