@@ -30,10 +30,13 @@ header ul{
     overflow: hidden;
     background-color: #2d1d00;
 }
-header ul li{
-    float: left;
 
+
+header ul li {
+    float: left;
 }
+
+
 header ul li a{
     display: block;
     color: white;
@@ -74,11 +77,18 @@ ul li:hover > ul {
 
 }
 
+#ListaContenidos li a{
+    text-align: left;
+}
+
+
 #ListaContenidos li{
 
     cursor: pointer;
-
+    float: none;
 }
+
+
 
 /* */
 
@@ -839,12 +849,8 @@ a.close{
     cursor: pointer;
 }
 
-.opcion p:hover{
-    
+.opcion p:hover{    
     border-left: 10px solid #3498db;
-    
-
-    
 }
 
 #cantidad{
@@ -859,6 +865,9 @@ a.close{
     font-family: 'Agency FB';
     font-size: 20px;
     width: 870px;
+    margin-top: 0px;
 }
+
+
 
 

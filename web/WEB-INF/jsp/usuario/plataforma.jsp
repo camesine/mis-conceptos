@@ -722,49 +722,61 @@
         <div id="Preguntas">
             <table class="Pareados">
                 <tr>
-                    <th>Referencia</th>
-                    <th>Respuesta</th>
-                    <th>Alternativa</th>
+                    <th>Concepto</th>
+                    <th style="width: 20px; padding-left: 5px;" >N°</th>
+                    <th >Alternativa</th>
                 </tr>
                 <tr>
-                    <td>1 algo</td>
-                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
-                    <td>respuesta</td>
+                    <td>Lorem Ipsum</td>
+                    <td style="display: none;" >12</td>
+                    <td><input type="text" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;" /> </td>
+                    <td>On the other hand, we denounce with</td>
+                    <td style="display: none;" >44</td>
                 </tr>
                 <tr>
-                    <td>2 algo</td>
-                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
-                    <td>respuesta</td>
+                    <td>omnis iste</td>
+                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"  /> </td>
+                    <td>dignissimos ducimus qui blanditiis praesentium voluptatum</td>
                 </tr>
                 <tr>
-                    <td>3 algo</td>
-                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
-                    <td>respuesta</td>
+                    <td>denouncing</td>
+                    <td><input type="text" placeholder="___" maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;" /> </td>
+                    <td>men who are so beguiled and demoralized by the charms</td>
                 </tr>
                 <tr>
-                    <td>4 algo</td>
-                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
-                    <td>respuesta</td>
+                    <td>annoying</td>
+                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;" /> </td>
+                    <td>cannot foresee the pain and trouble that are bound to ensue</td>
                 </tr>
                 <tr>
-                    <td>5 algo</td>
-                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
-                    <td>respuesta</td>
+                    <td>circumstances</td>
+                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"   /> </td>
+                    <td>Et harum quidem rerum facilis est et expedita distinctio</td>
                 </tr>
                 <tr>
-                    <td>6 algo</td>
-                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
-                    <td>respuesta</td>
+                    <td>dignissimos</td>
+                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px;font-family: 'Agency FB'; font-size: 20px;"   /> </td>
+                    <td>mistaken idea of denouncing pleasure and praising pain</td>
                 </tr>
                 <tr>
-                    <td>7 algo</td>
-                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
-                    <td>respuesta</td>
+                    <td>blanditiis</td>
+                    <td><input type="text" placeholder="___" maxlength="1" size="1"  style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"   /> </td>
+                    <td>natus error sit voluptatem accusantium doloremque laudantium</td>
                 </tr>
                 <tr>
-                    <td>8 algo</td>
-                    <td><input type="text" placeholder="_"  style="width: 10px; border: 0px" /> </td>
-                    <td>respuesta</td>
+                    <td>foresee</td>
+                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"  /> </td>
+                    <td>denouncing pleasure and praising pain was born and I will</td>
+                </tr>
+                 <tr>
+                    <td>blanditiis</td>
+                    <td><input type="text" placeholder="___" maxlength="1" size="1"  style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"   /> </td>
+                    <td>natus error sit voluptatem accusantium doloremque laudantium</td>
+                </tr>
+                <tr>
+                    <td>foresee</td>
+                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"  /> </td>
+                    <td>denouncing pleasure and praising pain was born and I will</td>
                 </tr>
             </table>
         </div>

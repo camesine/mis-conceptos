@@ -17,17 +17,17 @@ public class Generador {
 
     int Contenido_id;
     ArrayList<PreguntaSeleccion> preguntasSeleccion;
-            
+
     public Generador(int Contenido_id) {
         this.Contenido_id = Contenido_id;
         this.preguntasSeleccion = new ArrayList<>();
-        
+
     }
 
     public Generador() {
         this.Contenido_id = 0;
         this.preguntasSeleccion = new ArrayList<>();
-        
+
     }
 
     public ArrayList SeleccionDefinicionConcepto() {
@@ -35,7 +35,6 @@ public class Generador {
         DefinicionService AccesoDefinicion = new DefinicionService();
         List<Definicion> ListaDefiniciones = AccesoDefinicion.BuscarDefinicionContenido(Contenido_id);
 
-       
         ArrayList<SeleccionDefinicionConcepto> seleccionDefinicionConceptos = new ArrayList<>();
 
         for (int j = 0; j < ListaDefiniciones.size(); j++) {
@@ -163,8 +162,6 @@ public class Generador {
     }
 
     public ArrayList SeleccionCaracteristicaConcepto() {
-
-        
 
         CaracteristicaService AccesoCaracteristica = new CaracteristicaService();
         List<Caracteristica> ListaCaracteristicas = AccesoCaracteristica.BuscarCaracteristicaContenido(Contenido_id);
@@ -298,8 +295,6 @@ public class Generador {
 
     public ArrayList SeleccionObservacionConcepto() {
 
-     
-
         ObservacionService AccesoObservacion = new ObservacionService();
         List<Observacion> ListaObservaciones = AccesoObservacion.BuscarObservacionContenido(Contenido_id);
 
@@ -431,9 +426,8 @@ public class Generador {
     }
 
     public ArrayList<PreguntaSeleccion> PreguntasSeleccion() {
-      
+
         //
-        
         ArrayList<SeleccionDefinicionConcepto> seleccionDefinicionConceptos = this.SeleccionDefinicionConcepto();
         for (int i = 0; i < seleccionDefinicionConceptos.size(); i++) {
             PreguntaSeleccion pregunta = new PreguntaSeleccion();
@@ -443,13 +437,10 @@ public class Generador {
             pregunta.setOpcion2(seleccionDefinicionConceptos.get(i).getOpcion2().getDetalle());
             pregunta.setOpcion3(seleccionDefinicionConceptos.get(i).getOpcion3().getDetalle());
             pregunta.setOpcion4(seleccionDefinicionConceptos.get(i).getOpcion4().getDetalle());
-            this.preguntasSeleccion.add(pregunta);   
+            this.preguntasSeleccion.add(pregunta);
         }
-        
-        //
-         
 
-        
+        //
         ArrayList<SeleccionConceptoObservacion> seleccionConceptosObservaciones = this.SeleccionConceptoObservacion();
         for (int i = 0; i < seleccionConceptosObservaciones.size(); i++) {
             PreguntaSeleccion pregunta = new PreguntaSeleccion();
@@ -459,11 +450,10 @@ public class Generador {
             pregunta.setOpcion2(seleccionConceptosObservaciones.get(i).getOpcion2().getNombre());
             pregunta.setOpcion3(seleccionConceptosObservaciones.get(i).getOpcion3().getNombre());
             pregunta.setOpcion4(seleccionConceptosObservaciones.get(i).getOpcion4().getNombre());
-            this.preguntasSeleccion.add(pregunta);   
+            this.preguntasSeleccion.add(pregunta);
         }
-        
+
         //
-        
         ArrayList<SeleccionObservacionConcepto> seleccionObservacionConcepto = this.SeleccionObservacionConcepto();
         for (int i = 0; i < seleccionObservacionConcepto.size(); i++) {
             PreguntaSeleccion pregunta = new PreguntaSeleccion();
@@ -473,11 +463,10 @@ public class Generador {
             pregunta.setOpcion2(seleccionObservacionConcepto.get(i).getOpcion2().getDetalle());
             pregunta.setOpcion3(seleccionObservacionConcepto.get(i).getOpcion3().getDetalle());
             pregunta.setOpcion4(seleccionObservacionConcepto.get(i).getOpcion4().getDetalle());
-            this.preguntasSeleccion.add(pregunta);   
+            this.preguntasSeleccion.add(pregunta);
         }
 
         //
-        
         ArrayList<SeleccionConceptoCaracteristica> seleccionConceptosCaracteristicas = this.SeleccionConceptoCaracteristica();
         for (int i = 0; i < seleccionConceptosCaracteristicas.size(); i++) {
             PreguntaSeleccion pregunta = new PreguntaSeleccion();
@@ -487,11 +476,10 @@ public class Generador {
             pregunta.setOpcion2(seleccionConceptosCaracteristicas.get(i).getOpcion2().getNombre());
             pregunta.setOpcion3(seleccionConceptosCaracteristicas.get(i).getOpcion3().getNombre());
             pregunta.setOpcion4(seleccionConceptosCaracteristicas.get(i).getOpcion4().getNombre());
-            this.preguntasSeleccion.add(pregunta);   
+            this.preguntasSeleccion.add(pregunta);
         }
-        
+
         //
-        
         ArrayList<SeleccionConceptoDefinicion> seleccionConceptosDefinicion = this.SeleccionConceptoDefinicion();
         for (int i = 0; i < seleccionConceptosDefinicion.size(); i++) {
             PreguntaSeleccion pregunta = new PreguntaSeleccion();
@@ -501,14 +489,10 @@ public class Generador {
             pregunta.setOpcion2(seleccionConceptosDefinicion.get(i).getOpcion2().getNombre());
             pregunta.setOpcion3(seleccionConceptosDefinicion.get(i).getOpcion3().getNombre());
             pregunta.setOpcion4(seleccionConceptosDefinicion.get(i).getOpcion4().getNombre());
-            this.preguntasSeleccion.add(pregunta);   
+            this.preguntasSeleccion.add(pregunta);
         }
-        
+
         //
-        
-        
-        
-        
         //
         ArrayList<SeleccionCaracteristicaConcepto> seleccionCaracteristicaConceptos = this.SeleccionCaracteristicaConcepto();
         for (int i = 0; i < seleccionCaracteristicaConceptos.size(); i++) {
@@ -519,15 +503,95 @@ public class Generador {
             pregunta.setOpcion2(seleccionCaracteristicaConceptos.get(i).getOpcion2().getDetalle());
             pregunta.setOpcion3(seleccionCaracteristicaConceptos.get(i).getOpcion3().getDetalle());
             pregunta.setOpcion4(seleccionCaracteristicaConceptos.get(i).getOpcion4().getDetalle());
-            this.preguntasSeleccion.add(pregunta);   
+            this.preguntasSeleccion.add(pregunta);
         }
-        
-        Collections.shuffle(this.preguntasSeleccion);
-        
-        return this.preguntasSeleccion;
-        
-    }   
 
-   
-  
+        Collections.shuffle(this.preguntasSeleccion);
+
+        return this.preguntasSeleccion;
+
+    }
+
+    public static void main(String[] args) {
+
+        DefinicionService AccesoDefinicion = new DefinicionService();
+        List<Definicion> ListaDefiniciones = AccesoDefinicion.BuscarDefinicionContenido(44);
+        
+        CaracteristicaService AccesoCaracteristica = new CaracteristicaService();
+        List<Caracteristica> ListaCaracteristicas = AccesoCaracteristica.BuscarCaracteristicaContenido(44);
+
+        ObservacionService AccesoObservacion = new ObservacionService();
+        List<Observacion> ListaObservaciones = AccesoObservacion.BuscarObservacionContenido(44);
+
+        ArrayList<TerminoPareado> terminosPareados = new ArrayList<>();
+        
+        for (int i = 0; i < ListaDefiniciones.size(); i++) {
+            terminosPareados.add(new TerminoPareado(ListaDefiniciones.get(i).getConcepto().getId(), ListaDefiniciones.get(i).getConcepto().getNombre(), ListaDefiniciones.get(i).getId(), ListaDefiniciones.get(i).getDetalle()));
+        }
+
+        for (int i = 0; i < ListaCaracteristicas.size(); i++) {
+            terminosPareados.add(new TerminoPareado(ListaCaracteristicas.get(i).getConcepto().getId(), ListaCaracteristicas.get(i).getConcepto().getNombre(), ListaCaracteristicas.get(i).getId(), ListaCaracteristicas.get(i).getDetalle()));
+        }
+
+        for (int i = 0; i < ListaObservaciones.size(); i++) {
+            terminosPareados.add(new TerminoPareado(ListaObservaciones.get(i).getConcepto().getId(), ListaObservaciones.get(i).getConcepto().getNombre(), ListaObservaciones.get(i).getId(), ListaObservaciones.get(i).getDetalle()));
+        }
+
+        Collections.shuffle(terminosPareados);
+        
+        System.out.println("total de elementos caracteristicos: " + terminosPareados.size());
+        
+        
+        do {
+            
+            ArrayList<TerminoPareado> ListaTemp = new ArrayList<>();
+            ListaTemp.add(terminosPareados.get(0));
+                
+            for (int i = 0; i < terminosPareados.size(); i++) {
+                boolean sw = false;
+                for (int x = 0; x < ListaTemp.size(); x++) {
+                    if (ListaTemp.get(x).getIdConcepto() == terminosPareados.get(i).getIdConcepto()) {
+                        sw = true;
+                        break;
+                    }
+                }
+                if(!sw){
+                    ListaTemp.add(terminosPareados.get(i));
+                }
+
+            }
+            
+            System.out.println("Total temporal : " + ListaTemp.size());
+            
+            for (int x = ListaTemp.size()-1; x >= 0; x--) {
+                int rand = (int) (Math.random() * (x + 1));
+                int tempId = ListaTemp.get(x).getIdAlternativa();
+                String tempTexto = ListaTemp.get(x).getTextoAlternativa();
+                ListaTemp.get(x).setIdAlternativa(ListaTemp.get(rand).getIdAlternativa());
+                ListaTemp.get(x).setTextoAlternativa(ListaTemp.get(rand).getTextoAlternativa());
+                ListaTemp.get(rand).setIdAlternativa(tempId);
+                ListaTemp.get(rand).setTextoAlternativa(tempTexto);
+            }
+            
+            if(ListaTemp.size() >= 4 && ListaTemp.size() <= 10){
+                System.out.println("------------------------------------------------------------------------------------------------------------------");
+                for(int i = 0; i < ListaTemp.size(); i++){
+                    System.out.println(ListaTemp.get(i).getNombreConcepto()+ "          " + ListaTemp.get(i).getTextoAlternativa());
+                }
+                System.out.println("Esta pasa y se ejecuta aqui la funcion o alguna wea...");
+            }
+            
+            for(int i = 0; i < terminosPareados.size(); i++){
+                for(int x = 0; x < ListaTemp.size(); x++){
+                    if(ListaTemp.get(x) == terminosPareados.get(i)){
+                        terminosPareados.remove(i);
+                    }
+                }
+            }
+            
+            ListaTemp.clear();
+            System.out.println("terminos pareados final size" + terminosPareados.size());
+        } while (terminosPareados.size() != 0);
+
+    }
 }
