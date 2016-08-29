@@ -6,13 +6,13 @@ public class TerminoPareado {
 
     int IdConcepto;
     String NombreConcepto;
-    int IdAlternativa;
+    int IdAlternativaConcepto;
     String TextoAlternativa;
 
-    public TerminoPareado(int IdConcepto, String NombreConcepto, int IdAlternativa, String TextoAlternativa) {
+    public TerminoPareado(int IdConcepto, String NombreConcepto, int IdAlternativaConcepto, String TextoAlternativa) {
         this.IdConcepto = IdConcepto;
         this.NombreConcepto = NombreConcepto;
-        this.IdAlternativa = IdAlternativa;
+        this.IdAlternativaConcepto = IdAlternativaConcepto;
         this.TextoAlternativa = TextoAlternativa;
     }
     
@@ -21,7 +21,7 @@ public class TerminoPareado {
     public TerminoPareado() {
         this.IdConcepto = 0;
         this.NombreConcepto = null;
-        this.IdAlternativa = 0;
+        this.IdAlternativaConcepto = 0;
         this.TextoAlternativa = null;
     }
 
@@ -41,12 +41,12 @@ public class TerminoPareado {
         this.NombreConcepto = NombreConcepto;
     }
 
-    public int getIdAlternativa() {
-        return IdAlternativa;
+    public int getIdAlternativaConcepto() {
+        return IdAlternativaConcepto;
     }
 
-    public void setIdAlternativa(int IdAlternativa) {
-        this.IdAlternativa = IdAlternativa;
+    public void setIdAlternativaConcepto(int IdAlternativaConcepto) {
+        this.IdAlternativaConcepto = IdAlternativaConcepto;
     }
 
     public String getTextoAlternativa() {
@@ -56,7 +56,7 @@ public class TerminoPareado {
     public void setTextoAlternativa(String TextoAlternativa) {
         this.TextoAlternativa = TextoAlternativa;
     }
-    
+
     
     
     

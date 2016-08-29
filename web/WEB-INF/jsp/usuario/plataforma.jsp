@@ -351,6 +351,8 @@
 
 
 
+
+
                 $('#BtnNuevoContenido').click(function() {
 
                     $.ajax({
@@ -366,6 +368,15 @@
 
 
                 });
+
+
+
+
+                $("#b2").click(function() {
+                     window.open("<c:url value="/contenido/informe" /> " + "?contenido=" + $('#Contenido').attr('value'), "_blank"); 
+                });
+
+
 
 
 
@@ -385,18 +396,53 @@
                                 var etiqueta = "";
 
                                 for (var i = 0; i < response.length; i++) {
-                                    etiqueta = etiqueta + "<div class='pregunta'><p id='cantidad'>" + (i + 1) + "/" + response.length + "</p><p id='Enunciado'>" + response[i].enunciado + "</p><input type='hidden' class='respuesta' value='" + response[i].respuesta + "' /> <ul class='Alternativas' ><li class='opcion'><p>" + response[i].opcion1 + "</p></li><li  class='opcion'><p>" + response[i].opcion2 + "</p></li><li  class='opcion'><p>" + response[i].opcion3 + "</p></li><li  class='opcion'><p>" + response[i].opcion4 + "</p></li></ul></div>";
+                                    etiqueta = etiqueta + "<div class='pregunta'><p id='Enunciado'>" + response[i].enunciado + "</p><input type='hidden' class='respuesta' value='" + response[i].respuesta + "' /> <ul class='Alternativas' ><li class='opcion'><p>" + response[i].opcion1 + "</p></li><li  class='opcion'><p>" + response[i].opcion2 + "</p></li><li  class='opcion'><p>" + response[i].opcion3 + "</p></li><li  class='opcion'><p>" + response[i].opcion4 + "</p></li></ul></div>";
                                 }
 
                                 $('#Preguntas').html(etiqueta);
 
                                 $('#Preguntas').children(":first-child").css("display", "block");
                                 $('#PuntajeTotal').attr("value", response.length)
+
+
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '<c:url value="/contenido/preguntasTerminosPareados" />',
+                                    data: {seleccionado: $('#Contenido').attr('value')},
+                                })
+                                        .success(function(response) {
+                                            $('#Preguntas').append(response);
+                                            CantidadTotal = 0;
+                                            $('#Preguntas .pregunta').each(function(index, element) {
+                                                CantidadTotal = CantidadTotal + 1;
+
+                                            });
+                                            i = 0;
+                                            $('#Preguntas .pregunta').each(function(index, element) {
+                                                i = i + 1;
+                                                $(this).prepend("<p id='cantidad'>" + (i) + "/" + CantidadTotal + "</p>")
+
+                                            });
+
+
+                                        });
+
+
+
+
                             });
+
+
 
                     $('.ventana').css('display', 'block');
                     $('#dialogo').find(".close").after(("<h1 id='TituloTest'>TEST DE " + $('#seleccion').text() + "</h1> "));
                     $('#Puntaje').attr("value", "0");
+
+
+
+
+
 
 
 
@@ -651,7 +697,9 @@
 
         </article>
         <article id="Texto">
-            <input type="button" id="b1" value="GENERAR TEST" />
+            <input type="button" class="BtnGenerar" id="b1" value="GENERAR TEST" />
+            <input type="button" class="BtnGenerar" id="b2" value="INFORME" />
+
             <textarea id="TxtMateria"></textarea>
 
         </article>
@@ -720,65 +768,20 @@
 
 
         <div id="Preguntas">
-            <table class="Pareados">
-                <tr>
-                    <th>Concepto</th>
-                    <th style="width: 20px; padding-left: 5px;" >N°</th>
-                    <th >Alternativa</th>
-                </tr>
-                <tr>
-                    <td>Lorem Ipsum</td>
-                    <td style="display: none;" >12</td>
-                    <td><input type="text" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;" /> </td>
-                    <td>On the other hand, we denounce with</td>
-                    <td style="display: none;" >44</td>
-                </tr>
-                <tr>
-                    <td>omnis iste</td>
-                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"  /> </td>
-                    <td>dignissimos ducimus qui blanditiis praesentium voluptatum</td>
-                </tr>
-                <tr>
-                    <td>denouncing</td>
-                    <td><input type="text" placeholder="___" maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;" /> </td>
-                    <td>men who are so beguiled and demoralized by the charms</td>
-                </tr>
-                <tr>
-                    <td>annoying</td>
-                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;" /> </td>
-                    <td>cannot foresee the pain and trouble that are bound to ensue</td>
-                </tr>
-                <tr>
-                    <td>circumstances</td>
-                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"   /> </td>
-                    <td>Et harum quidem rerum facilis est et expedita distinctio</td>
-                </tr>
-                <tr>
-                    <td>dignissimos</td>
-                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px;font-family: 'Agency FB'; font-size: 20px;"   /> </td>
-                    <td>mistaken idea of denouncing pleasure and praising pain</td>
-                </tr>
-                <tr>
-                    <td>blanditiis</td>
-                    <td><input type="text" placeholder="___" maxlength="1" size="1"  style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"   /> </td>
-                    <td>natus error sit voluptatem accusantium doloremque laudantium</td>
-                </tr>
-                <tr>
-                    <td>foresee</td>
-                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"  /> </td>
-                    <td>denouncing pleasure and praising pain was born and I will</td>
-                </tr>
-                 <tr>
-                    <td>blanditiis</td>
-                    <td><input type="text" placeholder="___" maxlength="1" size="1"  style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"   /> </td>
-                    <td>natus error sit voluptatem accusantium doloremque laudantium</td>
-                </tr>
-                <tr>
-                    <td>foresee</td>
-                    <td><input type="text" placeholder="___"  maxlength="1" size="1" style="width: 20px; box-shadow: none; border: 0px;padding: 0px; text-align: center; margin-right: 20px; font-family: 'Agency FB'; font-size: 20px;"  /> </td>
-                    <td>denouncing pleasure and praising pain was born and I will</td>
-                </tr>
-            </table>
+            <!--   <table class="Pareados">
+                   <tr>
+                       <th>Concepto</th>
+                       <th id="ColumnaNumero">N°</th>
+                       <th >Alternativa</th>
+                   </tr>
+                   <tr>
+                       <td>Lorem Ipsum</td>
+                       <td class="TdKey">12</td>
+                       <td><input type="text" id="TxtPareado" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="___"  maxlength="1" size="1" /> </td>
+                       <td>On the other hand, we denounce with</td>
+                       <td id="TdKey">44</td>
+                   </tr>
+               </table> -->
         </div>
         <input type="button" id="BtnSiguente" onclick="Siguiente()" value="SIGUENTE">
 

@@ -512,41 +512,40 @@ public class Generador {
 
     }
 
-    public static void main(String[] args) {
+    public String PreguntasTerminosPareados() {
+
+        String Etiquetas = "";
 
         DefinicionService AccesoDefinicion = new DefinicionService();
-        List<Definicion> ListaDefiniciones = AccesoDefinicion.BuscarDefinicionContenido(44);
-        
+        List<Definicion> ListaDefiniciones = AccesoDefinicion.BuscarDefinicionContenido(this.Contenido_id);
+
         CaracteristicaService AccesoCaracteristica = new CaracteristicaService();
-        List<Caracteristica> ListaCaracteristicas = AccesoCaracteristica.BuscarCaracteristicaContenido(44);
+        List<Caracteristica> ListaCaracteristicas = AccesoCaracteristica.BuscarCaracteristicaContenido(this.Contenido_id);
 
         ObservacionService AccesoObservacion = new ObservacionService();
-        List<Observacion> ListaObservaciones = AccesoObservacion.BuscarObservacionContenido(44);
+        List<Observacion> ListaObservaciones = AccesoObservacion.BuscarObservacionContenido(this.Contenido_id);
 
         ArrayList<TerminoPareado> terminosPareados = new ArrayList<>();
-        
+
         for (int i = 0; i < ListaDefiniciones.size(); i++) {
-            terminosPareados.add(new TerminoPareado(ListaDefiniciones.get(i).getConcepto().getId(), ListaDefiniciones.get(i).getConcepto().getNombre(), ListaDefiniciones.get(i).getId(), ListaDefiniciones.get(i).getDetalle()));
+            terminosPareados.add(new TerminoPareado(ListaDefiniciones.get(i).getConcepto().getId(), ListaDefiniciones.get(i).getConcepto().getNombre(),ListaDefiniciones.get(i).getConcepto().getId(), ListaDefiniciones.get(i).getDetalle()));
         }
 
         for (int i = 0; i < ListaCaracteristicas.size(); i++) {
-            terminosPareados.add(new TerminoPareado(ListaCaracteristicas.get(i).getConcepto().getId(), ListaCaracteristicas.get(i).getConcepto().getNombre(), ListaCaracteristicas.get(i).getId(), ListaCaracteristicas.get(i).getDetalle()));
+            terminosPareados.add(new TerminoPareado(ListaCaracteristicas.get(i).getConcepto().getId(), ListaCaracteristicas.get(i).getConcepto().getNombre(), ListaCaracteristicas.get(i).getConcepto().getId(), ListaCaracteristicas.get(i).getDetalle()));
         }
 
         for (int i = 0; i < ListaObservaciones.size(); i++) {
-            terminosPareados.add(new TerminoPareado(ListaObservaciones.get(i).getConcepto().getId(), ListaObservaciones.get(i).getConcepto().getNombre(), ListaObservaciones.get(i).getId(), ListaObservaciones.get(i).getDetalle()));
+            terminosPareados.add(new TerminoPareado(ListaObservaciones.get(i).getConcepto().getId(), ListaObservaciones.get(i).getConcepto().getNombre(), ListaObservaciones.get(i).getConcepto().getId(), ListaObservaciones.get(i).getDetalle()));
         }
 
         Collections.shuffle(terminosPareados);
-        
-        System.out.println("total de elementos caracteristicos: " + terminosPareados.size());
-        
-        
+
         do {
-            
+
             ArrayList<TerminoPareado> ListaTemp = new ArrayList<>();
             ListaTemp.add(terminosPareados.get(0));
-                
+
             for (int i = 0; i < terminosPareados.size(); i++) {
                 boolean sw = false;
                 for (int x = 0; x < ListaTemp.size(); x++) {
@@ -555,43 +554,55 @@ public class Generador {
                         break;
                     }
                 }
-                if(!sw){
+                if (!sw) {
                     ListaTemp.add(terminosPareados.get(i));
                 }
 
             }
-            
-            System.out.println("Total temporal : " + ListaTemp.size());
-            
-            for (int x = ListaTemp.size()-1; x >= 0; x--) {
+
+            for (int x = ListaTemp.size() - 1; x >= 0; x--) {
+                
                 int rand = (int) (Math.random() * (x + 1));
-                int tempId = ListaTemp.get(x).getIdAlternativa();
+                
+                int tempId = ListaTemp.get(x).getIdAlternativaConcepto();
                 String tempTexto = ListaTemp.get(x).getTextoAlternativa();
-                ListaTemp.get(x).setIdAlternativa(ListaTemp.get(rand).getIdAlternativa());
+           
+                ListaTemp.get(x).setIdAlternativaConcepto(ListaTemp.get(rand).getIdAlternativaConcepto());
                 ListaTemp.get(x).setTextoAlternativa(ListaTemp.get(rand).getTextoAlternativa());
-                ListaTemp.get(rand).setIdAlternativa(tempId);
+                ListaTemp.get(rand).setIdAlternativaConcepto(tempId);
                 ListaTemp.get(rand).setTextoAlternativa(tempTexto);
             }
             
-            if(ListaTemp.size() >= 4 && ListaTemp.size() <= 10){
-                System.out.println("------------------------------------------------------------------------------------------------------------------");
-                for(int i = 0; i < ListaTemp.size(); i++){
-                    System.out.println(ListaTemp.get(i).getNombreConcepto()+ "          " + ListaTemp.get(i).getTextoAlternativa());
-                }
-                System.out.println("Esta pasa y se ejecuta aqui la funcion o alguna wea...");
+            for(int i = 0; i < ListaTemp.size(); i++){
+                ListaTemp.get(i).setNombreConcepto(i + 1 + ". " + ListaTemp.get(i).getNombreConcepto());
             }
-            
-            for(int i = 0; i < terminosPareados.size(); i++){
-                for(int x = 0; x < ListaTemp.size(); x++){
-                    if(ListaTemp.get(x) == terminosPareados.get(i)){
+
+            if (ListaTemp.size() >= 4 && ListaTemp.size() <= 10) {
+                Etiquetas = Etiquetas + "<div class='pregunta'><table class='Pareados'> <tr><th>Concepto</th><th id='ColumnaNumero'>N°</th><th >Alternativa</th></tr>";
+                for (int i = 0; i < ListaTemp.size(); i++) {
+
+                    Etiquetas = Etiquetas + "<tr><td>" + ListaTemp.get(i).getNombreConcepto() + "</td><td class='TdKey'>" + ListaTemp.get(i).getIdConcepto() + "</td><td><input type='text' id='TxtPareado' onKeypress='if (event.keyCode < 45 || event.keyCode > 57)event.returnValue = false;' placeholder='___'  maxlength='1' size='1' /> </td> <td>" + ListaTemp.get(i).getTextoAlternativa() + "</td> <td class='TdKey'>" + ListaTemp.get(i).getIdAlternativaConcepto() + "</td> </tr>";
+
+                }
+                Etiquetas = Etiquetas + "</table></div>";
+
+            }
+
+            for (int i = 0; i < terminosPareados.size(); i++) {
+                for (int x = 0; x < ListaTemp.size(); x++) {
+                    if (ListaTemp.get(x) == terminosPareados.get(i)) {
                         terminosPareados.remove(i);
                     }
                 }
             }
-            
+
             ListaTemp.clear();
-            System.out.println("terminos pareados final size" + terminosPareados.size());
+
         } while (terminosPareados.size() != 0);
 
+        return Etiquetas;
+
     }
+
+    
 }
