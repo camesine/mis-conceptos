@@ -16,28 +16,31 @@
             $(document).ready(function() {
 
                 $(document).keypress(function(e) {
+
                     if (e.which == 13) {
                         var datos = {
-                        correo: $('#TxtCorreoLogin').val(),
-                        pass: $('#TxtPassLogin').val()
-                    }
+                            correo: $('#TxtCorreoLogin').val(),
+                            pass: $('#TxtPassLogin').val()
+                        }
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '<c:url value="/usuario/login" />',
-                        data: datos,
-                    })
-                            .success(function(response) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '<c:url value="/usuario/login" />',
+                            data: datos,
+                            beforeSend: function() {
+
+                            }
+                        }).success(function(response) {
+
+                            if (response == "true") {
+                                $(location).attr('href', '<c:url value="/usuario/plataforma" />');
+                            } else {
+                                alert("ERROR")
+                            }
 
 
-                                if (response == "true") {
-                                    $(location).attr('href', '<c:url value="/usuario/plataforma" />');
-                                } else {
-                                    alert("ERROR")
-                                }
+                        }   );
 
-
-                            });
                     }
                 });
 
@@ -63,32 +66,32 @@
                             });
                 })
 
-/*
-                $('#BtnLogin').click(function() {
-
-                    var datos = {
-                        correo: $('#TxtCorreoLogin').val(),
-                        pass: $('#TxtPassLogin').val()
-                    }
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '<c:url value="/usuario/login" />',
-                        data: datos,
-                    })
-                            .success(function(response) {
-
-
-                                if (response == "true") {
-                                    $(location).attr('href', '<c:url value="/usuario/plataforma" />');
-                                } else {
-                                    alert("ERROR")
-                                }
-
-
-                            });
-                })
-*/
+                /*
+                 $('#BtnLogin').click(function() {
+                 
+                 var datos = {
+                 correo: $('#TxtCorreoLogin').val(),
+                 pass: $('#TxtPassLogin').val()
+                 }
+                 
+                 $.ajax({
+                 type: 'POST',
+                 url: '<c:url value="/usuario/login" />',
+                 data: datos,
+                 })
+                 .success(function(response) {
+                 
+                 
+                 if (response == "true") {
+                 $(location).attr('href', '<c:url value="/usuario/plataforma" />');
+                 } else {
+                 alert("ERROR")
+                 }
+                 
+                 
+                 });
+                 })
+                 */
 
 
             });
