@@ -13,33 +13,40 @@
         <title>Preguntame.cl</title>
 
         <script type="text/javascript" >
+
             $(document).ready(function() {
 
                 $(document).keypress(function(e) {
 
                     if (e.which == 13) {
+
+
                         var datos = {
                             correo: $('#TxtCorreoLogin').val(),
                             pass: $('#TxtPassLogin').val()
                         }
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '<c:url value="/usuario/login" />',
-                            data: datos,
-                            beforeSend: function() {
 
-                            }
-                        }).success(function(response) {
+                        
+                         $.ajax({
+                         type: 'POST',
+                         url: '<c:url value="/usuario/login" />',
+                         data: datos,
+                         beforeSend: function() {
+                         console.log("cargando...");
+                         }
+                         }).success(function(response) {
+                         
+                         if (response == "true") {
+                         
+                         $(location).attr('href', '<c:url value="/usuario/plataforma" />');
+                         } else {
+                         alert("ERROR")
+                         }
+                         
+                         
+                         });
 
-                            if (response == "true") {
-                                $(location).attr('href', '<c:url value="/usuario/plataforma" />');
-                            } else {
-                                alert("ERROR")
-                            }
-
-
-                        }   );
 
                     }
                 });
@@ -118,8 +125,9 @@
 
 
         <section id="inicio" >
+            
             <article id="welcome">
-                <h1>Preguntame.cl</h1>
+                <h1>MIS CONCEPTOS</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tristique leo vitae dui ullamcorper scelerisque. Vestibulum vitae metus cursus, tempor urna sit amet, dapibus augue. Donec interdum porta auctor. Duis malesuada arcu nec risus elementum convallis. Maecenas a pharetra odio.</p>
             </article>
             <article id="login">

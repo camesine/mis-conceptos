@@ -8,7 +8,6 @@ html,body{
 }
 
 #Contenedor{
-
     height:710px;
     width:1300px;
     margin-left:auto;
@@ -18,7 +17,7 @@ html,body{
 header{
 
     width: 100%;
-    height: 50px;
+    height: 47px;
     margin-bottom: 0px;
 }
 
@@ -61,6 +60,7 @@ header ul li a:hover {
 
 
 ul li ul {
+    z-index: 1;
     display:none;
     position:absolute;
 }
@@ -886,5 +886,44 @@ a.close{
     margin-right: 20px; 
     font-family: 'Agency FB'; 
     font-size: 20px;
+}
+
+.Completacion{
+    font-family: 'Agency FB';
+    font-size: 20px;
+    position: initial;
+    margin: 0px;
+    padding: 10px;
+}
+
+.Completacion input{
+    width: auto; 
+    box-shadow: none; 
+    border: 0px;
+    padding: 0px; 
+    text-align: center; 
+    font-family: 'Agency FB'; 
+    font-size: 20px;
+    color: black;
+
+}
+
+#VentanaBloqueo{
+    
+    width: 98.5%;
+    height: 730px;
+    margin: 0px;
+    font-family:Arial, Helvetica, sans-serif;
+    color:black;
+    line-height:28px;
+    font-size:15px;
+    text-align:justify;
+    background-color: rgba(0,0,0,.5);
+
+    
+    padding:10px;
+    border-radius:2px;
+
+    position: absolute;
 }
 

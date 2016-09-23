@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.tomcat.jni.Time;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +46,8 @@ public class UsuarioController {
 
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String Login(HttpServletRequest req) throws IOException {
+    public String Login(HttpServletRequest req) throws IOException, InterruptedException {
+        
         if (new UsuarioService().Login(req.getParameter("correo"), req.getParameter("pass"))) {
             req.getSession().setAttribute("correo", req.getParameter("correo"));
             return "true";

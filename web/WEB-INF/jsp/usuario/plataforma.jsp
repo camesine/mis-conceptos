@@ -219,6 +219,7 @@
 
 
             function SeleccionarContenido(x) {
+            // $("#ListaContenidos").css("display","none");
                 $('#Conceptos div').remove();
                 $.ajax({
                     type: 'POST',
@@ -247,6 +248,8 @@
                             }
 
                         });
+                        
+                        $('#VentanaBloqueo').fadeOut("fast",function(){});
 
             }
 
@@ -373,7 +376,7 @@
 
 
                 $("#b2").click(function() {
-                     window.open("<c:url value="/contenido/informe" /> " + "?contenido=" + $('#Contenido').attr('value'), "_blank"); 
+                    window.open("<c:url value="/contenido/informe" /> " + "?contenido=" + $('#Contenido').attr('value'), "_blank");
                 });
 
 
@@ -676,7 +679,7 @@
 
 
 </header>
-
+<div id="VentanaBloqueo"></div>
 <div id="Contenedor">
 
 
@@ -710,7 +713,7 @@
 
 <div style="clear:both"></div>
 <footer>
-    <h1>PREGUNTAME.CL</h1>
+    <h1>MisConceptos.cl</h1>
 </footer>
 
 
@@ -768,20 +771,9 @@
 
 
         <div id="Preguntas">
-            <!--   <table class="Pareados">
-                   <tr>
-                       <th>Concepto</th>
-                       <th id="ColumnaNumero">N°</th>
-                       <th >Alternativa</th>
-                   </tr>
-                   <tr>
-                       <td>Lorem Ipsum</td>
-                       <td class="TdKey">12</td>
-                       <td><input type="text" id="TxtPareado" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" placeholder="___"  maxlength="1" size="1" /> </td>
-                       <td>On the other hand, we denounce with</td>
-                       <td id="TdKey">44</td>
-                   </tr>
-               </table> -->
+            <p id="cantidad">1/81</p>
+            <p id="Enunciado">Completar el enunciado. </p>
+            <p class="Completacion" >Lorem ipsum dolor sit amet, consectetur <input type="text"   placeholder="_______________________" maxlength="23" size="23"> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut <input type="text"   placeholder="_______________________" maxlength="23" size="23"> enim ad minim veniam, quis nostrud exercitation ullamco <input type="text"   placeholder="_______________________" maxlength="23" size="23"> laboris nisi ut aliquip ex ea commodo consequat.</p>
         </div>
         <input type="button" id="BtnSiguente" onclick="Siguiente()" value="SIGUENTE">
 
@@ -790,6 +782,8 @@
 
 
 </div>
+
+
 
 </body>
 </html>

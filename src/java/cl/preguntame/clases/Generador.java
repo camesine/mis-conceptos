@@ -8,10 +8,21 @@ import cl.preguntame.service.CaracteristicaService;
 import cl.preguntame.service.ConceptoService;
 import cl.preguntame.service.DefinicionService;
 import cl.preguntame.service.ObservacionService;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+import opennlp.tools.cmdline.postag.POSModelLoader;
+import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSSample;
+import opennlp.tools.postag.POSTaggerME;
+import opennlp.tools.tokenize.WhitespaceTokenizer;
+import opennlp.tools.util.ObjectStream;
+import opennlp.tools.util.PlainTextByLineStream;
 
 public class Generador {
 
@@ -528,7 +539,7 @@ public class Generador {
         ArrayList<TerminoPareado> terminosPareados = new ArrayList<>();
 
         for (int i = 0; i < ListaDefiniciones.size(); i++) {
-            terminosPareados.add(new TerminoPareado(ListaDefiniciones.get(i).getConcepto().getId(), ListaDefiniciones.get(i).getConcepto().getNombre(),ListaDefiniciones.get(i).getConcepto().getId(), ListaDefiniciones.get(i).getDetalle()));
+            terminosPareados.add(new TerminoPareado(ListaDefiniciones.get(i).getConcepto().getId(), ListaDefiniciones.get(i).getConcepto().getNombre(), ListaDefiniciones.get(i).getConcepto().getId(), ListaDefiniciones.get(i).getDetalle()));
         }
 
         for (int i = 0; i < ListaCaracteristicas.size(); i++) {
@@ -561,19 +572,19 @@ public class Generador {
             }
 
             for (int x = ListaTemp.size() - 1; x >= 0; x--) {
-                
+
                 int rand = (int) (Math.random() * (x + 1));
-                
+
                 int tempId = ListaTemp.get(x).getIdAlternativaConcepto();
                 String tempTexto = ListaTemp.get(x).getTextoAlternativa();
-           
+
                 ListaTemp.get(x).setIdAlternativaConcepto(ListaTemp.get(rand).getIdAlternativaConcepto());
                 ListaTemp.get(x).setTextoAlternativa(ListaTemp.get(rand).getTextoAlternativa());
                 ListaTemp.get(rand).setIdAlternativaConcepto(tempId);
                 ListaTemp.get(rand).setTextoAlternativa(tempTexto);
             }
-            
-            for(int i = 0; i < ListaTemp.size(); i++){
+
+            for (int i = 0; i < ListaTemp.size(); i++) {
                 ListaTemp.get(i).setNombreConcepto(i + 1 + ". " + ListaTemp.get(i).getNombreConcepto());
             }
 
@@ -604,5 +615,131 @@ public class Generador {
 
     }
 
-    
+    public void PreguntaCompletacion() throws IOException {
+
+        ArrayList<String> enunciados = new ArrayList<>();
+
+        DefinicionService AccesoDefinicion = new DefinicionService();
+        List<Definicion> ListaDefiniciones = AccesoDefinicion.BuscarDefinicionContenido(this.Contenido_id);
+
+        CaracteristicaService AccesoCaracteristica = new CaracteristicaService();
+        List<Caracteristica> ListaCaracteristicas = AccesoCaracteristica.BuscarCaracteristicaContenido(this.Contenido_id);
+
+        ObservacionService AccesoObservacion = new ObservacionService();
+        List<Observacion> ListaObservaciones = AccesoObservacion.BuscarObservacionContenido(this.Contenido_id);
+
+        for (int i = 0; i < ListaDefiniciones.size(); i++) {
+            enunciados.add(ListaDefiniciones.get(i).getDetalle());
+        }
+
+        for (int i = 0; i < ListaCaracteristicas.size(); i++) {
+            enunciados.add(ListaCaracteristicas.get(i).getDetalle());
+        }
+
+        for (int i = 0; i < ListaObservaciones.size(); i++) {
+            enunciados.add(ListaObservaciones.get(i).getDetalle());
+        }
+
+        POSModel model = new POSModelLoader().load(new File("es-pos-maxent.bin"));
+        POSTaggerME tagger = new POSTaggerME(model);
+
+        for (int i = 0; i < enunciados.size(); i++) {
+            
+            String EnunciadoFormat = enunciados.get(i).replace(",", "");
+            
+            ArrayList<Palabra[]> sentencias = Morfologia(EnunciadoFormat, model, tagger);
+            System.out.println(i);
+            System.out.println(enunciados.get(i));
+            
+            for (int x = 0; x < sentencias.size(); x++) {
+                System.out.println("-------------------------------------------------------------------");
+
+                for (int j = 0; j < sentencias.get(x).length; j++) {
+
+                    if (sentencias.get(x)[j].Morfologia.substring(0, 1).equals("n") || sentencias.get(x)[j].Morfologia.substring(0, 2).equals("aq") || sentencias.get(x)[j].Morfologia.substring(0, 2).equals("vm")) {
+                       System.out.println(sentencias.get(x)[j].Palabra + "   |   " + sentencias.get(x)[j].Morfologia);
+                    }else{
+
+                     //   System.out.println("NO INCLUIDA : " + sentencias.get(x)[j].Palabra + "   |   " + sentencias.get(x)[j].Morfologia);
+                            
+                    }
+                }
+                System.out.println("");
+            }
+
+        }
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        Generador g = new Generador(46);
+        g.PreguntaCompletacion();
+
+    }
+
+    static ArrayList<Palabra[]> Morfologia(String enunciado, POSModel model, POSTaggerME tagger) throws IOException {
+
+        //    POSModel model = new POSModelLoader().load(new File("es-pos-maxent.bin"));
+        //   POSTaggerME tagger = new POSTaggerME(model);
+        String input = enunciado;
+
+        input = input.replaceAll("\n", " ");
+        int aux = 0;
+
+        ArrayList<Palabra[]> sentencias = new ArrayList<>();
+
+        for (int i = 0; i < input.length(); i++) {
+
+            for (int j = i; j < input.length(); j++) {
+                if (input.substring(j, j + 1).equals(".") || j == input.length() - 1) {
+
+                    String linea;
+
+                    if (!input.substring(j, j + 1).equals(".")) {
+                        linea = input.substring(i, j + 1).trim();
+
+                    } else {
+                        linea = input.substring(i, j).trim();
+
+                    }
+
+                    ObjectStream<String> lineStream = new PlainTextByLineStream(new StringReader(linea));
+                    String line;
+
+                    while ((line = lineStream.read()) != null) {
+
+                        String whitespaceTokenizerLine[] = WhitespaceTokenizer.INSTANCE.tokenize(line);
+                        String[] tags = tagger.tag(whitespaceTokenizerLine);
+
+                        POSSample sample = new POSSample(whitespaceTokenizerLine, tags);
+                        linea = sample.toString();
+
+                    }
+
+                    String[] tokens = linea.split(" ");
+                    Palabra[] ArrayPalabras = new Palabra[tokens.length];
+
+                    for (int y = 0; y < tokens.length; y++) {
+                        for (int z = 0; z < tokens[y].length(); z++) {
+                            if (tokens[y].substring(z, z + 1).equals("_")) {
+                                Palabra palabra = new Palabra(tokens[y].substring(0, z), tokens[y].substring(z + 1, tokens[y].length()));
+                                ArrayPalabras[y] = palabra;
+
+                            }
+
+                        }
+
+                    }
+                    sentencias.add(ArrayPalabras);
+
+                    aux = j;
+                    break;
+                }
+            }
+            i = aux;
+        }
+
+        return sentencias;
+    }
+
 }
