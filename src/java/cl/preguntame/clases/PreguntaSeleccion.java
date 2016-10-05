@@ -8,7 +8,7 @@ public class PreguntaSeleccion {
     String Opcion2;
     String Opcion3;
     String Opcion4;
-
+    
     public PreguntaSeleccion(String Enunciado, String Respuesta, String Opcion1, String Opcion2, String Opcion3, String Opcion4) {
         this.Enunciado = Enunciado;
         this.Respuesta = Respuesta;

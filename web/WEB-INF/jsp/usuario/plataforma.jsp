@@ -10,6 +10,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
         <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"  />
+
+        <script src="<c:url value="/resources/js/tinymce/tinymce.min.js" />"></script>
+        <script src="<c:url value="/resources/js/tinymce/init-tinymce.js" />"></script>
+
+
+
         <title>Preguntame.cl</title>
 
         <script type="text/javascript">
@@ -219,8 +225,9 @@
 
 
             function SeleccionarContenido(x) {
-            // $("#ListaContenidos").css("display","none");
+
                 $('#Conceptos div').remove();
+                $('#TxtMateria').val("")
                 $.ajax({
                     type: 'POST',
                     url: '<c:url value="/contenido/buscar" />',
@@ -229,12 +236,13 @@
                         .success(function(response) {
                             $('#seleccion').text(response.nombre.toUpperCase());
                             $('#TxtMateria').val(response.texto);
+                            tinymce.activeEditor.setContent(response.texto);
                             $('#Contenido').attr("value", response.id);
                         });
 
 
 
-
+                var etiqueta = "";
                 $.ajax({
                     type: 'POST',
                     url: '<c:url value="/concepto/buscar" />',
@@ -248,8 +256,9 @@
                             }
 
                         });
-                        
-                        $('#VentanaBloqueo').fadeOut("fast",function(){});
+
+                $('#VentanaBloqueo').fadeOut("fast", function() {
+                });
 
             }
 
@@ -328,6 +337,21 @@
 
             }
 
+            function EditarContenido(Contenido) {
+                $.ajax({
+                    type: 'POST',
+                    url: '<c:url value="/contenido/editar" />',
+                    data: {id: $('#Contenido').attr('value'),
+                        nombre: $('#seleccion').text(),
+                        texto: Contenido,
+                        usuario_id: ${usuario.id}
+                    },
+                })
+                        .success(function(response) {
+                            console.log(response)
+                        });
+            }
+
 
         </script>
 
@@ -336,25 +360,6 @@
         <script type="text/javascript">
 
             $(document).ready(function(e) {
-                $('#TxtMateria').on('input', function() {
-                    $.ajax({
-                        type: 'POST',
-                        url: '<c:url value="/contenido/editar" />',
-                        data: {id: $('#Contenido').attr('value'),
-                            nombre: $('#seleccion').text(),
-                            texto: $('#TxtMateria').val(),
-                            usuario_id: ${usuario.id}
-                        },
-                    })
-                            .success(function(response) {
-                                console.log(response)
-                            });
-                });
-
-
-
-
-
 
                 $('#BtnNuevoContenido').click(function() {
 
@@ -387,24 +392,27 @@
 
                 $("#b1").click(function() {
 
-
+                    $('#Contenedor').append("<div id='cargando'><img id='ImgCargando'  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>");
 
 
                     $.ajax({
                         type: 'POST',
                         url: '<c:url value="/contenido/preguntas" />',
-                        data: {seleccionado: $('#Contenido').attr('value')},
+                        data: {seleccionado: $('#Contenido').attr('value')}, beforeSend: function() {
+
+
+                        }
                     })
                             .success(function(response) {
                                 var etiqueta = "";
-
+                                console.log(response)
                                 for (var i = 0; i < response.length; i++) {
-                                    etiqueta = etiqueta + "<div class='pregunta'><p id='Enunciado'>" + response[i].enunciado + "</p><input type='hidden' class='respuesta' value='" + response[i].respuesta + "' /> <ul class='Alternativas' ><li class='opcion'><p>" + response[i].opcion1 + "</p></li><li  class='opcion'><p>" + response[i].opcion2 + "</p></li><li  class='opcion'><p>" + response[i].opcion3 + "</p></li><li  class='opcion'><p>" + response[i].opcion4 + "</p></li></ul></div>";
+                                    etiqueta = etiqueta + "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='SeleccionMultiple' /><p id='Enunciado'>" + response[i].enunciado + "</p><input type='hidden' class='respuesta' value='" + response[i].respuesta + "' /> <ul class='Alternativas' ><li class='opcion'><p class='tooltip' >" + response[i].opcion1 + "<span>" + response[i].opcion1 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion2 + "<span>" + response[i].opcion2 + "</span></p></li><li  class='opcion'><p class='tooltip'>" + response[i].opcion3 + "<span>" + response[i].opcion3 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion4 + "<span>" + response[i].opcion4 + "</span></p></li></ul></div>";
                                 }
 
                                 $('#Preguntas').html(etiqueta);
 
-                                $('#Preguntas').children(":first-child").css("display", "block");
+
                                 $('#PuntajeTotal').attr("value", response.length)
 
 
@@ -416,17 +424,57 @@
                                 })
                                         .success(function(response) {
                                             $('#Preguntas').append(response);
-                                            CantidadTotal = 0;
-                                            $('#Preguntas .pregunta').each(function(index, element) {
-                                                CantidadTotal = CantidadTotal + 1;
 
-                                            });
-                                            i = 0;
-                                            $('#Preguntas .pregunta').each(function(index, element) {
-                                                i = i + 1;
-                                                $(this).prepend("<p id='cantidad'>" + (i) + "/" + CantidadTotal + "</p>")
 
-                                            });
+
+                                            //COMPLETACION
+
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '<c:url value="/contenido/preguntasCompletacion" />',
+                                                data: {seleccionado: $('#Contenido').attr('value')},
+                                            })
+                                                    .success(function(response) {
+                                                        $('#Preguntas').append(response);
+
+
+                                                        CantidadTotal = 0;
+                                                        $('#Preguntas .pregunta').each(function(index, element) {
+                                                            CantidadTotal = CantidadTotal + 1;
+
+                                                        });
+                                                        i = 0;
+                                                        $('#Preguntas .pregunta').each(function(index, element) {
+                                                            i = i + 1;
+                                                            $(this).prepend("<p id='cantidad'>" + (i) + "/" + CantidadTotal + "</p>")
+
+                                                        });
+
+
+
+
+                                                        $('#Preguntas').children(":first-child").css("display", "block");
+
+
+                                                        $('.ventana').fadeIn("fast", function() {
+                                                        });
+
+                                                        $('#dialogo').find(".close").after(("<h1 id='TituloTest'>TEST DE " + $('#seleccion').text() + "</h1> "));
+                                                        $('#Puntaje').attr("value", "0");
+
+                                                        $('#Contenedor #cargando').remove();
+
+                                                        $('#Preguntas .pregunta ul li p').each(function(index, element) {
+                                                            if ($(this).text().length / 2 < 185) {
+                                                                $(this).removeClass();
+                                                                $(this).find("span").remove();
+
+                                                            }
+                                                        });
+
+                                                    });
+
+
 
 
                                         });
@@ -438,9 +486,6 @@
 
 
 
-                    $('.ventana').css('display', 'block');
-                    $('#dialogo').find(".close").after(("<h1 id='TituloTest'>TEST DE " + $('#seleccion').text() + "</h1> "));
-                    $('#Puntaje').attr("value", "0");
 
 
 
@@ -468,7 +513,8 @@
 
 
                 $('.close').click(function() {
-                    $('.ventana').css('display', 'none');
+                    $('.ventana').fadeOut("fast", function() {
+                    });
 
                     $('#TituloTest').remove();
                     $('.pregunta').remove();
@@ -479,16 +525,22 @@
                 });
 
 
-
+/*
                 $("#Texto").select(function() {
+
                     x = (document.getSelection());
                     $('#marcado').text(x);
+                    //tinymce.activeEditor.selection.getContent();
                 });
 
-
+*/
 
 
                 $("#btnAgregar").click(function() {
+
+
+                    $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
+
                     nombre = $('#marcado').text();
                     nombre = $.trim(nombre);
 
@@ -513,6 +565,8 @@
 
             function AgregarDef(x) {
 
+
+                $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
                 detalle = $('#marcado').text();
                 detalle = $.trim(detalle);
 
@@ -538,6 +592,7 @@
 
 
             function AgregarCar(x) {
+                $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
                 detalle = $('#marcado').text();
                 detalle = $.trim(detalle);
 
@@ -559,6 +614,7 @@
 
 
             function AgregarObs(x) {
+                $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
                 detalle = $('#marcado').text();
                 detalle = $.trim(detalle);
 
@@ -662,12 +718,14 @@
                     </c:forEach>
                 <li><a class="active" style="float:left;cursor: pointer" id="BtnNuevoContenido">NUEVO CONTENIDO</a> 
                     <input id="TxtNuevaMateria" type="text"  /> </li>
-            </ul>
-        <li><a href="">MAPAS CONCEPTUALES</a>
-        <li><a href="">INFORMES</a>
-        <li><a href="">NOSOTROS</a>
-        <li><a href="">CONTACTO</a></li>
+            </ul></li>
+
+        <li><a href="">MAPAS CONCEPTUALES</a></li>
+        <li><a href="">INFORMES</a></li>
+
+
         <ul style="float:right;list-style-type:none;">
+
             <li><a href="#">TUTORIAL</a></li>
             <li><a class="active" href="logout">CERRAR SESION</a></li>
 
@@ -703,7 +761,7 @@
             <input type="button" class="BtnGenerar" id="b1" value="GENERAR TEST" />
             <input type="button" class="BtnGenerar" id="b2" value="INFORME" />
 
-            <textarea id="TxtMateria"></textarea>
+            <textarea class="tinymce" id="TxtMateria"></textarea>
 
         </article>
     </section>
@@ -734,16 +792,40 @@
                         $("#Puntaje").attr("value", parseInt($("#Puntaje").attr("value")) + 1)
                     }
 
-
+                    var Completacion = 0;
+                    var TerminosPareados = 0;
+                    var Seleccion = 0;
                     if ($(this).next().attr("class") != "pregunta") {
+
+                        $('#Preguntas .pregunta .TipoPregunta').each(function(index, element) {
+                            if ($(this).val() == "SeleccionMultiple") {
+                                Seleccion = Seleccion + 1;
+                            }
+                            if ($(this).val() == "TerminosPareados") {
+                                TerminosPareados = TerminosPareados + 1;
+                            }
+                            if ($(this).val() == "Completacion") {
+                                Completacion = Completacion + 1;
+                            }
+
+
+                        })
+
                         alert("El ultimo" + " Puntaje : " + $("#Puntaje").attr("value") + " de " + $("#PuntajeTotal").attr("value"));
+                        alert("seleccion " + Seleccion)
+                        alert("Terminos p" + TerminosPareados)
+                        alert("Completacion" + Completacion)
+
+
                         return false;
                     }
 
 
-                    $(this).css("display", "none")
-
-                    $(this).next().css("display", "block")
+                    //  $(this).css("display", "none")
+                    $(this).css("display", "none").fadeOut("fast", function() {
+                    });
+                    $(this).next().fadeIn("fast", function() {
+                    });
 
 
 
@@ -770,10 +852,13 @@
         <a href="#close" class="close"> X </a>
 
 
+
         <div id="Preguntas">
-            <p id="cantidad">1/81</p>
-            <p id="Enunciado">Completar el enunciado. </p>
-            <p class="Completacion" >Lorem ipsum dolor sit amet, consectetur <input type="text"   placeholder="_______________________" maxlength="23" size="23"> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut <input type="text"   placeholder="_______________________" maxlength="23" size="23"> enim ad minim veniam, quis nostrud exercitation ullamco <input type="text"   placeholder="_______________________" maxlength="23" size="23"> laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <div class="pregunta">
+                <p id="cantidad">1/81</p>
+                <p id="Enunciado">Completar el enunciado. </p>
+                <p class="Completacion" >Lorem ipsum dolor sit amet, consectetur <input type="text"   placeholder="_______________________" maxlength="23" size="23"> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut <input type="text"   placeholder="_______________________" maxlength="23" size="23"> enim ad minim veniam, quis nostrud exercitation ullamco <input type="text"   placeholder="_______________________" maxlength="23" size="23"> laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
         </div>
         <input type="button" id="BtnSiguente" onclick="Siguiente()" value="SIGUENTE">
 

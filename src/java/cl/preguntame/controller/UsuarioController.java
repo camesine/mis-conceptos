@@ -47,7 +47,7 @@ public class UsuarioController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String Login(HttpServletRequest req) throws IOException, InterruptedException {
-        
+      
         if (new UsuarioService().Login(req.getParameter("correo"), req.getParameter("pass"))) {
             req.getSession().setAttribute("correo", req.getParameter("correo"));
             return "true";

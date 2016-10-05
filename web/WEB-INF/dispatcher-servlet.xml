@@ -38,6 +38,7 @@
                 <prop key="/contenido/preguntas">contenidoController</prop>
                 <prop key="/contenido/preguntasTerminosPareados">contenidoController</prop>
                 <prop key="/contenido/informe">contenidoController</prop>
+                <prop key="/contenido/preguntasCompletacion">contenidoController</prop>
                 <prop key="/concepto/nuevo">conceptoController</prop>
                 <prop key="/concepto/buscar">conceptoController</prop>
                 <prop key="/definicion/nuevo">definicionController</prop>
@@ -58,7 +59,7 @@
                 <prop key="/observacion/eliminar">observacionController</prop>
                 <prop key="/relacion/eliminar">relacionController</prop>
                 <prop key="/concepto/eliminar">conceptoController</prop>
-                </props>
+            </props>
         </property>
     </bean>
 

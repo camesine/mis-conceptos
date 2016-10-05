@@ -100,6 +100,16 @@ public class ContenidoController {
         return AccesoPreguntas.PreguntasTerminosPareados();
 
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/preguntasCompletacion", method = RequestMethod.POST)
+    public String preguntasCompletacion(HttpServletRequest req) throws IOException {
+        
+        Generador AccesoPreguntas = new Generador(Integer.parseInt(req.getParameter("seleccionado")));
+        return AccesoPreguntas.PreguntaCompletacion();
+        
+   }
+   
 
     @ResponseBody
     @RequestMapping(value = "/informe", method = RequestMethod.GET)

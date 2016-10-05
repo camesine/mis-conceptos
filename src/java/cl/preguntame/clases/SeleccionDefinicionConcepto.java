@@ -11,7 +11,7 @@ public class SeleccionDefinicionConcepto {
     Definicion Opcion2;
     Definicion Opcion3;
     Definicion Opcion4;
-
+    
     public SeleccionDefinicionConcepto(String Enunciado, Definicion DefCorrecta, Definicion Opcion1, Definicion Opcion2, Definicion Opcion3, Definicion Opcion4) {
         this.Enunciado = Enunciado;
         this.DefCorrecta = DefCorrecta;

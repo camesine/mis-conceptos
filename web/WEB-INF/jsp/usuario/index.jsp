@@ -14,7 +14,26 @@
 
         <script type="text/javascript" >
 
+            function SeleccionOpcion(id) {
+
+
+                $("#" + id).find('.Form').slideToggle();
+
+
+                $('#login .FormOpcion').each(function(index, element) {
+                    if ($(this).attr('id') != $("#" + id).attr('id')) {
+
+                        $(this).find('.Form').slideToggle();
+                    }
+                });
+
+
+            }
+
+
             $(document).ready(function() {
+
+                $("#Registrar .Form").css("display", "none")
 
                 $(document).keypress(function(e) {
 
@@ -27,25 +46,25 @@
                         }
 
 
-                        
-                         $.ajax({
-                         type: 'POST',
-                         url: '<c:url value="/usuario/login" />',
-                         data: datos,
-                         beforeSend: function() {
-                         console.log("cargando...");
-                         }
-                         }).success(function(response) {
-                         
-                         if (response == "true") {
-                         
-                         $(location).attr('href', '<c:url value="/usuario/plataforma" />');
-                         } else {
-                         alert("ERROR")
-                         }
-                         
-                         
-                         });
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '<c:url value="/usuario/login" />',
+                            data: datos,
+                            beforeSend: function() {
+                                $('#Contenedor').append("<div id='cargando'><img id='ImgCargando'  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>");
+                            }
+                        }).success(function(response) {
+
+                            if (response == "true") {
+
+                                $(location).attr('href', '<c:url value="/usuario/plataforma" />');
+                            } else {
+                                alert("ERROR")
+                            }
+
+
+                        });
 
 
                     }
@@ -73,32 +92,34 @@
                             });
                 })
 
-                /*
-                 $('#BtnLogin').click(function() {
-                 
-                 var datos = {
-                 correo: $('#TxtCorreoLogin').val(),
-                 pass: $('#TxtPassLogin').val()
-                 }
-                 
-                 $.ajax({
-                 type: 'POST',
-                 url: '<c:url value="/usuario/login" />',
-                 data: datos,
-                 })
-                 .success(function(response) {
-                 
-                 
-                 if (response == "true") {
-                 $(location).attr('href', '<c:url value="/usuario/plataforma" />');
-                 } else {
-                 alert("ERROR")
-                 }
-                 
-                 
-                 });
-                 })
-                 */
+
+                $('#BtnLogin').click(function() {
+
+                    var datos = {
+                        correo: $('#TxtCorreoLogin').val(),
+                        pass: $('#TxtPassLogin').val()
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '<c:url value="/usuario/login" />',
+                        data: datos, beforeSend: function() {
+                            $('#Contenedor').append("<div id='cargando'><img id='ImgCargando'  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>");
+                        }
+                    })
+                            .success(function(response) {
+
+
+                                if (response == "true") {
+                                    $(location).attr('href', '<c:url value="/usuario/plataforma" />');
+                                } else {
+                                    alert("ERROR")
+                                }
+
+
+                            });
+                })
+
 
 
             });
@@ -123,50 +144,63 @@
 
     <div id="Contenedor">
 
-
+<!-- 
+<div id="cargando"><img id="ImgCargando"  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>
+         -->
         <section id="inicio" >
-            
+
             <article id="welcome">
                 <h1>MIS CONCEPTOS</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tristique leo vitae dui ullamcorper scelerisque. Vestibulum vitae metus cursus, tempor urna sit amet, dapibus augue. Donec interdum porta auctor. Duis malesuada arcu nec risus elementum convallis. Maecenas a pharetra odio.</p>
             </article>
+
             <article id="login">
-
-                <div id="Entrar" >
-
-                    <h1>INICIAR SESION</h1>
-
-                    <p><input type="text" name="CorreoLogin" id="TxtCorreoLogin" value="" placeholder="Username or Email"></p>
-                    <p><input type="password" name="PassLogin" id="TxtPassLogin" value="" placeholder="Password"></p>
-                    <p class="remember_me">
-                        <label>
-                            <input type="checkbox" name="remember_me" id="remember_me">
-                            Remember me on this computer
-                        </label>
-                    </p>
-                    <p class="submit"><input type="submit" id="BtnLogin" name="commit" value="Entrar"></p>
+                <div id="Entrar" class="FormOpcion" >
+                    <div id="BtnFormEntrar"  onclick="SeleccionOpcion('Entrar')" ><h1>INICIAR SESION</h1></div>
+                    <div class="Form">
+                        <form>
+                            <div id="LblForm" ><label>CORREO ELECTRONICO</label></div>
+                            <input type="text" name="CorreoLogin" id="TxtCorreoLogin" value="" placeholder="E-mail">
+                                <div id="LblForm" ><label>CONTRASEÑA</label></div>
+                            <input type="password" name="PassLogin" id="TxtPassLogin" value="" placeholder="******">
+                        </form>
+                        <input type="submit" id="BtnLogin" name="commit" value="ENTRAR">
 
 
 
+                    </div>
                 </div>
-                <br />
-                <div id="Registrar" >
+                <div id="Registrar" class="FormOpcion" >
+                    <div id="BtnFormRegistrar"  onclick="SeleccionOpcion('Registrar')" ><h1>REGISTRO</h1></div>
+                    <div class="Form" >
 
-                    <h1>REGISTRAR</h1>
+                        <form>
+                            
+                            <div id="LblForm" ><label>CORREO ELECTRONICO</label></div>
+                        <input type="text" name="TxtCorreoNuevo" id="TxtCorreoNuevo" value="" placeholder="Email">
+                        <div id="LblForm" ><label>NOMBRE</label></div>
+                        <input type="text" name="TxtNombreNuevo" id="TxtNombreNuevo" value="" placeholder="Nombre">
+                        <div id="LblForm" ><label>APELLIDO</label></div>
+                        <input type="text" name="TxtApellidoNuevo" id="TxtApellidoNuevo" value="" placeholder="Apellido">
+                        <div id="LblForm" ><label>CONTRASEÑA</label></div>
+                        <input type="password" name="TxtPassNuevo" id="TxtPassNuevo"  value="" placeholder="Contraseña">
+                        <div id="LblForm" ><label>CONFIRMAR CONTRASEÑA</label></div>
+                        <input type="password" name="TxtPassNuevo2" id="TxtPassNuevo2" value="" placeholder="Confirmacion contraseña">
 
-                    <p><input type="text" name="TxtCorreoNuevo" id="TxtCorreoNuevo" value="" placeholder="Email"></p>
-                    <p><input type="text" name="TxtNombreNuevo" id="TxtNombreNuevo" value="" placeholder="Nombre"></p>
-                    <p><input type="text" name="TxtApellidoNuevo" id="TxtApellidoNuevo" value="" placeholder="Apellido"></p>
-                    <p><input type="password" name="TxtPassNuevo" id="TxtPassNuevo"  value="" placeholder="Contraseña"></p>
-                    <p><input type="password" name="TxtPassNuevo2" id="TxtPassNuevo2" value="" placeholder="Confirmacion contraseña"></p>
-
-                    <p class="submit"><input type="submit" id="BtnRegistrar" name="commit" value="Listo"></p>
+                        </form>
+                        <input type="submit" id="BtnRegistrar" name="commit" value="REGISTRAR">
 
 
+
+                    </div>
 
                 </div>
 
             </article>
+
+
+
+
 
         </section>
 

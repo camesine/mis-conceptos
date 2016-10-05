@@ -8,7 +8,7 @@ html,body{
 }
 
 #Contenedor{
-    height:710px;
+    height:570px;
     width:1300px;
     margin-left:auto;
     margin-right:auto;
@@ -49,6 +49,7 @@ header ul li a:hover:not(.active) {
 }
 
 .active {
+    cursor: pointer;
     background-color: #4CAF50;
 }
 .active:hover{
@@ -60,7 +61,7 @@ header ul li a:hover {
 
 
 ul li ul {
-    z-index: 1;
+    z-index: 2;
     display:none;
     position:absolute;
 }
@@ -83,7 +84,7 @@ ul li:hover > ul {
 
 
 #ListaContenidos li{
-
+    border-top: 1px solid #432c01;
     cursor: pointer;
     float: none;
 }
@@ -98,7 +99,7 @@ ul li:hover > ul {
     margin-top:15px;
     margin-left:auto;
     margin-right:auto;
-    width:1000px;
+    width:1200px;
     height:auto;
 
 }
@@ -115,10 +116,14 @@ ul li:hover > ul {
 }
 /* FORMULARIO INICIO */
 #login{
+    background: white;
+    margin-top: 30px;
     width:35%;
     text-align:center;
     font-family: 'Agency FB';
+
 }
+
 
 #welcome h1{
     color:#2d1d00;
@@ -137,41 +142,49 @@ ul li:hover > ul {
     margin:0px;
     width:100%;
     height:40%;
-    background-color:#999;
 }
 
 #Registrar{
     margin:0px;
     width:100%;
     height:54%;
-    background-color:red;	
 }
+#BtnFormEntrar, #BtnFormRegistrar{
+    outline-style: none;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
 
+}
 #login div{
 
     margin: 0px;
-    padding: 20px 20px 20px;
-    width: 100%;
-    background: white;
-    border-radius: 3px;
-    box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);	
+}
+.Form{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
 }
 
+.Form form{
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Form label{
+    margin: 0px;
+
+}
 #login div h1 {
-    margin: -20px -20px 21px;
+    margin: 0px;
     line-height: 40px;
     font-size: 20px;
     font-weight: bold;
     color: white;
     text-align: center;
-    background: #3498db;
+    background: #153e5a;
     border-bottom: 1px solid #cfcfcf;
-    border-radius: 3px 3px 0 0;
-    background-image: -webkit-linear-gradient(top, whiteffd, #eef2f5);
-    background-image: -moz-linear-gradient(top, whiteffd, #eef2f5);
-    background-image: -o-linear-gradient(top, whiteffd, #eef2f5);
-    background-image: linear-gradient(to bottom, whiteffd, #eef2f5);
-    -webkit-box-shadow: 0 1px whitesmoke;
     box-shadow: 0 1px whitesmoke;
 }
 
@@ -237,16 +250,15 @@ ul li:hover > ul {
     font-size: 14px;
 }
 #login input[type=text], #login input[type=password] {
+    background: #F5F5F5;
     margin: 5px;
+    margin-bottom: 10px;
     padding: 0 10px;
-    width: 200px;
     height: 34px;
     color: #404040;
-    background: white;
     border: 1px solid;
     border-color: #c4c4c4 #d1d1d1 #d4d4d4;
-    border-radius: 2px;
-    outline: 5px solid #eff4f7;
+
     -moz-outline-radius: 3px;
     -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
@@ -259,35 +271,28 @@ ul li:hover > ul {
 }
 
 #login 	input[type=submit] {
+    width: 60%;
     height:30px;
     cursor:pointer;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left:20%;
+    margin-right:20%;
     background: #63d934;
-    background-image: -webkit-linear-gradient(top, #63d934, #2bb834);
-    background-image: -moz-linear-gradient(top, #63d934, #2bb834);
-    background-image: -ms-linear-gradient(top, #63d934, #2bb834);
-    background-image: -o-linear-gradient(top, #63d934, #2bb834);
-    background-image: linear-gradient(to bottom, #63d934, #2bb834);
-    -webkit-border-radius: 4;
-    -moz-border-radius: 4;
     border-radius: 4px;
     font-family: Arial;
     color: #ffffff;
     font-size: 16px;
     padding: 5px 20px 10px 20px;
     text-decoration: none;
+    border: none;
+    outline-style: none;
+    margin-top: 20px;
+    
 }
 
 
 
 #login 	input[type=submit]:hover {
     background: #83fc3c;
-    background-image: -webkit-linear-gradient(top, #83fc3c, #63d934);
-    background-image: -moz-linear-gradient(top, #83fc3c, #63d934);
-    background-image: -ms-linear-gradient(top, #83fc3c, #63d934);
-    background-image: -o-linear-gradient(top, #83fc3c, #63d934);
-    background-image: linear-gradient(to bottom, #83fc3c, #63d934);
     text-decoration: none;
 }
 #login .lt-ie9 input[type=text], .lt-ie9 input[type=password] {
@@ -317,39 +322,33 @@ article{
 
 
 #Texto{
-
+    margin-left: 10px;
     height:100%;
-    width:900px;
+    width:890px;
     text-align:right;
 }
 footer{
-    background-color:#002D59;
+    background-color:#211500;
     width:100%;
-    height:120px;
+    height:30px;
 
 }
 footer h1{
 
     font-family: Agency FB; 
-    font-size: 60px; 
+    font-size: 10px; 
     text-align: center;
     color: #F4F4F4;
 }
 
 #btnAgregar {
-
+    outline-style: none;
+    border: none;
     margin-left:auto;
     margin-top:10px;
     margin-right:auto;
-    background: #3498db;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-    background-image: -o-linear-gradient(top, #3498db, #2980b9);
-    background-image: linear-gradient(to bottom, #3498db, #2980b9);
-    -webkit-border-radius: 4;
-    -moz-border-radius: 4;
-    border-radius: 4px;
+    background: #153e5a;
+
     font-family: Arial;
     color: #ffffff;
     font-size: 16px;
@@ -361,28 +360,18 @@ footer h1{
 
 
 #btnAgregar:hover{
-    background: #3cb0fd;
-    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    background: #1c5277;
     text-decoration: none;
 }
 .BtnGenerar {
+    outline-style: none;
+    border: none;
     cursor:pointer;
     margin-left:auto;
     margin-top:10px;
     margin-right:auto;
-    background: #3498db;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-    background-image: -o-linear-gradient(top, #3498db, #2980b9);
-    background-image: linear-gradient(to bottom, #3498db, #2980b9);
-    -webkit-border-radius: 4;
-    -moz-border-radius: 4;
-    border-radius: 4px;
+    margin-bottom: 10px;
+    background: #153e5a;
     font-family: Arial;
     color: #ffffff;
     font-size: 16px;
@@ -391,12 +380,7 @@ footer h1{
 
 }
 .BtnGenerar:hover{
-    background: #3cb0fd;
-    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    background: #1c5277;
     text-decoration: none;
 }	
 
@@ -669,13 +653,12 @@ select{
 } 
 a.close{
     background-color: red;
-    border-radius: 5px;
     color: #fff;
     font-size: 14px;
     font-weight: bold;
     line-height: 22px;
     position: absolute;
-    margin-left: 965px;
+    margin-left: 1270px;
     margin-top: 5px;
 
     text-align: center;
@@ -702,7 +685,6 @@ a.close{
     background-color: rgba(0,0,0,.5);
 
     border:1px solid black;
-    padding:10px;
     border-radius:2px;
 
     position: fixed;
@@ -714,7 +696,7 @@ a.close{
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    width: 1000px;
+    width: 100%;
     height: 500px;
 
     background: white;
@@ -728,8 +710,8 @@ a.close{
     height: auto;
     text-decoration: none;
     text-align: center;
-    box-shadow: #432c01 0px 10px 30px 5px inset;
-
+    // box-shadow: #432c01 0px 10px 30px 5px inset;
+    box-shadow: #432c01 1px 1px inset;
     font-size: 25px;
     font-family: 'Agency FB'; 
     color: #fff;
@@ -741,13 +723,17 @@ a.close{
 .titulo:hover{
 
 
-    box-shadow: #513500 0px 10px 30px 5px inset;
+    //box-shadow: #513500 10px 10px 30px 10px inset;
+    background-color: #352300;  
 
-
-    text-shadow: 0px 0px 20px #fff;
+    // text-shadow: 0px 0px 20px #fff;
 
 }
 .EliminarC{
+    outline-style: none;
+    border: none;
+    background-color: #2d1d00;
+    box-shadow: #432c01 1px 1px inset;
     width:10%; 
     height:35px;
     margin:0px;
@@ -755,6 +741,11 @@ a.close{
 
 
 }
+.EliminarC:hover{
+
+    background-color: #352300;  
+}
+
 
 
 
@@ -765,6 +756,7 @@ a.close{
     outline:none;
 }
 .Eliminar{
+
     height:27px;
     width:37px;
     cursor:pointer;
@@ -777,25 +769,19 @@ a.close{
     height: 340px; 
     width: 50px;
     margin-top: 10px;
-    width: 900px;
+    width: 1200px;
     margin-left: 50px;
 
 }
 
 #BtnSiguente {
+    outline-style: none;
+    border: none;
     margin-top: 30px;
     cursor:pointer;
-    margin-left: 800px;
+    margin-left: 1100px;
 
-    background: #3498db;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-    background-image: -o-linear-gradient(top, #3498db, #2980b9);
-    background-image: linear-gradient(to bottom, #3498db, #2980b9);
-    -webkit-border-radius: 4;
-    -moz-border-radius: 4;
-    border-radius: 4px;
+    background: #153e5a;
     font-family: Arial;
     color: #ffffff;
     font-size: 16px;
@@ -804,12 +790,8 @@ a.close{
 
 }
 #BtnSiguente:hover{
-    background: #3cb0fd;
-    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    background: #1c5277;
+
     text-decoration: none;
 }	
 
@@ -836,6 +818,9 @@ a.close{
     margin-top: 0px;
 }
 .opcion p{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-family: 'Agency FB';
     font-size: 20px;
     position: initial;
@@ -856,7 +841,7 @@ a.close{
 
 #cantidad{
     font-family: 'Agency FB';
-    margin-left: 870px;
+    margin-left: 1175px;
     font-weight: bold;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -865,7 +850,7 @@ a.close{
 .Pareados{
     font-family: 'Agency FB';
     font-size: 20px;
-    width: 870px;
+    width: 1200px;
     margin-top: 0px;
 }
 
@@ -909,7 +894,7 @@ a.close{
 }
 
 #VentanaBloqueo{
-    
+    z-index: 1;
     width: 98.5%;
     height: 730px;
     margin: 0px;
@@ -920,10 +905,68 @@ a.close{
     text-align:justify;
     background-color: rgba(0,0,0,.5);
 
-    
+
     padding:10px;
     border-radius:2px;
 
     position: absolute;
 }
 
+#cargando{
+    
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-family:Arial, Helvetica, sans-serif;
+    color:black;
+    line-height:28px;
+    font-size:15px;
+    text-align:justify;
+    background-color: rgba(0,0,0,.5);
+    padding:10px;
+    position: fixed;
+}
+#ImgCargando{
+    padding: 50px;
+    background: rgba(0,0,0,.5);
+    border-radius: 10px;
+    height: 100px;
+    margin-top: 15%;
+    margin-left: 42%;
+}
+p.tooltip{
+    margin: 0px;
+    cursor: pointer;
+}
+
+p.tooltip:hover { 
+    text-decoration:none;
+} 
+
+p.tooltip span {
+    text-justify: auto;
+    max-width: 600px;
+    white-space: normal;
+    height: auto;
+    font-family: 'Arial';
+    font-size: 15px;
+    display:none;  
+    padding:5px 5px; 
+    color: white;
+    background: rgba(0, 0, 0, 0.91);
+    border-radius: 20px;
+    padding: 10px;
+} 
+
+p.tooltip:hover span {
+    display:block; 
+    position:absolute; 
+}
+
+#LblForm{
+    padding-left: 5px;
+    width: 278px;
+    text-align: left;
+    font-weight: bold;
+}
