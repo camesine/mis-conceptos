@@ -447,6 +447,7 @@ public class Generador {
             pregunta.setOpcion2(seleccionDefinicionConceptos.get(i).getOpcion2().getDetalle());
             pregunta.setOpcion3(seleccionDefinicionConceptos.get(i).getOpcion3().getDetalle());
             pregunta.setOpcion4(seleccionDefinicionConceptos.get(i).getOpcion4().getDetalle());
+            pregunta.setConceptoReferencia(seleccionDefinicionConceptos.get(i).getDefCorrecta().getConcepto().getNombre());
             this.preguntasSeleccion.add(pregunta);
         }
 
@@ -460,6 +461,7 @@ public class Generador {
             pregunta.setOpcion2(seleccionConceptosObservaciones.get(i).getOpcion2().getNombre());
             pregunta.setOpcion3(seleccionConceptosObservaciones.get(i).getOpcion3().getNombre());
             pregunta.setOpcion4(seleccionConceptosObservaciones.get(i).getOpcion4().getNombre());
+            pregunta.setConceptoReferencia(seleccionConceptosObservaciones.get(i).getConceptoCorrecto().getNombre());
             this.preguntasSeleccion.add(pregunta);
         }
 
@@ -473,6 +475,7 @@ public class Generador {
             pregunta.setOpcion2(seleccionObservacionConcepto.get(i).getOpcion2().getDetalle());
             pregunta.setOpcion3(seleccionObservacionConcepto.get(i).getOpcion3().getDetalle());
             pregunta.setOpcion4(seleccionObservacionConcepto.get(i).getOpcion4().getDetalle());
+            pregunta.setConceptoReferencia(seleccionObservacionConcepto.get(i).getObsCorrecta().getConcepto().getNombre());
             this.preguntasSeleccion.add(pregunta);
         }
 
@@ -486,6 +489,7 @@ public class Generador {
             pregunta.setOpcion2(seleccionConceptosCaracteristicas.get(i).getOpcion2().getNombre());
             pregunta.setOpcion3(seleccionConceptosCaracteristicas.get(i).getOpcion3().getNombre());
             pregunta.setOpcion4(seleccionConceptosCaracteristicas.get(i).getOpcion4().getNombre());
+            pregunta.setConceptoReferencia(seleccionConceptosCaracteristicas.get(i).getConceptoCorrecto().getNombre());
             this.preguntasSeleccion.add(pregunta);
         }
 
@@ -499,6 +503,7 @@ public class Generador {
             pregunta.setOpcion2(seleccionConceptosDefinicion.get(i).getOpcion2().getNombre());
             pregunta.setOpcion3(seleccionConceptosDefinicion.get(i).getOpcion3().getNombre());
             pregunta.setOpcion4(seleccionConceptosDefinicion.get(i).getOpcion4().getNombre());
+            pregunta.setConceptoReferencia(seleccionConceptosDefinicion.get(i).getConceptoCorrecto().getNombre());
             this.preguntasSeleccion.add(pregunta);
         }
 
@@ -513,6 +518,7 @@ public class Generador {
             pregunta.setOpcion2(seleccionCaracteristicaConceptos.get(i).getOpcion2().getDetalle());
             pregunta.setOpcion3(seleccionCaracteristicaConceptos.get(i).getOpcion3().getDetalle());
             pregunta.setOpcion4(seleccionCaracteristicaConceptos.get(i).getOpcion4().getDetalle());
+            pregunta.setConceptoReferencia(seleccionCaracteristicaConceptos.get(i).getCaCorrecta().getConcepto().getNombre());
             this.preguntasSeleccion.add(pregunta);
         }
 
@@ -592,7 +598,6 @@ public class Generador {
                 for (int i = 0; i < ListaTemp.size(); i++) {
 
                    // Etiquetas = Etiquetas + "<tr><td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 50px ' >" + ListaTemp.get(i).getNombreConcepto() + "</td><td class='TdKey'>" + ListaTemp.get(i).getIdConcepto() + "</td><td><input type='text' id='TxtPareado' onKeypress='if (event.keyCode < 45 || event.keyCode > 57)event.returnValue = false;' placeholder='___'  maxlength='1' size='1' /> </td> <td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 50px ' ><p class='tooltip' >" + ListaTemp.get(i).getTextoAlternativa() + "<span>" + ListaTemp.get(i).getTextoAlternativa() + "</span></p></td> <td class='TdKey'>" + ListaTemp.get(i).getIdAlternativaConcepto() + "</td> </tr>";
-
                     Etiquetas = Etiquetas + "<tr><td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 50px ' >" + ListaTemp.get(i).getNombreConcepto() + "</td><td class='TdKey'>" + ListaTemp.get(i).getIdConcepto() + "</td><td><input type='text' id='TxtPareado' onKeypress='if (event.keyCode < 45 || event.keyCode > 57)event.returnValue = false;' placeholder='___'  maxlength='1' size='1' /> </td> <td><p class='tooltip' style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 980px' >" + ListaTemp.get(i).getTextoAlternativa() + "<span>" + ListaTemp.get(i).getTextoAlternativa() + "</span></p></td> <td class='TdKey'>" + ListaTemp.get(i).getIdAlternativaConcepto() + "</td> </tr>";
 
                 }
@@ -617,8 +622,7 @@ public class Generador {
     }
 
     public String PreguntaCompletacion() throws IOException {
-        
-        System.out.println("-------------------------------------------------------------------------------------------------");
+
         ArrayList<String> enunciados = new ArrayList<>();
 
         DefinicionService AccesoDefinicion = new DefinicionService();
@@ -629,30 +633,28 @@ public class Generador {
 
         ObservacionService AccesoObservacion = new ObservacionService();
         List<Observacion> ListaObservaciones = AccesoObservacion.BuscarObservacionContenido(this.Contenido_id);
-
+        
+        ArrayList<String> ConceptosReferenciados = new ArrayList<>();
+        
         for (int i = 0; i < ListaDefiniciones.size(); i++) {
+            ConceptosReferenciados.add(ListaDefiniciones.get(i).getConcepto().getNombre());
             enunciados.add(ListaDefiniciones.get(i).getDetalle());
         }
 
         for (int i = 0; i < ListaCaracteristicas.size(); i++) {
+            ConceptosReferenciados.add(ListaCaracteristicas.get(i).getConcepto().getNombre());
             enunciados.add(ListaCaracteristicas.get(i).getDetalle());
         }
 
         for (int i = 0; i < ListaObservaciones.size(); i++) {
+            ConceptosReferenciados.add(ListaObservaciones.get(i).getConcepto().getNombre());
             enunciados.add(ListaObservaciones.get(i).getDetalle());
         }
 
-        
-        
-        
         POSModel model = new POSModelLoader().load(new File("C:\\Users\\Hector\\Documents\\GitHub\\preguntame\\es-pos-maxent.bin"));
-        
-        
-        
-        
+
         POSTaggerME tagger = new POSTaggerME(model);
 
-        
         String EtiquetaFinal = "";
 
         for (int i = 0; i < enunciados.size(); i++) {
@@ -661,7 +663,7 @@ public class Generador {
             EnunciadoFormat = EnunciadoFormat.replace(".", "");
             EnunciadoFormat = EnunciadoFormat.replace("(", "");
             EnunciadoFormat = EnunciadoFormat.replace(")", "");
-            
+
             ArrayList<String> palabras = new ArrayList<>();
             ArrayList<Palabra[]> sentencias = Morfologia(EnunciadoFormat, model, tagger);
 
@@ -678,7 +680,7 @@ public class Generador {
                 }
                 //   System.out.println("");
             }
-            String etiqueta = "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='Completacion' /> <p id='Enunciado'>Completar el enunciado. </p> <p class='Completacion'> " + enunciados.get(i) + " </p> </div> ";
+            String etiqueta = "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='Completacion' /> <p id='Enunciado'>Completar el enunciado. </p> <input type='hidden' class='ConceptoReferenciado' value='"+ ConceptosReferenciados.get(i) +"'> <p class='Completacion'> " + enunciados.get(i) + " </p></div> ";
 
             int CantidadPalabras = palabras.size() / 3;
             Collections.shuffle(palabras);
@@ -689,18 +691,16 @@ public class Generador {
 
             }
             EtiquetaFinal = EtiquetaFinal + " " + etiqueta;
-       //     System.out.println(etiqueta);
+            //     System.out.println(etiqueta);
             //     System.out.println("");
 
         }
-        
+
         return EtiquetaFinal;
-        
+
     }
-    
 
     static ArrayList<Palabra[]> Morfologia(String enunciado, POSModel model, POSTaggerME tagger) throws IOException {
-
 
         String input = enunciado;
 

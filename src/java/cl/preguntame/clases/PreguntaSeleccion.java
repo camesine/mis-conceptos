@@ -8,14 +8,16 @@ public class PreguntaSeleccion {
     String Opcion2;
     String Opcion3;
     String Opcion4;
+    String ConceptoReferencia;
     
-    public PreguntaSeleccion(String Enunciado, String Respuesta, String Opcion1, String Opcion2, String Opcion3, String Opcion4) {
+    public PreguntaSeleccion(String Enunciado, String Respuesta, String Opcion1, String Opcion2, String Opcion3, String Opcion4, String ConceptoReferencia) {
         this.Enunciado = Enunciado;
         this.Respuesta = Respuesta;
         this.Opcion1 = Opcion1;
         this.Opcion2 = Opcion2;
         this.Opcion3 = Opcion3;
         this.Opcion4 = Opcion4;
+        this.ConceptoReferencia = ConceptoReferencia;
     }
     
     public PreguntaSeleccion() {
@@ -25,6 +27,7 @@ public class PreguntaSeleccion {
         this.Opcion2 = null;
         this.Opcion3 = null;
         this.Opcion4 = null;
+        this.ConceptoReferencia = null;
     }
 
     public String getEnunciado() {
@@ -33,6 +36,14 @@ public class PreguntaSeleccion {
 
     public void setEnunciado(String Enunciado) {
         this.Enunciado = Enunciado;
+    }
+
+    public String getConceptoReferencia() {
+        return ConceptoReferencia;
+    }
+
+    public void setConceptoReferencia(String ConceptoReferencia) {
+        this.ConceptoReferencia = ConceptoReferencia;
     }
 
     public String getRespuesta() {

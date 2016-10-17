@@ -348,7 +348,7 @@
                     },
                 })
                         .success(function(response) {
-                            console.log(response)
+
                         });
             }
 
@@ -391,7 +391,7 @@
 // GENERACION DE PREGUNTAS
 
                 $("#b1").click(function() {
-
+                    $("#BtnSiguente").val("SIGUIENTE");
                     $('#Contenedor').append("<div id='cargando'><img id='ImgCargando'  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>");
 
 
@@ -407,7 +407,7 @@
                                 var etiqueta = "";
                                 console.log(response)
                                 for (var i = 0; i < response.length; i++) {
-                                    etiqueta = etiqueta + "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='SeleccionMultiple' /><p id='Enunciado'>" + response[i].enunciado + "</p><input type='hidden' class='respuesta' value='" + response[i].respuesta + "' /> <ul class='Alternativas' ><li class='opcion'><p class='tooltip' >" + response[i].opcion1 + "<span>" + response[i].opcion1 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion2 + "<span>" + response[i].opcion2 + "</span></p></li><li  class='opcion'><p class='tooltip'>" + response[i].opcion3 + "<span>" + response[i].opcion3 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion4 + "<span>" + response[i].opcion4 + "</span></p></li></ul></div>";
+                                    etiqueta = etiqueta + "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='SeleccionMultiple' /><input type='hidden' class='ConceptoReferenciado' value='" + response[i].conceptoReferencia + "' /><p id='Enunciado'>" + response[i].enunciado + "</p><input type='hidden' class='respuesta' value='" + response[i].respuesta + "' /> <ul class='Alternativas' ><li class='opcion'><p class='tooltip' >" + response[i].opcion1 + "<span>" + response[i].opcion1 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion2 + "<span>" + response[i].opcion2 + "</span></p></li><li  class='opcion'><p class='tooltip'>" + response[i].opcion3 + "<span>" + response[i].opcion3 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion4 + "<span>" + response[i].opcion4 + "</span></p></li></ul></div>";
                                 }
 
                                 $('#Preguntas').html(etiqueta);
@@ -525,15 +525,15 @@
                 });
 
 
-/*
-                $("#Texto").select(function() {
-
-                    x = (document.getSelection());
-                    $('#marcado').text(x);
-                    //tinymce.activeEditor.selection.getContent();
-                });
-
-*/
+                /*
+                 $("#Texto").select(function() {
+                 
+                 x = (document.getSelection());
+                 $('#marcado').text(x);
+                 //tinymce.activeEditor.selection.getContent();
+                 });
+                 
+                 */
 
 
                 $("#btnAgregar").click(function() {
@@ -788,6 +788,10 @@
 
                 if ($(this).css('display') == "block") {
 
+                    if ($(this).next().next().attr("class") != "pregunta") {
+                        $("#BtnSiguente").val("FINALIZAR");
+                    }
+
                     if ($(this).find('.respondido').text() == $(this).find(".respuesta").attr("value")) {
                         $("#Puntaje").attr("value", parseInt($("#Puntaje").attr("value")) + 1)
                     }
@@ -795,6 +799,7 @@
                     var Completacion = 0;
                     var TerminosPareados = 0;
                     var Seleccion = 0;
+
                     if ($(this).next().attr("class") != "pregunta") {
 
                         $('#Preguntas .pregunta .TipoPregunta').each(function(index, element) {
@@ -806,8 +811,8 @@
                             }
                             if ($(this).val() == "Completacion") {
                                 Completacion = Completacion + 1;
-                            }
 
+                            }
 
                         })
 
