@@ -361,6 +361,8 @@
 
             $(document).ready(function(e) {
 
+                localStorage.clear();
+
                 $('#BtnNuevoContenido').click(function() {
 
                     $.ajax({
@@ -780,6 +782,14 @@
     <script type="text/javascript">
         function Siguiente() {
 
+            var Lista = localStorage.getItem("ListaRespuestas");//Retrieve the stored data
+
+            Lista = JSON.parse(Lista); //Converts string to object
+
+            if (Lista == null) //If there is no data, initialize an empty array
+                Lista = [];
+
+
             //$(this).css("background", "#3498db");
 
             $('#Preguntas div').each(function(index, element) {
@@ -791,17 +801,43 @@
                     if ($(this).next().next().attr("class") != "pregunta") {
                         $("#BtnSiguente").val("FINALIZAR");
                     }
-
+                    var correcto = false;
                     if ($(this).find('.respondido').text() == $(this).find(".respuesta").attr("value")) {
+
                         $("#Puntaje").attr("value", parseInt($("#Puntaje").attr("value")) + 1)
+
+                        correcto = true;
+
                     }
+
+                    if (correcto == true) {
+                        var respuesta = JSON.stringify({
+                            Tipo: 'SeleccionMultiple',
+                            Correcto: 'true',
+                            ConceptoReferencia: $(this).find(".ConceptoReferenciado").val(),
+                        });
+
+                        Lista.push(respuesta);
+                        localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
+                    }else{
+                        
+                        var respuesta = JSON.stringify({
+                            Tipo: 'SeleccionMultiple',
+                            Correcto: 'false',
+                            ConceptoReferencia: $(this).find(".ConceptoReferenciado").val(),
+                        });
+
+                        Lista.push(respuesta);
+                        localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
+                        
+                    }
+                    
 
                     var Completacion = 0;
                     var TerminosPareados = 0;
                     var Seleccion = 0;
 
                     if ($(this).next().attr("class") != "pregunta") {
-
                         $('#Preguntas .pregunta .TipoPregunta').each(function(index, element) {
                             if ($(this).val() == "SeleccionMultiple") {
                                 Seleccion = Seleccion + 1;
@@ -811,17 +847,12 @@
                             }
                             if ($(this).val() == "Completacion") {
                                 Completacion = Completacion + 1;
-
                             }
-
                         })
-
                         alert("El ultimo" + " Puntaje : " + $("#Puntaje").attr("value") + " de " + $("#PuntajeTotal").attr("value"));
                         alert("seleccion " + Seleccion)
                         alert("Terminos p" + TerminosPareados)
                         alert("Completacion" + Completacion)
-
-
                         return false;
                     }
 
