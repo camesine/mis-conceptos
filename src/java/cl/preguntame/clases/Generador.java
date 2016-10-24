@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import opennlp.tools.cmdline.postag.POSModelLoader;
@@ -597,7 +598,7 @@ public class Generador {
                 Etiquetas = Etiquetas + "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='TerminosPareados' /><table class='Pareados'> <tr><th style='width: 150px;' >Concepto</th><th id='ColumnaNumero'>N°</th><th >Alternativa</th></tr>";
                 for (int i = 0; i < ListaTemp.size(); i++) {
 
-                   // Etiquetas = Etiquetas + "<tr><td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 50px ' >" + ListaTemp.get(i).getNombreConcepto() + "</td><td class='TdKey'>" + ListaTemp.get(i).getIdConcepto() + "</td><td><input type='text' id='TxtPareado' onKeypress='if (event.keyCode < 45 || event.keyCode > 57)event.returnValue = false;' placeholder='___'  maxlength='1' size='1' /> </td> <td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 50px ' ><p class='tooltip' >" + ListaTemp.get(i).getTextoAlternativa() + "<span>" + ListaTemp.get(i).getTextoAlternativa() + "</span></p></td> <td class='TdKey'>" + ListaTemp.get(i).getIdAlternativaConcepto() + "</td> </tr>";
+                    // Etiquetas = Etiquetas + "<tr><td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 50px ' >" + ListaTemp.get(i).getNombreConcepto() + "</td><td class='TdKey'>" + ListaTemp.get(i).getIdConcepto() + "</td><td><input type='text' id='TxtPareado' onKeypress='if (event.keyCode < 45 || event.keyCode > 57)event.returnValue = false;' placeholder='___'  maxlength='1' size='1' /> </td> <td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 50px ' ><p class='tooltip' >" + ListaTemp.get(i).getTextoAlternativa() + "<span>" + ListaTemp.get(i).getTextoAlternativa() + "</span></p></td> <td class='TdKey'>" + ListaTemp.get(i).getIdAlternativaConcepto() + "</td> </tr>";
                     Etiquetas = Etiquetas + "<tr><td style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 50px ' >" + ListaTemp.get(i).getNombreConcepto() + "</td><td class='TdKey'>" + ListaTemp.get(i).getIdConcepto() + "</td><td><input type='text' id='TxtPareado' onKeypress='if (event.keyCode < 45 || event.keyCode > 57)event.returnValue = false;' placeholder='___'  maxlength='1' size='1' /> </td> <td><p class='tooltip' style='overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 980px' >" + ListaTemp.get(i).getTextoAlternativa() + "<span>" + ListaTemp.get(i).getTextoAlternativa() + "</span></p></td> <td class='TdKey'>" + ListaTemp.get(i).getIdAlternativaConcepto() + "</td> </tr>";
 
                 }
@@ -633,9 +634,9 @@ public class Generador {
 
         ObservacionService AccesoObservacion = new ObservacionService();
         List<Observacion> ListaObservaciones = AccesoObservacion.BuscarObservacionContenido(this.Contenido_id);
-        
+
         ArrayList<String> ConceptosReferenciados = new ArrayList<>();
-        
+
         for (int i = 0; i < ListaDefiniciones.size(); i++) {
             ConceptosReferenciados.add(ListaDefiniciones.get(i).getConcepto().getNombre());
             enunciados.add(ListaDefiniciones.get(i).getDetalle());
@@ -663,6 +664,8 @@ public class Generador {
             EnunciadoFormat = EnunciadoFormat.replace(".", "");
             EnunciadoFormat = EnunciadoFormat.replace("(", "");
             EnunciadoFormat = EnunciadoFormat.replace(")", "");
+            EnunciadoFormat = EnunciadoFormat.replace("'", "");
+            EnunciadoFormat = EnunciadoFormat.replace("'", "");
 
             ArrayList<String> palabras = new ArrayList<>();
             ArrayList<Palabra[]> sentencias = Morfologia(EnunciadoFormat, model, tagger);
@@ -680,16 +683,24 @@ public class Generador {
                 }
                 //   System.out.println("");
             }
-            String etiqueta = "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='Completacion' /> <p id='Enunciado'>Completar el enunciado. </p> <input type='hidden' class='ConceptoReferenciado' value='"+ ConceptosReferenciados.get(i) +"'> <p class='Completacion'> " + enunciados.get(i) + " </p></div> ";
+            String etiqueta = enunciados.get(i);
+
+            HashSet<String> hashSet = new HashSet<String>(palabras);
+            palabras.clear();
+            palabras.addAll(hashSet);
 
             int CantidadPalabras = palabras.size() / 3;
             Collections.shuffle(palabras);
 
             for (int x = 0; x < CantidadPalabras; x++) {
-
-                etiqueta = etiqueta.replace(palabras.get(x), "<input type='text' id='" + palabras.get(x) + "' placeholder='_______________________' maxlength='23' size='23'>");
+                //OJO CON LOS PLURALES DENTRO DE LA MISMA ORACION
+               // System.out.println(x + "--------------" + palabras.get(x));
+                etiqueta = etiqueta.replace(palabras.get(x), "<input type='text' id='" + palabras.get(x) + "' placeholder='_______________________' maxlength='23' size='23' />");
 
             }
+
+            etiqueta = "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='Completacion' /> <p id='Enunciado'>Completar el enunciado. </p> <input type='hidden' class='ConceptoReferenciado' value='" + ConceptosReferenciados.get(i) + "' /> <p class='Completacion'> " + etiqueta + " </p></div> ";
+
             EtiquetaFinal = EtiquetaFinal + " " + etiqueta;
             //     System.out.println(etiqueta);
             //     System.out.println("");

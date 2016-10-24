@@ -163,7 +163,7 @@ ul li:hover > ul {
 .Form{
     padding-top: 20px;
     padding-bottom: 20px;
-    
+
 }
 
 .Form form{
@@ -286,7 +286,7 @@ ul li:hover > ul {
     border: none;
     outline-style: none;
     margin-top: 20px;
-    
+
 }
 
 
@@ -913,7 +913,7 @@ a.close{
 }
 
 #cargando{
-    
+
     top: 0;
     left: 0;
     right: 0;
@@ -969,4 +969,124 @@ p.tooltip:hover span {
     width: 278px;
     text-align: left;
     font-weight: bold;
+}
+
+#Resultados{
+
+    padding: 0px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: 500px;
+    background: white;
+}
+
+#ventanaResultados{
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display:none;    
+    font-family:Arial, Helvetica, sans-serif;
+    color:black;
+    line-height:28px;
+    font-size:15px;
+    text-align:justify;
+    background-color: rgba(0,0,0,.5);
+
+    border:1px solid black;
+    border-radius:2px;
+
+    position: fixed;
+
+
+}
+#detalles{
+    float: left;
+    height: 472px; 
+    width: 50px;
+    width: 100%;
+    overflow: scroll;
+    overflow-x:hidden;
+
+
+}
+
+#detalles::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+#detalles::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+#detalles::-webkit-scrollbar-thumb
+{
+    background-color: #666;
+}
+
+#TusResultados{
+    float: left;
+    background: #153e5a;
+    width: 95%;
+    color: white;
+    text-align: center;
+    font-size: 23px;
+    font-family: 'Agency FB';
+}
+
+
+
+
+#TablaTotales {
+    color: #333; /* Lighten up font color */
+    font-family: Helvetica, Arial, sans-serif; /* Nicer font */
+    width: 100%;
+    border-collapse:collapse;
+    border-spacing: 0;
+}
+
+#TablaTotales td, th {
+    text-align: center;
+    border: 1px solid transparent; /* No more visible border */
+    height: 30px;
+    transition: all 0.3s; /* Simple transition for hover effect */
+}
+
+#TablaTotales th {
+    background: #DFDFDF; /* Darken header a bit */
+    font-weight: bold;
+}
+
+#TablaTotales td {
+    background: #FAFAFA;
+    text-align: center;
+}
+
+/* Cells in even rows (2,4,6...) are one color */
+#TablaTotales tr:nth-child(even) td { background: #F1F1F1; }
+
+/* Cells in odd rows (1,3,5...) are another (excludes header cells) */
+#TablaTotales tr:nth-child(odd) td { background: #FEFEFE; }
+
+
+//#TablaTotales tr td:hover { background: #666; color: #FFF; } /* Hover cell effect! */
+
+#CerrarResultados{
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    background: red;
+    float: left;
+    width: 5%;
+    height: 28px;
+    margin: 0px;
 }

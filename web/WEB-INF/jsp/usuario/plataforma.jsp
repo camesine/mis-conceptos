@@ -16,7 +16,7 @@
 
 
 
-        <title>Preguntame.cl</title>
+        <title>MisConceptos.cl</title>
 
         <script type="text/javascript">
 
@@ -353,11 +353,21 @@
             }
 
 
+
+
+
+
+
+
+
+
         </script>
 
 
 
         <script type="text/javascript">
+
+
 
             $(document).ready(function(e) {
 
@@ -393,6 +403,8 @@
 // GENERACION DE PREGUNTAS
 
                 $("#b1").click(function() {
+
+                    localStorage.clear();
                     $("#BtnSiguente").val("SIGUIENTE");
                     $('#Contenedor').append("<div id='cargando'><img id='ImgCargando'  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>");
 
@@ -407,7 +419,7 @@
                     })
                             .success(function(response) {
                                 var etiqueta = "";
-                                console.log(response)
+
                                 for (var i = 0; i < response.length; i++) {
                                     etiqueta = etiqueta + "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='SeleccionMultiple' /><input type='hidden' class='ConceptoReferenciado' value='" + response[i].conceptoReferencia + "' /><p id='Enunciado'>" + response[i].enunciado + "</p><input type='hidden' class='respuesta' value='" + response[i].respuesta + "' /> <ul class='Alternativas' ><li class='opcion'><p class='tooltip' >" + response[i].opcion1 + "<span>" + response[i].opcion1 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion2 + "<span>" + response[i].opcion2 + "</span></p></li><li  class='opcion'><p class='tooltip'>" + response[i].opcion3 + "<span>" + response[i].opcion3 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion4 + "<span>" + response[i].opcion4 + "</span></p></li></ul></div>";
                                 }
@@ -521,12 +533,35 @@
                     $('#TituloTest').remove();
                     $('.pregunta').remove();
 
-
+                    $('#ventanaResultados').fadeOut("fast", function() {
+                    });
 
 
                 });
 
+                $('body').on('click', '.close', function() {
+                    $('.ventana').fadeOut("fast", function() {
+                    });
 
+                    $('#TituloTest').remove();
+                    $('.pregunta').remove();
+
+                });
+                
+                $('#CerrarResultados').click(function() {
+                    $('.ventana').fadeOut("fast", function() {
+                    });
+
+                    $('#TituloTest').remove();
+                    $('.pregunta').remove();
+
+                    $('#ventanaResultados').fadeOut("fast", function() {
+                    });
+
+
+                });
+                
+                
                 /*
                  $("#Texto").select(function() {
                  
@@ -782,15 +817,14 @@
     <script type="text/javascript">
         function Siguiente() {
 
-            var Lista = localStorage.getItem("ListaRespuestas");//Retrieve the stored data
+            var Lista = localStorage.getItem("ListaRespuestas");
 
-            Lista = JSON.parse(Lista); //Converts string to object
+            Lista = JSON.parse(Lista);
 
-            if (Lista == null) //If there is no data, initialize an empty array
+            if (Lista == null)
                 Lista = [];
-
-
             //$(this).css("background", "#3498db");
+
 
             $('#Preguntas div').each(function(index, element) {
 
@@ -801,60 +835,264 @@
                     if ($(this).next().next().attr("class") != "pregunta") {
                         $("#BtnSiguente").val("FINALIZAR");
                     }
-                    var correcto = false;
-                    if ($(this).find('.respondido').text() == $(this).find(".respuesta").attr("value")) {
 
-                        $("#Puntaje").attr("value", parseInt($("#Puntaje").attr("value")) + 1)
 
-                        correcto = true;
+                    if ($(this).find(".TipoPregunta").val() == "SeleccionMultiple") {
+
+                        if ($(this).find('.respondido').text() == $(this).find(".respuesta").attr("value")) {
+
+                            var respuesta = JSON.stringify({
+                                Tipo: 'SeleccionMultiple',
+                                Correcto: true,
+                                ConceptoReferencia: $(this).find(".ConceptoReferenciado").val(),
+                            });
+                            Lista.push(respuesta);
+                            localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
+
+                        } else {
+                            var respuesta = JSON.stringify({
+                                Tipo: 'SeleccionMultiple',
+                                Correcto: false,
+                                ConceptoReferencia: $(this).find(".ConceptoReferenciado").val(),
+                            });
+
+                            Lista.push(respuesta);
+                            localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
+
+                        }
+                    }
+
+
+
+                    if ($(this).find(".TipoPregunta").val() == "TerminosPareados") {
+                        var tabla = $(this).find("table");
+
+                        $(tabla).find('tbody tr').each(function(index, element) {
+
+                            var ingresado = $(this).find("td").eq(2).find("input").val();
+                            var Correcta = $(this).find("td").eq(4).text();
+
+                            if (ingresado != null) {
+
+                                $(tabla).find('tbody tr').each(function(index, element) {
+
+                                    if ($(this).find("td").eq(1).text() == Correcta) {
+
+                                        var NumeroConcepto = $(this).find("td").eq(0).text();
+                                        NumeroConcepto = NumeroConcepto.replace(/\D/g, '');
+
+                                        var ConceptoReferenciado = $(this).find("td").eq(0).text();
+                                        ConceptoReferenciado = ConceptoReferenciado.replace(/[0-9]/, "");
+                                        ConceptoReferenciado = ConceptoReferenciado.replace(".", "");
+
+
+                                        if (ingresado == NumeroConcepto) {
+
+                                            var respuestaPareado = JSON.stringify({
+                                                Tipo: 'TerminoPareado',
+                                                Correcto: true,
+                                                ConceptoReferencia: ConceptoReferenciado.trim(),
+                                            });
+                                            Lista.push(respuestaPareado);
+                                            localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
+
+
+
+
+                                        } else {
+                                            var respuestaPareado = JSON.stringify({
+                                                Tipo: 'TerminoPareado',
+                                                Correcto: false,
+                                                ConceptoReferencia: ConceptoReferenciado.trim(),
+                                            });
+                                            Lista.push(respuestaPareado);
+                                            localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
+
+                                        }
+                                    }
+
+
+                                });
+
+                            }
+
+
+
+                        });
 
                     }
 
-                    if (correcto == true) {
-                        var respuesta = JSON.stringify({
-                            Tipo: 'SeleccionMultiple',
-                            Correcto: 'true',
-                            ConceptoReferencia: $(this).find(".ConceptoReferenciado").val(),
+
+                    if ($(this).find(".TipoPregunta").val() == "Completacion") {
+                        var enunciado = $(this).find(".Completacion");
+                        var correcto = true;
+
+                        $(enunciado).find('input').each(function(index, element) {
+                            if ($(this).attr("id") != $(this).val()) {
+                                correcto = false;
+                            }
                         });
 
-                        Lista.push(respuesta);
-                        localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
-                    }else{
-                        
-                        var respuesta = JSON.stringify({
-                            Tipo: 'SeleccionMultiple',
-                            Correcto: 'false',
-                            ConceptoReferencia: $(this).find(".ConceptoReferenciado").val(),
-                        });
+                        if (correcto == true) {
 
-                        Lista.push(respuesta);
-                        localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
-                        
+                            var respuestaCompletacion = JSON.stringify({
+                                Tipo: 'Completacion',
+                                Correcto: true,
+                                ConceptoReferencia: $(enunciado.parent()).find(".ConceptoReferenciado").val(),
+                            });
+                            Lista.push(respuestaCompletacion);
+                            localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
+
+
+                        } else {
+
+                            var respuestaCompletacion = JSON.stringify({
+                                Tipo: 'Completacion',
+                                Correcto: false,
+                                ConceptoReferencia: $(enunciado.parent()).find(".ConceptoReferenciado").val(),
+                            });
+
+                            Lista.push(respuestaCompletacion);
+                            localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
+
+
+                        }
+
+
                     }
-                    
 
-                    var Completacion = 0;
-                    var TerminosPareados = 0;
-                    var Seleccion = 0;
 
                     if ($(this).next().attr("class") != "pregunta") {
-                        $('#Preguntas .pregunta .TipoPregunta').each(function(index, element) {
-                            if ($(this).val() == "SeleccionMultiple") {
-                                Seleccion = Seleccion + 1;
+
+                        $(".ventana").css("display", "none");
+                        //   $('#Contenedor').append("<div id='cargando'><img id='ImgCargando'  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>");
+
+
+                        $("#ventanaResultados").fadeIn("fast", function() {
+                        });
+
+                        //    $('#ventanaResultados').find(".close").after(("<h1 id='TituloTest'>TUS RESULTADOS</h1>"));
+
+                        // $("#detalles").html(localStorage.ListaRespuestas);
+                        Lista = localStorage.ListaRespuestas;
+                        Lista = JSON.parse(Lista);
+
+                        var ConceptosReferenciados = [];
+
+                        for (var i in Lista) {
+                            Lista[i] = JSON.parse(Lista[i])
+                            sw = false;
+
+                            for (var j in ConceptosReferenciados) {
+                                if (Lista[i].ConceptoReferencia == ConceptosReferenciados[j]) {
+                                    sw = true;
+                                }
+
                             }
-                            if ($(this).val() == "TerminosPareados") {
-                                TerminosPareados = TerminosPareados + 1;
+
+                            if (sw == false) {
+                                ConceptosReferenciados.push(Lista[i].ConceptoReferencia);
+
                             }
-                            if ($(this).val() == "Completacion") {
-                                Completacion = Completacion + 1;
+
+                        }
+
+
+                        $("#detalles table tbody").html("");
+
+                        console.log(Lista)
+
+                        console.log(ConceptosReferenciados)
+
+
+                        var correctasTotal = 0;
+
+                        for (var i in Lista) {
+                            if (Lista[i].Correcto == true) {
+                                correctasTotal = correctasTotal + 1;
                             }
-                        })
-                        alert("El ultimo" + " Puntaje : " + $("#Puntaje").attr("value") + " de " + $("#PuntajeTotal").attr("value"));
-                        alert("seleccion " + Seleccion)
-                        alert("Terminos p" + TerminosPareados)
-                        alert("Completacion" + Completacion)
-                        return false;
+                        }
+
+
+                        $("#detalles table tbody").append("<tr><td>Total de preguntas</td><td>" + Lista.length + "</td><td>" + correctasTotal + "</td><td>" + (Lista.length - correctasTotal) + "</td><td>" + (correctasTotal * 100 / Lista.length).toFixed(2) + "%</td><td>" + ((Lista.length - correctasTotal) * 100 / Lista.length).toFixed(2) + "%</td></tr>");
+
+
+                        correctasTotal = 0;
+                        var total = 0;
+                        for (var i in Lista) {
+
+                            if (Lista[i].Tipo == "SeleccionMultiple") {
+
+                                total = total + 1;
+                                if (Lista[i].Correcto == true) {
+                                    correctasTotal = correctasTotal + 1;
+                                }
+
+                            }
+                        }
+
+                        $("#detalles table tbody").append("<tr><td>Seleccion multiple</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td><td>" + ((total - correctasTotal) * 100 / total).toFixed(2) + "%</td></tr>");
+
+
+
+                        correctasTotal = 0;
+                        total = 0;
+                        for (var i in Lista) {
+
+                            if (Lista[i].Tipo == "TerminoPareado") {
+
+                                total = total + 1;
+                                if (Lista[i].Correcto == true) {
+                                    correctasTotal = correctasTotal + 1;
+                                }
+
+                            }
+                        }
+
+                        $("#detalles table tbody").append("<tr><td>Terminos pareados</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td><td>" + ((total - correctasTotal) * 100 / total).toFixed(2) + "%</td></tr>");
+
+
+                        correctasTotal = 0;
+                        total = 0;
+                        for (var i in Lista) {
+
+                            if (Lista[i].Tipo == "Completacion") {
+
+                                total = total + 1;
+                                if (Lista[i].Correcto == true) {
+                                    correctasTotal = correctasTotal + 1;
+                                }
+
+                            }
+                        }
+
+                        $("#detalles table tbody").append("<tr><td>Completacion</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td><td>" + ((total - correctasTotal) * 100 / total).toFixed(2) + "%</td></tr>");
+
+
+
+
+                        for (var i in ConceptosReferenciados) {
+                            correctasTotal = 0;
+                            total = 0;
+
+                            for (var j in Lista) {
+
+                                if (ConceptosReferenciados[i] == Lista[j].ConceptoReferencia) {
+                                    total = total + 1;
+                                    if (Lista[j].Correcto == true) {
+                                        correctasTotal = correctasTotal + 1;
+                                    }
+                                }
+
+                            }
+                            $("#detalles table tbody").append("<tr><td>" + ConceptosReferenciados[i] + "</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td><td>" + ((total - correctasTotal) * 100 / total).toFixed(2) + "%</td></tr>");
+
+
+                        }
                     }
+
+
+
 
 
                     //  $(this).css("display", "none")
@@ -863,21 +1101,12 @@
                     $(this).next().fadeIn("fast", function() {
                     });
 
-
-
-
-
                     return false;
                 }
 
             });
 
         }
-
-
-
-
-
 
     </script>
 
@@ -901,9 +1130,33 @@
     </div>
 
 
-
 </div>
 
+<div id="ventanaResultados">
+    <div id="Resultados">
+        <div id="TusResultados">TUS RESULTADOS</div><div id="CerrarResultados" >X</div>
+        <div id="detalles" >
+            <table id='TablaTotales' >
+                <thead>
+                <th>Item</th>
+                <th>Total</th>
+                <th>Correctas</th>
+                <th>Incorrectas</th>
+                <th>% Correctas</th>
+                <th>% Incorrectas</th>
+                </thead>
+                <tbody>
+
+
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+</div>
 
 
 </body>

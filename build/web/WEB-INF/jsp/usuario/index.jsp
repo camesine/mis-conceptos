@@ -10,7 +10,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
         <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"  />
-        <title>Preguntame.cl</title>
+        <title>MisConceptos.cl</title>
 
         <script type="text/javascript" >
 
@@ -144,9 +144,9 @@
 
     <div id="Contenedor">
 
-<!-- 
-<div id="cargando"><img id="ImgCargando"  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>
-         -->
+        <!-- 
+        <div id="cargando"><img id="ImgCargando"  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>
+        -->
         <section id="inicio" >
 
             <article id="welcome">
@@ -161,7 +161,7 @@
                         <form>
                             <div id="LblForm" ><label>CORREO ELECTRONICO</label></div>
                             <input type="text" name="CorreoLogin" id="TxtCorreoLogin" value="" placeholder="E-mail">
-                                <div id="LblForm" ><label>CONTRASEÑA</label></div>
+                            <div id="LblForm" ><label>CONTRASEÑA</label></div>
                             <input type="password" name="PassLogin" id="TxtPassLogin" value="" placeholder="******">
                         </form>
                         <input type="submit" id="BtnLogin" name="commit" value="ENTRAR">
@@ -175,17 +175,17 @@
                     <div class="Form" >
 
                         <form>
-                            
+
                             <div id="LblForm" ><label>CORREO ELECTRONICO</label></div>
-                        <input type="text" name="TxtCorreoNuevo" id="TxtCorreoNuevo" value="" placeholder="Email">
-                        <div id="LblForm" ><label>NOMBRE</label></div>
-                        <input type="text" name="TxtNombreNuevo" id="TxtNombreNuevo" value="" placeholder="Nombre">
-                        <div id="LblForm" ><label>APELLIDO</label></div>
-                        <input type="text" name="TxtApellidoNuevo" id="TxtApellidoNuevo" value="" placeholder="Apellido">
-                        <div id="LblForm" ><label>CONTRASEÑA</label></div>
-                        <input type="password" name="TxtPassNuevo" id="TxtPassNuevo"  value="" placeholder="Contraseña">
-                        <div id="LblForm" ><label>CONFIRMAR CONTRASEÑA</label></div>
-                        <input type="password" name="TxtPassNuevo2" id="TxtPassNuevo2" value="" placeholder="Confirmacion contraseña">
+                            <input type="text" name="TxtCorreoNuevo" id="TxtCorreoNuevo" value="" placeholder="Email">
+                            <div id="LblForm" ><label>NOMBRE</label></div>
+                            <input type="text" name="TxtNombreNuevo" id="TxtNombreNuevo" value="" placeholder="Nombre">
+                            <div id="LblForm" ><label>APELLIDO</label></div>
+                            <input type="text" name="TxtApellidoNuevo" id="TxtApellidoNuevo" value="" placeholder="Apellido">
+                            <div id="LblForm" ><label>CONTRASEÑA</label></div>
+                            <input type="password" name="TxtPassNuevo" id="TxtPassNuevo"  value="" placeholder="Contraseña">
+                            <div id="LblForm" ><label>CONFIRMAR CONTRASEÑA</label></div>
+                            <input type="password" name="TxtPassNuevo2" id="TxtPassNuevo2" value="" placeholder="Confirmacion contraseña">
 
                         </form>
                         <input type="submit" id="BtnRegistrar" name="commit" value="REGISTRAR">
