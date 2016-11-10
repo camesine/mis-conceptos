@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.tomcat.jni.Time;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,5 +62,15 @@ public class UsuarioController {
         map.put("usuario", lista.get(0));
         return "usuario/plataforma";
     }
+    
+    @RequestMapping("perfil")
+    public String perfil(HttpServletRequest req, Map<String, Object> map) {
+
+        List<Usuario> lista = new UsuarioService().BuscarUsuario((String) req.getSession().getAttribute("correo"));
+        map.put("usuario", lista.get(0));
+        return "usuario/perfil";
+    }
+    
+    
 
 }

@@ -747,7 +747,7 @@
 <header>
     <ul>
         <li><a href="index">INICIO</a></li>
-        <li><a href="#">${fn:toUpperCase(usuario.nombre)}</a>
+        <li><a href="<c:url value="/usuario/perfil" />">${fn:toUpperCase(usuario.nombre)}</a>
         <li><a class="active"  id="seleccion" >CONTENIDOS</a>
             <ul id="ListaContenidos">
                 <c:forEach items="${usuario.contenidos}" var="contenido">
@@ -1146,9 +1146,6 @@
                 <th>% Incorrectas</th>
                 </thead>
                 <tbody>
-
-
-
                 </tbody>
             </table>
 
