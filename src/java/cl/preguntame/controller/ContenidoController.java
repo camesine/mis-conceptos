@@ -100,17 +100,62 @@ public class ContenidoController {
         return AccesoPreguntas.PreguntasTerminosPareados();
 
     }
-    
+
     @ResponseBody
     @RequestMapping(value = "/preguntasCompletacion", method = RequestMethod.POST)
     public String preguntasCompletacion(HttpServletRequest req) throws IOException {
-        
+
         Generador AccesoPreguntas = new Generador(Integer.parseInt(req.getParameter("seleccionado")));
         return AccesoPreguntas.PreguntaCompletacion();
-        
-   }
-   
 
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/eliminar", method = RequestMethod.POST)
+    public String Eliminar(HttpServletRequest req) {
+
+        Contenido contenido = new Contenido();
+        contenido.setId(Integer.parseInt(req.getParameter("id")));
+        contenido.setNombre("");
+        contenido.setTexto("");
+        Usuario u = new Usuario();
+        u.setId(000);
+        contenido.setUsuario(u);
+
+        ContenidoService acceso = new ContenidoService();
+        acceso.EliminarContenido(contenido);
+
+        return "true";
+
+    }
+
+    
+    
+    @ResponseBody
+    @RequestMapping(value = "/editarNombre", method = RequestMethod.POST)
+    public String EditarNombre(HttpServletRequest req) {
+
+        ContenidoService acceso = new ContenidoService();
+        Contenido c = acceso.BuscarContenido(Integer.parseInt(req.getParameter("id")));
+
+        Contenido Update = new Contenido();
+        Update.setId(Integer.parseInt(req.getParameter("id")));
+        Update.setNombre(req.getParameter("nombre"));
+        Update.setTexto(c.getTexto());
+
+        Usuario u = new Usuario();
+        u.setId(Integer.parseInt(req.getParameter("usuario_id")));
+
+        Update.setUsuario(u);
+
+        acceso.ActualizarContenido(Update);
+
+        return "true";
+
+    }
+
+    
+    
     @ResponseBody
     @RequestMapping(value = "/informe", method = RequestMethod.GET)
     public void Informe(HttpServletRequest req, HttpServletResponse res) throws IOException, DocumentException {
@@ -142,18 +187,16 @@ public class ContenidoController {
         for (int i = 0; i < ListaConceptos.size(); i++) {
             Informe.add(new Paragraph("\n"));
             Informe.add(new Paragraph(ListaConceptos.get(i).getNombre().toUpperCase(), FontFactory.getFont("arial", 15, Font.BOLD)));
-            
-            
-            
+
             Informe.add(new Paragraph("DEFINICIONES", FontFactory.getFont("arial", 12, Font.BOLD)));
             for (int y = 0; y < ListaDefiniciones.size(); y++) {
                 if (ListaConceptos.get(i).getId() == ListaDefiniciones.get(y).getConcepto().getId()) {
 
-                    Informe.add(new Paragraph("- " +  ListaDefiniciones.get(y).getDetalle(), FontFactory.getFont("arial", 12, BaseColor.BLACK)));
+                    Informe.add(new Paragraph("- " + ListaDefiniciones.get(y).getDetalle(), FontFactory.getFont("arial", 12, BaseColor.BLACK)));
 
                 }
             }
-         
+
             Informe.add(new Paragraph("CARACTERISTICAS", FontFactory.getFont("arial", 12, Font.BOLD)));
             for (int y = 0; y < ListaCaracteristicas.size(); y++) {
                 if (ListaConceptos.get(i).getId() == ListaCaracteristicas.get(y).getConcepto().getId()) {
@@ -162,8 +205,8 @@ public class ContenidoController {
 
                 }
             }
- 
-             Informe.add(new Paragraph("OBSERVACIONES", FontFactory.getFont("arial", 12, Font.BOLD)));
+
+            Informe.add(new Paragraph("OBSERVACIONES", FontFactory.getFont("arial", 12, Font.BOLD)));
             for (int y = 0; y < ListaObservaciones.size(); y++) {
                 if (ListaConceptos.get(i).getId() == ListaObservaciones.get(y).getConcepto().getId()) {
 

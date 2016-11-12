@@ -4,6 +4,8 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <html>
 
     <head>
@@ -13,6 +15,56 @@
         <title>PERFIL</title>
 
         <script type="text/javascript" >
+            $(document).ready(function(e) {
+
+                $("#BtnEditarUsuario").on("click", function() {
+
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '<c:url value="/usuario/editar" />',
+                        data: {id: ${usuario.id}, correo: $("#TxtCorreo").val(), nombre: $("#TxtNombre").val(), apellido: $("#TxtApellido").val(), pass: $("#TxtPass").val()}
+                    }).success(function(response) {
+                        alert(response);
+
+                    });
+                })
+
+
+
+            });
+
+            function EliminarContenido(idContenido) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '<c:url value="/contenido/eliminar" />',
+                    data: {id: idContenido}
+                }).success(function(response) {
+                    if (response == "true") {
+                        $("#" + idContenido).remove();
+                    }
+
+                });
+            }
+
+            function EditarContenido(idContenido) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '<c:url value="/contenido/editarNombre" />',
+                    data: {nombre: $('#contenidos').find("input[id=" + idContenido + "]").val(), id: idContenido, usuario_id: ${usuario.id}},
+                })
+                        .success(function(response) {
+                            console.log(response);
+                        });
+
+            }
+            
+            function VerInforme(idContenido){
+            window.open("<c:url value="/contenido/informe" /> " + "?contenido=" + idContenido, "_blank");
+    }
+            
 
         </script>
 
@@ -20,6 +72,7 @@
     </head>
 
     <body>
+
     <header>
         <ul>
             <li><a href="<c:url value="/usuario/plataforma" />">INICIO</a></li>
@@ -27,7 +80,7 @@
             <li><a href="#">CONTACTO</a></li>
             <ul style="float:right;list-style-type:none;">
                 <li><a href="#">TUTORIAL</a></li>
-            <li><a class="active" href="logout">CERRAR SESION</a></li>
+                <li><a class="active" href="logout">CERRAR SESION</a></li>
             </ul>
         </ul>
     </header>
@@ -38,31 +91,35 @@
             <h1>DATOS PERSONALES</h1>
             <form>
 
-                            <div id="LblForm" ><label>CORREO ELECTRONICO</label></div>
-                            <input type="text" name="TxtCorreo" id="TxtCorreoNuevo" value="" placeholder="Email">
-                            <div id="LblForm" ><label>NOMBRE</label></div>
-                            <input type="text" name="TxtNombre" id="TxtNombreNuevo" value="" placeholder="Nombre">
-                            <div id="LblForm" ><label>APELLIDO</label></div>
-                            <input type="text" name="TxtApellido" id="TxtApellidoNuevo" value="" placeholder="Apellido">
-                            <div id="LblForm" ><label>CONTRASEÑA</label></div>
-                            <input type="password" name="TxtPass" id="TxtPassNuevo"  value="" placeholder="Contraseña">
-                           
-                        </form>
-                        <input type="submit" id="Btn" name="commit" value="CONFIRMAR">
-            
+                <div id="LblForm" ><label>CORREO ELECTRONICO</label></div>
+                <input type='text' name='TxtCorreo' id='TxtCorreo' value='${usuario.correo}' placeholder='Email'>
+                <div id="LblForm" ><label>NOMBRE</label></div>
+                <input type="text" name="TxtNombre" id="TxtNombre" value="${usuario.nombre}" placeholder="Nombre">
+                <div id="LblForm" ><label>APELLIDO</label></div>
+                <input type="text" name="TxtApellido" id="TxtApellido" value="${usuario.apellido}" placeholder="Apellido">
+                <div id="LblForm" ><label>CONTRASEÑA</label></div>
+                <input type="password" name="TxtPass" id="TxtPass"  value="" placeholder="Contraseña">
+
+            </form>
+            <input type="submit" id="BtnEditarUsuario" name="commit" value="CONFIRMAR">
+
         </section>
-        
+
         <section id="contenidos" >
             <h1>MIS CONTENIDOS</h1>
             <table>
-                <tr><td class="TDnombreContenido"><input type="text" CONTENIDO1/></td><td><button>INFORME</button></td><td></td><td><button>ELIMINAR</button></td></tr>
-                <tr><td class="TDnombreContenido"><input type="text" CONTENIDO1/></td><td><button>INFORME</button></td><td></td><td><button>ELIMINAR</button></td></tr>
-                <tr><td class="TDnombreContenido"><input type="text" CONTENIDO1/></td><td><button>INFORME</button></td><td></td><td><button>ELIMINAR</button></td></tr>
-                </table>
-            
+
+                <c:forEach items="${usuario.contenidos}" var="contenido">
+
+                    <tr id="${contenido.id}" ><td class="TDnombreContenido"><input type="text" id="${contenido.id}" onblur="EditarContenido(${contenido.id})" value="${contenido.nombre}" /></td><td><button onclick="VerInforme(${contenido.id})" >INFORME</button></td><td></td><td><button onclick="EliminarContenido(${contenido.id})" >ELIMINAR</button></td></tr>
+
+                </c:forEach>
+
+            </table>
+
         </section>
-        
-        
+
+
     </div>
 
     <footer>

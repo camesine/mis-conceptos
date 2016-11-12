@@ -236,7 +236,15 @@
                         .success(function(response) {
                             $('#seleccion').text(response.nombre.toUpperCase());
                             $('#TxtMateria').val(response.texto);
-                            tinymce.activeEditor.setContent(response.texto);
+        if(response.texto == null){
+            tinymce.activeEditor.setContent("Ingresa el contenido en estudio...");
+        
+        }else{
+            tinymce.activeEditor.setContent(response.texto);
+        
+        }
+        
+                            
                             $('#Contenido').attr("value", response.id);
                         });
 

@@ -46,7 +46,7 @@ public class UsuarioController {
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String Login(HttpServletRequest req) throws IOException, InterruptedException {
-      
+
         if (new UsuarioService().Login(req.getParameter("correo"), req.getParameter("pass"))) {
             req.getSession().setAttribute("correo", req.getParameter("correo"));
             return "true";
@@ -62,7 +62,7 @@ public class UsuarioController {
         map.put("usuario", lista.get(0));
         return "usuario/plataforma";
     }
-    
+
     @RequestMapping("perfil")
     public String perfil(HttpServletRequest req, Map<String, Object> map) {
 
@@ -70,7 +70,33 @@ public class UsuarioController {
         map.put("usuario", lista.get(0));
         return "usuario/perfil";
     }
-    
-    
+
+    @ResponseBody
+    @RequestMapping(value = "/editar", method = RequestMethod.POST)
+    public String Editar(HttpServletRequest req) {
+
+        UsuarioService acceso = new UsuarioService();
+        
+        
+        if (String.valueOf(acceso.BuscarUsuario(Integer.parseInt(req.getParameter("id"))).getContrasena()).equals(String.valueOf(req.getParameter("pass")))) {
+            
+            Usuario u = new Usuario();
+            u.setId(Integer.parseInt(req.getParameter("id")));
+            u.setCorreo(req.getParameter("correo"));
+            u.setNombre(req.getParameter("nombre"));
+            u.setApellido(req.getParameter("apellido"));
+            u.setContrasena(req.getParameter("pass"));
+            TipoUsuario tipo = new TipoUsuario();
+            tipo.setId(1);
+            u.setTipoUsuario(tipo);
+            acceso.ActualizarUsuario(u);
+            return "true";
+
+        } else {
+            
+            return "false";
+        }
+
+    }
 
 }

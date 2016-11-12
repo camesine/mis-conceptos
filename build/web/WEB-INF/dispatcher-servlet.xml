@@ -59,7 +59,10 @@
                 <prop key="/observacion/eliminar">observacionController</prop>
                 <prop key="/relacion/eliminar">relacionController</prop>
                 <prop key="/concepto/eliminar">conceptoController</prop>
-                <prop key="/usuario/perfil">conceptoController</prop>
+                <prop key="/usuario/perfil">usuarioController</prop>
+                <prop key="/usuario/editar">usuarioController</prop>
+                <prop key="/contenido/eliminar">contenidoController</prop>
+                <prop key="/contenido/editarNombre">contenidoController</prop>
             </props>
         </property>
     </bean>

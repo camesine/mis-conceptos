@@ -4,11 +4,13 @@ html,body{
     padding:0px;
     margin:0px;
     background-color:#F5F5F5;
-
+    height: 100%;
 }
 
 #Contenedor{
-    height:auto;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
     width:1300px;
     margin-left:auto;
     margin-right:auto;
@@ -1094,7 +1096,7 @@ p.tooltip:hover span {
 
 #datosUsuario{
     background: white;
-     padding-bottom: 30px;
+    padding-bottom: 30px;
     padding-left: 100px;
     padding-right: 100px;
     margin-left: auto;
@@ -1202,7 +1204,7 @@ p.tooltip:hover span {
 
 #contenidos{
     background: white;
-     padding-bottom: 30px;
+    padding-bottom: 30px;
     padding-left: 100px;
     padding-right: 100px;
     margin-left: auto;
