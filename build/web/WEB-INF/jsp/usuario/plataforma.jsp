@@ -4,7 +4,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,6 +13,13 @@
 
         <script src="<c:url value="/resources/js/tinymce/tinymce.min.js" />"></script>
         <script src="<c:url value="/resources/js/tinymce/init-tinymce.js" />"></script>
+
+        <script type="text/javascript">
+            mxBasePath = "<c:url value="/resources/mxGraph" />";
+        </script>
+
+
+        <script src="<c:url value="/resources/mxGraph/js/mxClient.js" />"></script>
 
 
 
@@ -236,15 +243,15 @@
                         .success(function(response) {
                             $('#seleccion').text(response.nombre.toUpperCase());
                             $('#TxtMateria').val(response.texto);
-        if(response.texto == null){
-            tinymce.activeEditor.setContent("Ingresa el contenido en estudio...");
-        
-        }else{
-            tinymce.activeEditor.setContent(response.texto);
-        
-        }
-        
-                            
+                            if (response.texto == null) {
+                                tinymce.activeEditor.setContent("Ingresa el contenido en estudio...");
+
+                            } else {
+                                tinymce.activeEditor.setContent(response.texto);
+
+                            }
+
+
                             $('#Contenido').attr("value", response.id);
                         });
 
@@ -362,7 +369,14 @@
 
 
 
+            function EditorOk(selector) {
 
+                $("#" + selector).val($("#TxtEditor").val());
+
+                $('#Editor').fadeOut("fast", function() {
+                });
+                $('#Editor').find("#EditarOK").remove();
+            }
 
 
 
@@ -371,6 +385,96 @@
 
         </script>
 
+        <script type="text/javascript">
+
+            // Program starts here. Creates a sample graph in the
+            // DOM node with the specified ID. This function is invoked
+            // from the onLoad event handler of the document (see below).
+            function MapaConceptual(container, relaciones)
+            {
+                // Checks if browser is supported
+                if (!mxClient.isBrowserSupported())
+                {
+                    // Displays an error message if the browser is
+                    // not supported.
+                    mxUtils.error('Browser is not supported!', 200, false);
+                }
+                else
+                {
+                    // Creates the graph inside the given container
+                    var graph = new mxGraph(container);
+
+                    // Adds rubberband selection
+                    new mxRubberband(graph);
+
+                    // Changes the default vertex style in-place
+                    var style = graph.getStylesheet().getDefaultVertexStyle();
+                    style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
+                    style[mxConstants.STYLE_GRADIENTCOLOR] = 'white';
+                    style[mxConstants.STYLE_PERIMETER_SPACING] = 0;
+                    style[mxConstants.STYLE_ROUNDED] = false;
+                    style[mxConstants.STYLE_SHADOW] = false;
+
+
+
+
+                    style = graph.getStylesheet().getDefaultEdgeStyle();
+                    style[mxConstants.STYLE_ROUNDED] = false;
+
+
+                    // Creates a layout algorithm to be used
+                    // with the graph
+                    var layout = new mxHierarchicalLayout(graph);
+                    var organic = new mxFastOrganicLayout(graph);
+                    organic.forceConstant = 120;
+
+                    var parent = graph.getDefaultParent();
+
+                    // Adds a button to execute the layout
+                    var button = document.createElement('button');
+                    mxUtils.write(button, 'Hierarchical');
+                    mxEvent.addListener(button, 'click', function(evt)
+                    {
+                        layout.execute(parent);
+                    });
+                    //container.append(button);
+
+                    // Adds a button to execute the layout
+                    var button = document.createElement('button');
+                    mxUtils.write(button, 'Organic');
+
+                    mxEvent.addListener(button, 'click', function(evt)
+                    {
+                        organic.execute(parent);
+                    });
+
+                    //	$(container).append(button);
+
+                    // Load cells and layouts the graph
+                    graph.getModel().beginUpdate();
+                    try
+                    {
+                        eval(relaciones);
+                        // Executes the layout
+                        layout.execute(parent);
+                    }
+                    finally
+                    {
+                        // Updates the display
+                        graph.getModel().endUpdate();
+                    }
+
+                    if (mxClient.IS_QUIRKS)
+                    {
+                        document.body.style.overflow = 'hidden';
+                        new mxDivResizer(container);
+                    }
+                }
+            }
+            ;
+        </script>
+
+
 
 
         <script type="text/javascript">
@@ -378,6 +482,7 @@
 
 
             $(document).ready(function(e) {
+
 
                 localStorage.clear();
 
@@ -397,7 +502,24 @@
 
                 });
 
+                $("#b3").click(function() {
 
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '<c:url value="/relacion/relacionConceptual" />',
+                        data: {contenido_id: $('#Contenido').attr('value')},
+                    })
+                            .success(function(response) {
+                                $("#MapaConceptual").find("svg").remove();
+                                MapaConceptual(document.getElementById('MapaConceptual'), response);
+
+                                $("#ventanaMapa").fadeIn("fast", function() {
+                                });
+                            });
+
+
+                });
 
 
                 $("#b2").click(function() {
@@ -518,6 +640,17 @@
 
                 });
 
+                $('body #art1').on('dblclick', 'input[type=text]', function() {
+
+                    $("#TxtEditor").val($(this).val());
+                    $("#Editor").css("display", "block");
+                    $("#Editor").append("<input type='button' onclick='EditorOk(" + $(this).attr("id") + ")' class='BtnGenerar' id='EditarOK' value='OK' />");
+
+                });
+
+
+
+
                 $('body').on('click', '.opcion', function() {
 
                     $(".Alternativas").find("li").css("background", "white");
@@ -554,8 +687,13 @@
                     $('#TituloTest').remove();
                     $('.pregunta').remove();
 
+                    $('#Editor').fadeOut("fast", function() {
+                    });
+
                 });
-                
+
+
+
                 $('#CerrarResultados').click(function() {
                     $('.ventana').fadeOut("fast", function() {
                     });
@@ -565,11 +703,42 @@
 
                     $('#ventanaResultados').fadeOut("fast", function() {
                     });
+                    $('#Editor').fadeOut("fast", function() {
+                    });
+
+
 
 
                 });
-                
-                
+
+                $('#CerrarEditor').click(function() {
+                    $('#Editor').fadeOut("fast", function() {
+                    });
+                    $('#Editor').find("#EditarOK").remove();
+
+                });
+
+                $('#CerrarMapa').click(function() {
+                    $('.ventana').fadeOut("fast", function() {
+                    });
+
+                    $('#TituloTest').remove();
+                    $('.pregunta').remove();
+
+                    $('#ventanaResultados').fadeOut("fast", function() {
+                    });
+
+                    $('#ventanaMapa').fadeOut("fast", function() {
+                    });
+
+
+                    $('#Editor').fadeOut("fast", function() {
+                    });
+
+
+                });
+
+
                 /*
                  $("#Texto").select(function() {
                  
@@ -612,10 +781,12 @@
 
 
                 $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
-                detalle = $('#marcado').text();
+                var detalle = $('#marcado').text();
                 detalle = $.trim(detalle);
-
-
+                
+                
+                if(detalle.toUpperCase() != $("#" + x).find(".titulo").text() ){
+                
                 $.ajax({
                     type: 'POST',
                     url: '<c:url value="/definicion/nuevo" />',
@@ -629,7 +800,10 @@
 
 
                         });
+                        }else{
 
+alert("ERROR--Concepto especificado explicitamente");
+}
 
 
             }
@@ -805,6 +979,7 @@
         <article id="Texto">
             <input type="button" class="BtnGenerar" id="b1" value="GENERAR TEST" />
             <input type="button" class="BtnGenerar" id="b2" value="INFORME" />
+            <input type="button" class="BtnGenerar" id="b3" value="MAPA CONCEPTUAL" />
 
             <textarea class="tinymce" id="TxtMateria"></textarea>
 
@@ -1134,10 +1309,7 @@
             </div>
         </div>
         <input type="button" id="BtnSiguente" onclick="Siguiente()" value="SIGUENTE">
-
     </div>
-
-
 </div>
 
 <div id="ventanaResultados">
@@ -1160,6 +1332,21 @@
 
         </div>
     </div>
+
+</div>
+
+<div id="ventanaMapa">
+    <div id="MapaConceptual">
+        <div id="TusResultados">MAPA CONCEPTUAL</div><div id="CerrarMapa" >X</div>
+
+    </div>
+
+</div>
+
+<div id="Editor" >
+    <div id="TusResultados">EDITAR</div><div id="CerrarEditor" >X</div>
+    <textarea id="TxtEditor"></textarea>
+    <br>
 
 </div>
 

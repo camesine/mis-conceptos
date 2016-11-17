@@ -1094,6 +1094,8 @@ p.tooltip:hover span {
 }
 
 
+
+
 #datosUsuario{
     background: white;
     padding-bottom: 30px;
@@ -1263,4 +1265,106 @@ p.tooltip:hover span {
 #contenidos button:hover {
     background: #1c5277;
     text-decoration: none;
+}
+
+
+#ventanaMapa{
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display:none;    
+    font-family:Arial, Helvetica, sans-serif;
+    color:black;
+    line-height:28px;
+    font-size:15px;
+    text-align:justify;
+    background-color: rgba(0,0,0,.5);
+
+    border:1px solid black;
+    border-radius:2px;
+
+    position: fixed;
+
+
+}
+
+
+#MapaConceptual{
+    text-align: center;
+    padding: 0px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    height: auto;
+    background: white;
+}
+
+svg{
+    height: auto !important;
+    width: auto !important;
+    padding: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#CerrarMapa{
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    background: red;
+    float: left;
+    width: 5%;
+    height: 28px;
+    margin: 0px;
+}
+
+#Editor{
+    text-align: center !important;
+    top: 20%;
+    margin-left:auto;
+    margin-right:auto;
+    left:0;
+    right:0;
+    bottom: 0;
+    display:none;    
+    font-family:Arial, Helvetica, sans-serif;
+    color:black;
+    background-color: #F5F5F5;
+    line-height:28px;
+    font-size:15px;
+    text-align:justify;
+    width: 600px;
+    height: 260px;
+    border-radius:2px;
+    position: absolute;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+}
+#TxtEditor{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    height: 130px;
+
+}
+#EditarOK{
+    width: 200px !important;
+}
+
+
+#CerrarEditor{
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+    background: red;
+    float: left;
+    width: 5%;
+    height: 28px;
+    margin: 0px;
 }

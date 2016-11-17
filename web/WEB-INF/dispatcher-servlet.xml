@@ -51,6 +51,7 @@
                 <prop key="/relacion/nuevo">relacionController</prop>
                 <prop key="/relacion/buscar">relacionController</prop>
                 <prop key="/relacion/editar">relacionController</prop>
+                <prop key="/relacion/relacionConceptual">relacionController</prop>
                 <prop key="/definicion/editar">definicionController</prop>
                 <prop key="/caracteristica/editar">caracteristicaController</prop>
                 <prop key="/observacion/editar">observacionController</prop>
@@ -90,6 +91,7 @@
      
     
     <mvc:resources mapping="/resources/**" location="/WEB-INF/jsp/resources/" />
+    
     <mvc:annotation-driven />
 
    

@@ -3,6 +3,7 @@ package cl.preguntame.controller;
 import cl.preguntame.model.Concepto;
 import cl.preguntame.model.Relacion;
 import cl.preguntame.model.TipoRelacion;
+import cl.preguntame.service.ConceptoService;
 import cl.preguntame.service.RelacionService;
 import cl.preguntame.service.TipoRelacionService;
 import java.util.ArrayList;
@@ -129,5 +130,60 @@ public class RelacionController {
     }
     
     
-    
+    @ResponseBody
+    @RequestMapping(value = "/relacionConceptual", method = RequestMethod.POST)
+    public String RelacionConceptual(HttpServletRequest req) {
+        
+        
+        
+        ConceptoService accesoConcepto = new ConceptoService();
+        List<Concepto> listaConcepto = accesoConcepto.BuscarConceptoContenido(Integer.parseInt(req.getParameter("contenido_id")));
+        
+        String DefinicionConceptos = "";
+        
+        for(int i = 0; i < listaConcepto.size(); i++){
+            DefinicionConceptos += "var v"+listaConcepto.get(i).getId()+" = graph.insertVertex(parent, null, '"+listaConcepto.get(i).getNombre().toUpperCase()+"', 0, 0, 150, 50);";
+        }
+        
+        RelacionService accesoRelaciones = new RelacionService();
+        List<Relacion> listaRelaciones = accesoRelaciones.BuscarRelacionContenido(Integer.parseInt(req.getParameter("contenido_id")));
+        
+        String DefinicionRelaciones = "";
+        
+        for(int i = 0; i < listaRelaciones.size(); i++){
+            DefinicionRelaciones += "var e"+i+" = graph.insertEdge(parent, null, '"+listaRelaciones.get(i).getTipoRelacion().getNombre().toUpperCase()+"', v"+listaRelaciones.get(i).getConceptoByConcepto1().getId()+", v"+listaRelaciones.get(i).getConceptoByConcepto2().getId()+");";
+        }
+          
+        
+        return DefinicionConceptos + " " + DefinicionRelaciones;
+        
+    }
+    /*
+    public static void main(String[] args) {
+        
+        
+        ConceptoService accesoConcepto = new ConceptoService();
+        List<Concepto> listaConcepto = accesoConcepto.BuscarConceptoContenido(46);
+        
+        String DefinicionConceptos = "";
+        
+        for(int i = 0; i < listaConcepto.size(); i++){
+            DefinicionConceptos += "var v"+listaConcepto.get(i).getId()+" = graph.insertVertex(parent, null, '"+listaConcepto.get(i).getNombre()+"', 0, 0, 80, 30);";
+        }
+        
+        System.out.println(DefinicionConceptos);
+        
+        
+        
+        RelacionService accesoRelaciones = new RelacionService();
+        List<Relacion> listaRelaciones = accesoRelaciones.BuscarRelacionContenido(46);
+        
+        String DefinicionRelaciones = "";
+        
+        for(int i = 0; i < listaRelaciones.size(); i++){
+            DefinicionRelaciones += "var e"+i+" = graph.insertEdge(parent, null, '"+listaRelaciones.get(i).getTipoRelacion().getNombre()+"', v"+listaRelaciones.get(i).getConceptoByConcepto1().getId()+", v"+listaRelaciones.get(i).getConceptoByConcepto2().getId()+");";
+        }
+          System.out.println(DefinicionRelaciones);
+    }
+    */
 }
