@@ -25,12 +25,23 @@
                         url: '<c:url value="/usuario/editar" />',
                         data: {id: ${usuario.id}, correo: $("#TxtCorreo").val(), nombre: $("#TxtNombre").val(), apellido: $("#TxtApellido").val(), pass: $("#TxtPass").val()}
                     }).success(function(response) {
-                        alert(response);
+
+                        if (response == "false") {
+
+                            $("#MensajeError").css("display", "block");
+                        } else {
+                            $(location).attr("href", "<c:url value="/usuario/perfil" />");
+                        }
 
                     });
                 })
 
+                $('#CerrarError').click(function() {
 
+                    $('#MensajeError').fadeOut("fast", function() {
+                    });
+
+                });
 
             });
 
@@ -60,11 +71,11 @@
                         });
 
             }
-            
-            function VerInforme(idContenido){
-            window.open("<c:url value="/contenido/informe" /> " + "?contenido=" + idContenido, "_blank");
-    }
-            
+
+            function VerInforme(idContenido) {
+                window.open("<c:url value="/contenido/informe" /> " + "?contenido=" + idContenido, "_blank");
+            }
+
 
         </script>
 
@@ -118,13 +129,51 @@
             </table>
 
         </section>
-
+        <div id="MensajeError"><div id="TusResultados">ERROR</div><div id="CerrarError" >X</div>
+            <p></p>
+        </div>
 
     </div>
 
-    <footer>
-        <h1>MisConceptos.CL</h1>
+
+    <footer class="footer-distributed">
+        <div class="footer-left">
+
+            <h3>Company<span>logo</span></h3>
+
+            <p class="footer-links">
+                <a href="#">INICIO</a>
+                ·
+                <a href="#">PERFIL</a>
+                ·
+                <a href="#">NOSOTROS</a>
+                ·
+                <a href="#">CERRAR SESION</a>
+
+            </p>
+
+            <p class="footer-company-name">Mis conceptos&copy; 2016</p>
+
+
+
+        </div>
+
+        <div class="footer-right">
+
+            <p>Contacto</p>
+
+            <form action="#" method="post">
+
+                <input type="text" name="email" placeholder="Email" />
+                <textarea name="message" placeholder="Mensaje"></textarea>
+                <button>Send</button>
+
+            </form>
+
+        </div>
+
     </footer>
+
 
 
 </body>

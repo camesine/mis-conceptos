@@ -554,7 +554,41 @@
                                     etiqueta = etiqueta + "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='SeleccionMultiple' /><input type='hidden' class='ConceptoReferenciado' value='" + response[i].conceptoReferencia + "' /><p id='Enunciado'>" + response[i].enunciado + "</p><input type='hidden' class='respuesta' value='" + response[i].respuesta + "' /> <ul class='Alternativas' ><li class='opcion'><p class='tooltip' >" + response[i].opcion1 + "<span>" + response[i].opcion1 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion2 + "<span>" + response[i].opcion2 + "</span></p></li><li  class='opcion'><p class='tooltip'>" + response[i].opcion3 + "<span>" + response[i].opcion3 + "</span></p></li><li  class='opcion'><p class='tooltip' >" + response[i].opcion4 + "<span>" + response[i].opcion4 + "</span></p></li></ul></div>";
                                 }
 
+
                                 $('#Preguntas').html(etiqueta);
+
+
+                                var etiqueta = "";
+                                var posicion = null;
+
+
+                                $('#Preguntas .pregunta .Alternativas').each(function(index, element) {
+
+                                    var alternativas = $(this);
+                                    $(alternativas).find("li").each(function(index, element) {
+
+                                        etiqueta = $(this).html();
+                                        var contador = 0;
+
+
+                                        $(alternativas).find("li").each(function(index, element) {
+                                            console.log("comparando " + etiqueta + "------------------------" + $(this).html())
+
+                                            if (etiqueta == $(this).html()) {
+                                                contador = contador + 1;
+
+                                            }
+
+                                        });
+                                        console.log(contador)
+                                        if (contador > 1) {
+                                            $(this).remove();
+                                        }
+
+                                    });
+
+
+                                });
 
 
                                 $('#PuntajeTotal').attr("value", response.length)
@@ -692,6 +726,28 @@
 
                 });
 
+                $('#CerrarError').click(function() {
+                    $('.ventana').fadeOut("fast", function() {
+                    });
+
+                    $('#TituloTest').remove();
+                    $('.pregunta').remove();
+
+                    $('#ventanaResultados').fadeOut("fast", function() {
+                    });
+                    $('#Editor').fadeOut("fast", function() {
+                    });
+
+                    $('#MensajeError').fadeOut("fast", function() {
+                    });
+
+
+
+
+                });
+
+
+
 
 
                 $('#CerrarResultados').click(function() {
@@ -755,20 +811,24 @@
 
                     $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
 
-                    nombre = $('#marcado').text();
+                    var nombre = $('#marcado').text();
                     nombre = $.trim(nombre);
 
+                    if (!nombre == null || !nombre == "") {
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '<c:url value="/concepto/nuevo" />',
-                        data: {concepto: nombre, contenido: $('#Contenido').attr('value')}
-                    })
-                            .success(function(response) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '<c:url value="/concepto/nuevo" />',
+                            data: {concepto: nombre, contenido: $('#Contenido').attr('value')}
+                        })
+                                .success(function(response) {
 
-                                $('#Conceptos').prepend("<div id=" + response + " class='Concepto' ><div style='float:left' class='titulo' onclick='Cconcepto(" + response + ")'>" + $('#marcado').text().toUpperCase() + "</div><button onClick='EliminarC(" + response + ")' class='EliminarC' ><img src='<c:url value="/resources/imagenes/error.png" />' /> </button>  <ul style='display:none'><li><input type='button' class='AgregarDefinicion' onclick='AgregarDef(" + response + ")' value='DEFINICION' /> </li><div class='def'> </div><li><input type='button' class='AgregarCaracteristica' onclick='AgregarCar(" + response + ")' value='CARACTERISTICA' /> </li><div class='Car'> </div></li> <li><input type='button' onclick='AgregarObs(" + response + ")' class='AgregarObservacion' value='OBSERVACION' /></li><div class='Obs'> </div><li><input type='button' onclick='AgregarRel(" + response + ")' class='AgregarRelacion' value='RELACION' /></li><div class='rel'> </div> </ul> </div>");
-                            });
+                                    $('#Conceptos').prepend("<div id=" + response + " class='Concepto' ><div style='float:left' class='titulo' onclick='Cconcepto(" + response + ")'>" + $('#marcado').text().toUpperCase() + "</div><button onClick='EliminarC(" + response + ")' class='EliminarC' ><img src='<c:url value="/resources/imagenes/error.png" />' /> </button>  <ul style='display:none'><li><input type='button' class='AgregarDefinicion' onclick='AgregarDef(" + response + ")' value='DEFINICION' /> </li><div class='def'> </div><li><input type='button' class='AgregarCaracteristica' onclick='AgregarCar(" + response + ")' value='CARACTERISTICA' /> </li><div class='Car'> </div></li> <li><input type='button' onclick='AgregarObs(" + response + ")' class='AgregarObservacion' value='OBSERVACION' /></li><div class='Obs'> </div><li><input type='button' onclick='AgregarRel(" + response + ")' class='AgregarRelacion' value='RELACION' /></li><div class='rel'> </div> </ul> </div>");
+                                });
+                    } else {
 
+                        $("#MensajeError").css("display", "block");
+                    }
 
 
 
@@ -779,31 +839,30 @@
 
             function AgregarDef(x) {
 
-
                 $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
                 var detalle = $('#marcado').text();
                 detalle = $.trim(detalle);
-                
-                
-                if(detalle.toUpperCase() != $("#" + x).find(".titulo").text() ){
-                
-                $.ajax({
-                    type: 'POST',
-                    url: '<c:url value="/definicion/nuevo" />',
-                    data: {detalle: detalle, concepto_id: x}
-                })
-                        .success(function(response) {
-
-                            def = "def";
-                            div = $("#" + x).attr('id');
-                            $("#" + x).find(".def").append(" <input type='text' id='" + response + "' onblur='EditarDefinicion(" + response + "," + div + ")' id='detalle' style='float:left'  value='" + $('#marcado').text() + "'/><button style='float:left' id='" + response + "' onClick='EliminarDef(" + response + ")' class='Eliminar' ><img src='<c:url value="/resources/imagenes/error.png" />' /></button>");
 
 
-                        });
-                        }else{
+                if (detalle.toUpperCase().indexOf($("#" + x).find(".titulo").text()) == -1 && detalle.length < 500) {
 
-alert("ERROR--Concepto especificado explicitamente");
-}
+                    $.ajax({
+                        type: 'POST',
+                        url: '<c:url value="/definicion/nuevo" />',
+                        data: {detalle: detalle, concepto_id: x}
+                    })
+                            .success(function(response) {
+
+                                def = "def";
+                                div = $("#" + x).attr('id');
+                                $("#" + x).find(".def").append(" <input type='text' id='" + response + "' onblur='EditarDefinicion(" + response + "," + div + ")' id='detalle' style='float:left'  value='" + $('#marcado').text() + "'/><button style='float:left' id='" + response + "' onClick='EliminarDef(" + response + ")' class='Eliminar' ><img src='<c:url value="/resources/imagenes/error.png" />' /></button>");
+
+
+                            });
+                } else {
+
+                    $("#MensajeError").css("display", "block");
+                }
 
 
             }
@@ -812,21 +871,28 @@ alert("ERROR--Concepto especificado explicitamente");
 
             function AgregarCar(x) {
                 $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
-                detalle = $('#marcado').text();
+                var detalle = $('#marcado').text();
                 detalle = $.trim(detalle);
 
-                $.ajax({
-                    type: 'POST',
-                    url: '<c:url value="/caracteristica/nuevo" />',
-                    data: {detalle: detalle, concepto_id: x}
-                })
-                        .success(function(response) {
 
-                            Car = "Car";
-                            div = $("#" + x).attr('id');
-                            $("#" + x).find(".Car").append(" <input type='text' id='" + response + "' onblur='EditarCaracteristica(" + response + "," + div + ")' style='float:left'  value='" + $('#marcado').text() + "'/><button style='float:left' id='" + response + "' onClick='EliminarCar(" + response + ")' class='Eliminar' ><img src='<c:url value="/resources/imagenes/error.png" />' /></button>");
+                if (detalle.toUpperCase().indexOf($("#" + x).find(".titulo").text()) == -1 && detalle.length < 500) {
 
-                        });
+                    $.ajax({
+                        type: 'POST',
+                        url: '<c:url value="/caracteristica/nuevo" />',
+                        data: {detalle: detalle, concepto_id: x}
+                    })
+                            .success(function(response) {
+
+                                Car = "Car";
+                                div = $("#" + x).attr('id');
+                                $("#" + x).find(".Car").append(" <input type='text' id='" + response + "' onblur='EditarCaracteristica(" + response + "," + div + ")' style='float:left'  value='" + $('#marcado').text() + "'/><button style='float:left' id='" + response + "' onClick='EliminarCar(" + response + ")' class='Eliminar' ><img src='<c:url value="/resources/imagenes/error.png" />' /></button>");
+
+                            });
+                } else {
+
+                    $("#MensajeError").css("display", "block");
+                }
 
             }
 
@@ -834,21 +900,26 @@ alert("ERROR--Concepto especificado explicitamente");
 
             function AgregarObs(x) {
                 $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
-                detalle = $('#marcado').text();
+                var detalle = $('#marcado').text();
                 detalle = $.trim(detalle);
 
-                $.ajax({
-                    type: 'POST',
-                    url: '<c:url value="/observacion/nuevo" />',
-                    data: {detalle: detalle, concepto_id: x}
-                })
-                        .success(function(response) {
+                if (detalle.toUpperCase().indexOf($("#" + x).find(".titulo").text()) == -1 && detalle.length < 500) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '<c:url value="/observacion/nuevo" />',
+                        data: {detalle: detalle, concepto_id: x}
+                    })
+                            .success(function(response) {
 
-                            Obs = "Obs";
-                            div = $("#" + x).attr('id');
-                            $("#" + x).find(".Obs").append(" <input type='text' id='" + response + "' onblur='EditarObservacion(" + response + "," + div + ")' style='float:left'  value='" + $('#marcado').text() + "'/><button style='float:left' id='" + response + "' onClick='EliminarObs(" + response + ")' class='Eliminar' ><img src='<c:url value="/resources/imagenes/error.png" />' /></button>");
+                                Obs = "Obs";
+                                div = $("#" + x).attr('id');
+                                $("#" + x).find(".Obs").append(" <input type='text' id='" + response + "' onblur='EditarObservacion(" + response + "," + div + ")' style='float:left'  value='" + $('#marcado').text() + "'/><button style='float:left' id='" + response + "' onClick='EliminarObs(" + response + ")' class='Eliminar' ><img src='<c:url value="/resources/imagenes/error.png" />' /></button>");
 
-                        });
+                            });
+                } else {
+
+                    $("#MensajeError").css("display", "block");
+                }
 
 
             }
@@ -990,9 +1061,45 @@ alert("ERROR--Concepto especificado explicitamente");
 </div>
 
 <div style="clear:both"></div>
-<footer>
-    <h1>MisConceptos.cl</h1>
+
+<footer class="footer-distributed">
+    <div class="footer-left">
+
+        <h3>Company<span>logo</span></h3>
+
+        <p class="footer-links">
+            <a href="#">INICIO</a>
+            ·
+            <a href="#">PERFIL</a>
+            ·
+            <a href="#">NOSOTROS</a>
+            ·
+            <a href="#">CERRAR SESION</a>
+
+        </p>
+
+        <p class="footer-company-name">Mis conceptos&copy; 2016</p>
+
+
+
+    </div>
+
+    <div class="footer-right">
+
+        <p>Contacto</p>
+
+        <form action="#" method="post">
+
+            <input type="text" name="email" placeholder="Email" />
+            <textarea name="message" placeholder="Mensaje"></textarea>
+            <button>Send</button>
+
+        </form>
+
+    </div>
+
 </footer>
+
 
 
 <div class="ventana">
@@ -1348,6 +1455,10 @@ alert("ERROR--Concepto especificado explicitamente");
     <textarea id="TxtEditor"></textarea>
     <br>
 
+</div>
+
+<div id="MensajeError"><div id="TusResultados">ERROR</div><div id="CerrarError" >X</div>
+    <p></p>
 </div>
 
 

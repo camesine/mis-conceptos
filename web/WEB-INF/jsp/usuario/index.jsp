@@ -113,12 +113,25 @@
                                 if (response == "true") {
                                     $(location).attr('href', '<c:url value="/usuario/plataforma" />');
                                 } else {
-                                    alert("ERROR")
+                                    $('#Contenedor #cargando').remove();
+                                    $("#MensajeError").css("display", "block");
+
                                 }
 
 
                             });
                 })
+
+
+
+
+                $('#CerrarError').click(function() {
+
+                    $('#MensajeError').fadeOut("fast", function() {
+                    });
+
+                });
+
 
 
 
@@ -205,11 +218,43 @@
         </section>
 
 
-
+        <div id="MensajeError"><div id="TusResultados">ERROR</div><div id="CerrarError" >X</div>
+            <p></p>
+        </div>
     </div>
+    <footer class="footer-distributed">
+        <div class="footer-left">
 
-    <footer>
-        <h1>PREGUNTAME.CL</h1>
+            <h3>Company<span>logo</span></h3>
+
+            <p class="footer-links">
+                <a href="#">INICIO</a>
+                ·
+               
+                <a href="#">NOSOTROS</a>
+               
+            </p>
+
+            <p class="footer-company-name">Mis conceptos&copy; 2016</p>
+
+
+
+        </div>
+
+        <div class="footer-right">
+
+            <p>Contacto</p>
+
+            <form action="#" method="post">
+
+                <input type="text" name="email" placeholder="Email" />
+                <textarea name="message" placeholder="Mensaje"></textarea>
+                <button>Send</button>
+
+            </form>
+
+        </div>
+
     </footer>
 
 
