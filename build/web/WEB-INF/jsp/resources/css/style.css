@@ -5,10 +5,12 @@ html,body{
     margin:0px;
     background-color:#F5F5F5;
     height: 100%;
+
+
 }
 
 #Contenedor{
-    min-height: 100%;
+    min-height: 83%;
     height: auto !important;
     height: 100%;
     width:1300px;
@@ -134,6 +136,7 @@ ul li:hover > ul {
     font-size:45px;	
 }
 #welcome p{
+    text-align: justify;
     color:#2d1d00;
     margin:40px;
     font-family: 'Agency FB';
@@ -1012,10 +1015,6 @@ p.tooltip:hover span {
     height: 472px; 
     width: 50px;
     width: 100%;
-    overflow: scroll;
-    overflow-x:hidden;
-
-
 }
 
 #detalles::-webkit-scrollbar-track
@@ -1035,6 +1034,33 @@ p.tooltip:hover span {
     background-color: #666;
 }
 
+#ResultadosDetalles{
+    display: none;
+    height: 472px; 
+    width: 50px;
+    width: 100%;
+    overflow: scroll;
+    overflow-x:hidden;
+    text-align: center;
+}
+
+#ResultadosDetalles::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+#ResultadosDetalles::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+#ResultadosDetalles::-webkit-scrollbar-thumb
+{
+    background-color: #666;
+}
+
 #TusResultados{
     float: left;
     background: #153e5a;
@@ -1048,39 +1074,110 @@ p.tooltip:hover span {
 
 
 
-#TablaTotales {
-    color: #333; /* Lighten up font color */
-    font-family: Helvetica, Arial, sans-serif; /* Nicer font */
+
+
+.TablaTotales {
+
+    text-align: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    margin-bottom: 3em;
+    background: #fff;
+    width: 70%;
+}
+.TablaTotales tbody tr td:first-child {
+    background-color: #2d1d00;
+    color: #fff;
+    white-space: nowrap;
+
+}
+
+.TablaTotales > thead > tr > th:nth-child(1){
+    background-color:#4CAF50 ;
+    color: white;
+}
+.TablaTotales td, th {
+    text-align: center !important;
+    font-weight: normal;
+    padding: 0.75em 1.5em;
+    text-align: left;
+}
+td.err {
+    background-color: #e992b9;
+    color: #fff;
+    font-size: 0.75em;
+    text-align: center;
+    line-height: 1;
+}
+.TablaTotales th {
+    background-color: #4CAF50;
+    color: #fff;
+    white-space: nowrap;
+}
+.TablaTotales tbody th {
+    background-color: #2ea879;
+}
+.TablaTotales tbody tr:nth-child(2n-1) {
+    background-color: #f5f5f5;
+    transition: all .125s ease-in-out;
+}
+.TablaTotales tbody tr:hover {
+    background-color: rgba(129,208,177,.3);
+}
+.TablaTotales tbody tr {
+    text-align: center;
+}
+/* For appearance */
+.TablaTotales .sticky-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    margin: 3em 0;
     width: 100%;
-    border-collapse:collapse;
-    border-spacing: 0;
+}
+.TablaTotales .sticky-wrap .sticky-thead,
+.TablaTotales .sticky-wrap .sticky-col,
+.TablaTotales .sticky-wrap .sticky-intersect {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all .125s ease-in-out;
+    z-index: 50;
+    width: auto; /* Prevent table from stretching to full size */
+}
+.TablaTotales.sticky-wrap .sticky-thead {
+    box-shadow: 0 0.25em 0.1em -0.1em rgba(0,0,0,.125);
+    z-index: 100;
+    width: 100%; /* Force stretch */
+}
+.TablaTotales .sticky-wrap .sticky-intersect {
+    opacity: 1;
+    z-index: 150;
+
+}
+.TablaTotales .sticky-wrap .sticky-intersect th {
+    background-color: #666;
+    color: #eee;
+}
+.TablaTotales .sticky-wrap td,
+.TablaTotales .sticky-wrap th {
+    box-sizing: border-box;
 }
 
-#TablaTotales td, th {
-    text-align: center;
-    border: 1px solid transparent; /* No more visible border */
-    height: 30px;
-    transition: all 0.3s; /* Simple transition for hover effect */
+/* Not needed for sticky header/column functionality */
+.TablaTotales td.user-name {
+    text-transform: capitalize;
+}
+.TablaTotales .sticky-wrap.overflow-y {
+    overflow-y: auto;
+    max-height: 50vh;
 }
 
-#TablaTotales th {
-    background: #DFDFDF; /* Darken header a bit */
-    font-weight: bold;
-}
-
-#TablaTotales td {
-    background: #FAFAFA;
-    text-align: center;
-}
-
-/* Cells in even rows (2,4,6...) are one color */
-#TablaTotales tr:nth-child(even) td { background: #F1F1F1; }
-
-/* Cells in odd rows (1,3,5...) are another (excludes header cells) */
-#TablaTotales tr:nth-child(odd) td { background: #FEFEFE; }
 
 
-//#TablaTotales tr td:hover { background: #666; color: #FFF; } /* Hover cell effect! */
 
 #CerrarResultados{
     cursor: pointer;
@@ -1410,202 +1507,337 @@ svg{
 
 
 .footer-distributed{
-	background-color: #292c2f;
-	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
-	box-sizing: border-box;
-	width: 100%;
-	font: bold 16px sans-serif;
-	text-align: left;
+    background-color: #292c2f;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+    width: 100%;
+    font: bold 16px sans-serif;
+    text-align: left;
 
-	padding: 50px 60px 40px;
-	margin-top: 80px;
-	overflow: hidden;
+    padding: 50px 60px 40px;
+    margin-top: 80px;
+    overflow: hidden;
 }
 
 /* Footer left */
 
 .footer-distributed .footer-left{
-	float: left;
+    float: left;
 }
 
 /* The company logo */
 
 .footer-distributed h3{
-	color:  #ffffff;
-	font: normal 36px 'Cookie', cursive;
-	margin: 0 0 10px;
+    color:  #ffffff;
+    font: normal 36px 'Cookie', cursive;
+    margin: 0 0 10px;
 }
 
 .footer-distributed h3 span{
-	color:  #5383d3;
+    color:  #5383d3;
 }
 
 /* Footer links */
 
 .footer-distributed .footer-links{
-	color:  #ffffff;
-	margin: 0 0 10px;
-	padding: 0;
+    color:  #ffffff;
+    margin: 0 0 10px;
+    padding: 0;
 }
 
 .footer-distributed .footer-links a{
-	display:inline-block;
-	line-height: 1.8;
-	text-decoration: none;
-	color:  inherit;
+    display:inline-block;
+    line-height: 1.8;
+    text-decoration: none;
+    color:  inherit;
 }
 
 .footer-distributed .footer-company-name{
-	color:  #8f9296;
-	font-size: 14px;
-	font-weight: normal;
-	margin: 0;
+    color:  #8f9296;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
 }
 
 /* Footer social icons */
 
 .footer-distributed .footer-icons{
-	margin-top: 40px;
+    margin-top: 40px;
 }
 
 .footer-distributed .footer-icons a{
-	display: inline-block;
-	width: 35px;
-	height: 35px;
-	cursor: pointer;
-	background-color:  #33383b;
-	border-radius: 2px;
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    background-color:  #33383b;
+    border-radius: 2px;
 
-	font-size: 20px;
-	color: #ffffff;
-	text-align: center;
-	line-height: 35px;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    line-height: 35px;
 
-	margin-right: 3px;
-	margin-bottom: 5px;
+    margin-right: 3px;
+    margin-bottom: 5px;
 }
 
 /* Footer Right */
 
 .footer-distributed .footer-right{
-	float: right;
+    float: right;
 }
 
 .footer-distributed .footer-right p{
-	display: inline-block;
-	vertical-align: top;
-	margin: 15px 42px 0 0;
-	color: #ffffff;
+    display: inline-block;
+    vertical-align: top;
+    margin: 15px 42px 0 0;
+    color: #ffffff;
 }
 
 /* The contact form */
 
 .footer-distributed form{
-	display: inline-block;
+    display: inline-block;
 }
 
 .footer-distributed form input,
 .footer-distributed form textarea{
-	display: block;
-	border-radius: 3px;
-	box-sizing: border-box;
-	background-color:  #1f2022;
-	box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
-	border: none;
-	resize: none;
+    display: block;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background-color:  #1f2022;
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    border: none;
+    resize: none;
 
-	font: inherit;
-	font-size: 14px;
-	font-weight: normal;
-	color:  #d1d2d2;
+    font: inherit;
+    font-size: 14px;
+    font-weight: normal;
+    color:  #d1d2d2;
 
-	width: 400px;
-	padding: 18px;
+    width: 400px;
+    padding: 18px;
 }
 
 .footer-distributed ::-webkit-input-placeholder {
-	color:  #5c666b;
+    color:  #5c666b;
 }
 
 .footer-distributed ::-moz-placeholder {
-	color:  #5c666b;
-	opacity: 1;
+    color:  #5c666b;
+    opacity: 1;
 }
 
 .footer-distributed :-ms-input-placeholder{
-	color:  #5c666b;
+    color:  #5c666b;
 }
 
 
 .footer-distributed form input{
-	height: 55px;
-	margin-bottom: 15px;
+    height: 55px;
+    margin-bottom: 15px;
 }
 
 .footer-distributed form textarea{
-	height: 100px;
-	margin-bottom: 20px;
+    height: 100px;
+    margin-bottom: 20px;
 }
 
 .footer-distributed form button{
-	border-radius: 3px;
-	background-color:  #33383b;
-	color: #ffffff;
-	border: 0;
-	padding: 15px 50px;
-	font-weight: bold;
-	float: right;
+    border-radius: 3px;
+    background-color:  #33383b;
+    color: #ffffff;
+    border: 0;
+    padding: 15px 50px;
+    font-weight: bold;
+    float: right;
 }
 
 /* If you don't want the footer to be responsive, remove these media queries */
 
 @media (max-width: 1000px) {
 
-	.footer-distributed {
-		font: bold 14px sans-serif;
-	}
+    .footer-distributed {
+        font: bold 14px sans-serif;
+    }
 
-	.footer-distributed .footer-company-name{
-		font-size: 12px;
-	}
+    .footer-distributed .footer-company-name{
+        font-size: 12px;
+    }
 
-	.footer-distributed form input,
-	.footer-distributed form textarea{
-		width: 250px;
-	}
+    .footer-distributed form input,
+    .footer-distributed form textarea{
+        width: 250px;
+    }
 
-	.footer-distributed form button{
-		padding: 10px 35px;
-	}
+    .footer-distributed form button{
+        padding: 10px 35px;
+    }
 
 }
 
 @media (max-width: 800px) {
 
-	.footer-distributed{
-		padding: 30px;
-	}
+    .footer-distributed{
+        padding: 30px;
+    }
 
-	.footer-distributed .footer-left,
-	.footer-distributed .footer-right{
-		float: none;
-		max-width: 300px;
-		margin: 0 auto;
-	}
+    .footer-distributed .footer-left,
+    .footer-distributed .footer-right{
+        float: none;
+        max-width: 300px;
+        margin: 0 auto;
+    }
 
-	.footer-distributed .footer-left{
-		margin-bottom: 40px;
-	}
+    .footer-distributed .footer-left{
+        margin-bottom: 40px;
+    }
 
-	.footer-distributed form{
-		margin-top: 30px;
-	}
+    .footer-distributed form{
+        margin-top: 30px;
+    }
 
-	.footer-distributed form{
-		display: block;
-	}
+    .footer-distributed form{
+        display: block;
+    }
 
-	.footer-distributed form button{
-		float: none;
-	}
+    .footer-distributed form button{
+        float: none;
+    }
+}
+
+
+#Nosotros{
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+#Nosotros h1{
+    text-align: center;
+    color: #2d1d00;
+    margin: 40px;
+    font-family: 'Agency FB';
+    font-size: 45px;   
+}
+#Nosotros h2{
+    text-align: left;
+    color: #2d1d00;
+    margin: 40px;
+    font-family: 'Agency FB';
+
+}
+
+#Nosotros p{
+    text-align: justify;
+    color: #2d1d00;
+    margin: 40px;
+    font-family: 'Arial';
+    font-size: 20px;
+}
+
+
+.MenuResultados{
+    width: 49.4%;
+    height: 70%;
+    float: left;
+}
+
+#Porcentaje{
+    text-align: right;
+}
+
+.circliful{
+    margin: 0px;
+    padding: 0px;
+    padding-right: 20px;
+    width: 300px !important;
+    height: 300px !important;
+}
+#DetalleTotal ul{
+    font-family: 'Arial';
+    margin-top: 55px;
+    font-size: 20px;
+}
+#DetalleTotal ul li{
+    margin-bottom: 30px;
+}
+#ResultadosMenu{
+    height: auto;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    margin-top: 20px;
+}
+#ResultadosMenu .active{
+    outline-style: none;
+    border: none;
+    cursor:pointer;
+    margin-left:auto;
+    margin-top:10px;
+    margin-right:auto;
+    margin-bottom: 10px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+}
+#VerTotales{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+
+#test-circle5 > svg > text.icon{
+    fill : green;
+}
+#test-circle5 > svg > text.timer{
+    fill : green;
+}
+
+
+#RespuestasCorrectas{
+    display: none;
+    height: 472px; 
+    width: 50px;
+    width: 100%;
+    overflow: scroll;
+    overflow-x:hidden;
+    text-align: center;
+}
+
+
+#RespuestasCorrectas::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+#RespuestasCorrectas::-webkit-scrollbar
+{
+    width: 10px;
+    background-color: #F5F5F5;
+}
+
+#RespuestasCorrectas::-webkit-scrollbar-thumb
+{
+    background-color: #666;
+}
+#Correctas{
+
+    border-top: 1px solid black;
+    float: left;
+    height: 340px; 
+    width: 50px;
+    margin-top: 10px;
+    width: 1200px;
+    margin-left: 50px;
+    
 }

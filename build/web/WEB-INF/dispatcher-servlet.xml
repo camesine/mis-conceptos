@@ -64,6 +64,7 @@
                 <prop key="/usuario/editar">usuarioController</prop>
                 <prop key="/contenido/eliminar">contenidoController</prop>
                 <prop key="/contenido/editarNombre">contenidoController</prop>
+                <prop key="/plataforma/nosotros">plataformaController</prop>
             </props>
         </property>
     </bean>
@@ -88,6 +89,7 @@
     <bean name="observacionController" class="cl.preguntame.controller.ObservacionController" />
     <bean name="tiporelacionController" class="cl.preguntame.controller.TipoRelacionController" />
     <bean name="relacionController" class="cl.preguntame.controller.RelacionController" />
+    <bean name="plataformaController" class="cl.preguntame.controller.PlataformaController" />
      
     
     <mvc:resources mapping="/resources/**" location="/WEB-INF/jsp/resources/" />

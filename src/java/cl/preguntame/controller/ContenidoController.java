@@ -1,6 +1,8 @@
 package cl.preguntame.controller;
 
+import cl.preguntame.clases.Cabecera;
 import cl.preguntame.clases.Generador;
+import cl.preguntame.clases.ListadoPDF;
 import cl.preguntame.model.Caracteristica;
 import cl.preguntame.model.Concepto;
 import cl.preguntame.model.Contenido;
@@ -17,6 +19,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.ListItem;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Font;
@@ -129,8 +132,6 @@ public class ContenidoController {
 
     }
 
-    
-    
     @ResponseBody
     @RequestMapping(value = "/editarNombre", method = RequestMethod.POST)
     public String EditarNombre(HttpServletRequest req) {
@@ -154,8 +155,6 @@ public class ContenidoController {
 
     }
 
-    
-    
     @ResponseBody
     @RequestMapping(value = "/informe", method = RequestMethod.GET)
     public void Informe(HttpServletRequest req, HttpServletResponse res) throws IOException, DocumentException {
@@ -177,44 +176,71 @@ public class ContenidoController {
 
         res.setContentType("application/pdf");
         Document Informe = new Document();
-        PdfWriter.getInstance(Informe, res.getOutputStream());
+        PdfWriter writer = PdfWriter.getInstance(Informe, res.getOutputStream());
+
+        Cabecera encabezado = new Cabecera();
+        encabezado.setEncabezado(contenido.getNombre());
+        writer.setPageEvent(encabezado);
+        Informe.setMargins(30, 30, 55, 30);
+       // com.itextpdf.text.List lista = new com.itextpdf.text.List();
         Informe.open();
 
-        Paragraph titulo = new Paragraph(contenido.getNombre(), FontFactory.getFont("arial", 22, BaseColor.BLACK));
-        titulo.setAlignment(Element.ALIGN_CENTER);
-        Informe.add(titulo);
+       // Paragraph titulo = new Paragraph(contenido.getNombre(), FontFactory.getFont("arial", 16, BaseColor.BLACK));
+       // titulo.setAlignment(Element.ALIGN_LEFT);
+        /* Image imagen = Image.getInstance("C:\\Users\\Hector\\Documents\\GitHub\\preguntame\\web\\WEB-INF\\jsp\\resources\\imagenes\\loading-verde.gif");
+         imagen.setAlignment(Element.ALIGN_RIGHT);
+         imagen.scalePercent(20);
+         Informe.add(imagen);*/
+       // Informe.add(titulo);
+
         char punto = 4;
         for (int i = 0; i < ListaConceptos.size(); i++) {
-            Informe.add(new Paragraph("\n"));
-            Informe.add(new Paragraph(ListaConceptos.get(i).getNombre().toUpperCase(), FontFactory.getFont("arial", 15, Font.BOLD)));
 
-            Informe.add(new Paragraph("DEFINICIONES", FontFactory.getFont("arial", 12, Font.BOLD)));
+            Informe.add(new Paragraph("\n"));
+            Informe.add(new Paragraph("CONCEPTO: " + ListaConceptos.get(i).getNombre().toUpperCase(), FontFactory.getFont("arial", 12, Font.BOLD)));
+
+            //    Informe.add(new Paragraph("DEFINICIONES:", FontFactory.getFont("arial", 10, Font.BOLD)));
+            Paragraph p = new Paragraph("DEFINICIONES:", FontFactory.getFont("arial", 10, Font.BOLD));
+            p.setIndentationLeft(18);
+            Informe.add(p);
+
+            ArrayList<ListItem> items = new ArrayList<>();
+
             for (int y = 0; y < ListaDefiniciones.size(); y++) {
                 if (ListaConceptos.get(i).getId() == ListaDefiniciones.get(y).getConcepto().getId()) {
 
-                    Informe.add(new Paragraph("- " + ListaDefiniciones.get(y).getDetalle(), FontFactory.getFont("arial", 12, BaseColor.BLACK)));
-
+                    items.add(new ListItem(ListaDefiniciones.get(y).getDetalle()));
                 }
             }
+            Informe.add(new ListadoPDF(items).getListado());
 
-            Informe.add(new Paragraph("CARACTERISTICAS", FontFactory.getFont("arial", 12, Font.BOLD)));
+            items.clear();
+
+            p = new Paragraph("CARACTERISTICAS:", FontFactory.getFont("arial", 10, Font.BOLD));
+            p.setIndentationLeft(18);
+            Informe.add(p);
+
             for (int y = 0; y < ListaCaracteristicas.size(); y++) {
                 if (ListaConceptos.get(i).getId() == ListaCaracteristicas.get(y).getConcepto().getId()) {
 
-                    Informe.add(new Paragraph("- " + ListaCaracteristicas.get(y).getDetalle(), FontFactory.getFont("arial", 12, BaseColor.BLACK)));
-
+                    items.add(new ListItem(ListaCaracteristicas.get(y).getDetalle()));
                 }
             }
+            Informe.add(new ListadoPDF(items).getListado());
+            items.clear();
 
-            Informe.add(new Paragraph("OBSERVACIONES", FontFactory.getFont("arial", 12, Font.BOLD)));
+            p = new Paragraph("OBSERVACIONES:", FontFactory.getFont("arial", 10, Font.BOLD));
+            p.setIndentationLeft(18);
+            Informe.add(p);
+
             for (int y = 0; y < ListaObservaciones.size(); y++) {
                 if (ListaConceptos.get(i).getId() == ListaObservaciones.get(y).getConcepto().getId()) {
 
-                    Informe.add(new Paragraph("- " + ListaObservaciones.get(y).getDetalle(), FontFactory.getFont("arial", 12, BaseColor.BLACK)));
-
+                    items.add(new ListItem(ListaObservaciones.get(y).getDetalle()));
                 }
             }
-
+            Informe.add(new ListadoPDF(items).getListado());
+            items.clear();
         }
 
         Informe.close();

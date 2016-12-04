@@ -14,6 +14,14 @@
         <script src="<c:url value="/resources/js/tinymce/tinymce.min.js" />"></script>
         <script src="<c:url value="/resources/js/tinymce/init-tinymce.js" />"></script>
 
+
+        <link rel="stylesheet" href="<c:url value="/resources/css/material-design-iconic-font.min.css" />"  />
+        <link rel="stylesheet" href="<c:url value="/resources/css/jquery.circliful.css" />"  />
+        <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <script src="<c:url value="/resources/js/jquery.circliful.js" />"></script>
+
         <script type="text/javascript">
             mxBasePath = "<c:url value="/resources/mxGraph" />";
         </script>
@@ -483,7 +491,6 @@
 
             $(document).ready(function(e) {
 
-
                 localStorage.clear();
 
                 $('#BtnNuevoContenido').click(function() {
@@ -532,6 +539,11 @@
 
 // GENERACION DE PREGUNTAS
 
+                $("#RepetirTest").click(function() {
+                    $("#CerrarResultados").click();
+                    $("#b1").click();
+                });
+
                 $("#b1").click(function() {
 
                     localStorage.clear();
@@ -572,7 +584,6 @@
 
 
                                         $(alternativas).find("li").each(function(index, element) {
-                                            console.log("comparando " + etiqueta + "------------------------" + $(this).html())
 
                                             if (etiqueta == $(this).html()) {
                                                 contador = contador + 1;
@@ -580,7 +591,7 @@
                                             }
 
                                         });
-                                        console.log(contador)
+
                                         if (contador > 1) {
                                             $(this).remove();
                                         }
@@ -683,6 +694,46 @@
                 });
 
 
+                $('#ResultadosMenu').on('click', '#VerCorrectas', function() {
+
+                    $('#detalles').css("display", "none");
+
+                    $('#RespuestasCorrectas').fadeIn("fast", function() {
+                    });
+
+                });
+
+                $('#RespuestasCorrectas').on('click', '#VerTotales', function() {
+
+                    $('#RespuestasCorrectas').css("display", "none");
+
+                    $('#detalles').fadeIn("fast", function() {
+                    });
+
+                });
+
+
+                $('#ResultadosMenu').on('click', '#DetalleResultados', function() {
+
+                    $('#detalles').css("display", "none");
+
+                    $('#ResultadosDetalles').fadeIn("fast", function() {
+                    });
+
+                });
+
+
+                $('#ResultadosDetalles').on('click', '#VerTotales', function() {
+
+                    $('#ResultadosDetalles').css("display", "none");
+
+                    $('#detalles').fadeIn("fast", function() {
+                    });
+
+                });
+
+
+
 
 
                 $('body').on('click', '.opcion', function() {
@@ -762,7 +813,16 @@
                     $('#Editor').fadeOut("fast", function() {
                     });
 
+                    $("#detalles #test-circle5").html("");
+                    $("#detalles #DetalleTotal ul").html("");
 
+
+                    $('#detalles').css("display", "block");
+
+                    $('#ResultadosDetalles').css("display", "none");
+                    $('#TablaTotales tbody').html("");
+                    $('#TablaTotalesItems tbody').html("");
+                    $('#RespuestasCorrectas #Correctas').html("");
 
 
                 });
@@ -834,9 +894,6 @@
 
                 });
             });
-
-
-
             function AgregarDef(x) {
 
                 $('#marcado').text(tinymce.activeEditor.selection.getContent({format: 'text'}));
@@ -1063,6 +1120,7 @@
 <div style="clear:both"></div>
 
 <footer class="footer-distributed">
+
     <div class="footer-left">
 
         <h3>Company<span>logo</span></h3>
@@ -1108,9 +1166,7 @@
         function Siguiente() {
 
             var Lista = localStorage.getItem("ListaRespuestas");
-
             Lista = JSON.parse(Lista);
-
             if (Lista == null)
                 Lista = [];
             //$(this).css("background", "#3498db");
@@ -1138,17 +1194,14 @@
                             });
                             Lista.push(respuesta);
                             localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
-
                         } else {
                             var respuesta = JSON.stringify({
                                 Tipo: 'SeleccionMultiple',
                                 Correcto: false,
                                 ConceptoReferencia: $(this).find(".ConceptoReferenciado").val(),
                             });
-
                             Lista.push(respuesta);
                             localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
-
                         }
                     }
 
@@ -1156,12 +1209,10 @@
 
                     if ($(this).find(".TipoPregunta").val() == "TerminosPareados") {
                         var tabla = $(this).find("table");
-
                         $(tabla).find('tbody tr').each(function(index, element) {
 
                             var ingresado = $(this).find("td").eq(2).find("input").val();
                             var Correcta = $(this).find("td").eq(4).text();
-
                             if (ingresado != null) {
 
                                 $(tabla).find('tbody tr').each(function(index, element) {
@@ -1170,12 +1221,9 @@
 
                                         var NumeroConcepto = $(this).find("td").eq(0).text();
                                         NumeroConcepto = NumeroConcepto.replace(/\D/g, '');
-
                                         var ConceptoReferenciado = $(this).find("td").eq(0).text();
                                         ConceptoReferenciado = ConceptoReferenciado.replace(/[0-9]/, "");
                                         ConceptoReferenciado = ConceptoReferenciado.replace(".", "");
-
-
                                         if (ingresado == NumeroConcepto) {
 
                                             var respuestaPareado = JSON.stringify({
@@ -1185,10 +1233,6 @@
                                             });
                                             Lista.push(respuestaPareado);
                                             localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
-
-
-
-
                                         } else {
                                             var respuestaPareado = JSON.stringify({
                                                 Tipo: 'TerminoPareado',
@@ -1197,32 +1241,27 @@
                                             });
                                             Lista.push(respuestaPareado);
                                             localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
-
                                         }
                                     }
 
 
                                 });
-
                             }
 
 
 
                         });
-
                     }
 
 
                     if ($(this).find(".TipoPregunta").val() == "Completacion") {
                         var enunciado = $(this).find(".Completacion");
                         var correcto = true;
-
                         $(enunciado).find('input').each(function(index, element) {
                             if ($(this).attr("id") != $(this).val()) {
                                 correcto = false;
                             }
                         });
-
                         if (correcto == true) {
 
                             var respuestaCompletacion = JSON.stringify({
@@ -1232,8 +1271,6 @@
                             });
                             Lista.push(respuestaCompletacion);
                             localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
-
-
                         } else {
 
                             var respuestaCompletacion = JSON.stringify({
@@ -1241,11 +1278,8 @@
                                 Correcto: false,
                                 ConceptoReferencia: $(enunciado.parent()).find(".ConceptoReferenciado").val(),
                             });
-
                             Lista.push(respuestaCompletacion);
                             localStorage.setItem("ListaRespuestas", JSON.stringify(Lista));
-
-
                         }
 
 
@@ -1258,12 +1292,106 @@
                         //   $('#Contenedor').append("<div id='cargando'><img id='ImgCargando'  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>");
 
 
-                        $("#ventanaResultados").fadeIn("fast", function() {
-                        });
+
 
                         //    $('#ventanaResultados').find(".close").after(("<h1 id='TituloTest'>TUS RESULTADOS</h1>"));
 
                         // $("#detalles").html(localStorage.ListaRespuestas);
+
+
+                        var preguntas = $("#Preguntas").html();
+                        $("#RespuestasCorrectas #Correctas").append(preguntas);
+
+
+
+                        $('#RespuestasCorrectas #Correctas .pregunta').each(function(index, element) {
+                            $(this).css("display", "block");
+                            $(this).css("height", "auto");
+                            $(this).css("border-bottom", "1px solid black");
+                            $(this).css("padding-bottom", "50px");
+
+                            if ($(this).find(".TipoPregunta").val() == "SeleccionMultiple") {
+                                $('#RespuestasCorrectas #Correctas .pregunta').find("span").remove();
+                                var respuesta = $(this).find(".respuesta").val();
+                                var alternativas = $(this).find(".Alternativas .opcion p");
+                                
+                                $(alternativas).each(function(index, element) {
+                                    $(this).css("font-family", "Agency FB");
+                                    $(this).css("font-size", "20px");
+                                    if ($(this).text() == respuesta) {
+                                        $(this).css("color", "red");
+                           //             $(this).css("font-family", "Arial");
+                                        $(this).css("font-weight", "bold");
+                                        //    $(this).css("padding", "10px");
+
+                                    }
+                                })
+
+                                $(this).find(".Alternativas .opcion").removeClass();
+
+
+                            }
+
+
+
+
+
+
+
+
+                            if ($(this).find(".TipoPregunta").val() == "TerminosPareados") {
+                                var tabla = $(this).find("table");
+                                $(tabla).find('tbody tr').each(function(index, element) {
+
+                                    var NumeroConcepto = null;
+                                    var Correcta = $(this).find("td").eq(4).text();
+                                    $(tabla).find('tbody tr').each(function(index, element) {
+
+                                        if ($(this).find("td").eq(1).text() == Correcta) {
+                                            NumeroConcepto = $(this).find("td").eq(0).text();
+                                            NumeroConcepto = NumeroConcepto.replace(/\D/g, '');
+
+
+                                        }
+
+
+                                    });
+                                    Correcta = $(this).find("td").find("input").val(NumeroConcepto);
+                                    $(this).find("td").find("input").css("color", "red");
+                                    $(this).find("td").find("input").css("font-weight", "bold");
+                                    $(this).find("#ColumnaNumero").css("width", "24");
+
+
+                                });
+                            }
+
+
+                            if ($(this).find(".TipoPregunta").val() == "Completacion") {
+                                var preguntas = $(this);
+                                preguntas = preguntas.find(".Completacion input");
+                                $(preguntas).each(function(index, element) {
+                                    $(this).val($(this).attr("id"));
+                                   
+                                   
+                                    $(this).css("color", "red");
+                                    $(this).css("font-weight", "bold");
+                                })
+
+
+
+                            }
+
+
+
+
+
+
+
+
+                        })
+
+
+
                         Lista = localStorage.ListaRespuestas;
                         Lista = JSON.parse(Lista);
 
@@ -1288,12 +1416,6 @@
                         }
 
 
-                        $("#detalles table tbody").html("");
-
-                        console.log(Lista)
-
-                        console.log(ConceptosReferenciados)
-
 
                         var correctasTotal = 0;
 
@@ -1303,8 +1425,25 @@
                             }
                         }
 
+                        $("#ventanaResultados").fadeIn("fast", function() {
 
-                        $("#detalles table tbody").append("<tr><td>Total de preguntas</td><td>" + Lista.length + "</td><td>" + correctasTotal + "</td><td>" + (Lista.length - correctasTotal) + "</td><td>" + (correctasTotal * 100 / Lista.length).toFixed(2) + "%</td><td>" + ((Lista.length - correctasTotal) * 100 / Lista.length).toFixed(2) + "%</td></tr>");
+                        });
+
+                        $("#test-circle5").circliful({
+                            animationStep: 5,
+                            foregroundBorderWidth: 5,
+                            backgroundBorderWidth: 15,
+                            percent: (correctasTotal * 100 / Lista.length).toFixed(2),
+                            icon: 'f14a',
+                            iconPosition: 'middle',
+                            text: 'RENDIMIENTO',
+                            textBelow: true
+                        });
+                        $("#DetalleTotal ul").append("<li><p style='color: rgb(102, 102, 102);' >" + $('#seleccion').text() + "</p></li><li style='margin-left: 30px' ><img style='height: 20px;    vertical-align: text-top;' src='<c:url value="/resources/imagenes/list.png" />' /> TOTAL DE PREGUNTAS: " + Lista.length + "</li> <li style='margin-left: 30px' ><img style='height: 20px;     vertical-align: text-top;' src='<c:url value="/resources/imagenes/Tick.png" />' /> CORRECTAS: " + correctasTotal + " </li> <li style='margin-left: 30px' ><img style='height: 26px; vertical-align: text-bottom;' src='<c:url value="/resources/imagenes/close.png" />' /> INCORRECTAS: " + (Lista.length - correctasTotal) + "</li>");
+                        //  
+
+                        //  $("#ResultadosDetalles table").append("<tr><td>Total de preguntas</td><td>" + Lista.length + "</td><td>" + correctasTotal + "</td><td>" + (Lista.length - correctasTotal) + "</td><td>" + (correctasTotal * 100 / Lista.length).toFixed(2) + "%</td><td>" + ((Lista.length - correctasTotal) * 100 / Lista.length).toFixed(2) + "%</td></tr>");
+
 
 
                         correctasTotal = 0;
@@ -1317,12 +1456,18 @@
                                 if (Lista[i].Correcto == true) {
                                     correctasTotal = correctasTotal + 1;
                                 }
-
                             }
                         }
 
-                        $("#detalles table tbody").append("<tr><td>Seleccion multiple</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td><td>" + ((total - correctasTotal) * 100 / total).toFixed(2) + "%</td></tr>");
+                        if (total > 0) {
 
+                            if ((correctasTotal * 100 / total) < 60) {
+                                $("#ResultadosDetalles #TablaTotalesItems tbody").append("<tr><td>SELECCION MULTIPLE</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td style='color: red;'>" + (correctasTotal * 100 / total).toFixed(2) + "%</td></tr>");
+                            } else {
+                                $("#ResultadosDetalles #TablaTotalesItems tbody").append("<tr><td>SELECCION MULTIPLE</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td></tr>");
+
+                            }
+                        }
 
 
                         correctasTotal = 0;
@@ -1339,7 +1484,14 @@
                             }
                         }
 
-                        $("#detalles table tbody").append("<tr><td>Terminos pareados</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td><td>" + ((total - correctasTotal) * 100 / total).toFixed(2) + "%</td></tr>");
+                        if (total > 0) {
+
+                            if ((correctasTotal * 100 / total) < 60) {
+                                $("#ResultadosDetalles #TablaTotalesItems tbody").append("<tr><td>TERMINOS PAREADOS</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td style='color: red;' >" + (correctasTotal * 100 / total).toFixed(2) + "%</td></tr>");
+                            } else {
+                                $("#ResultadosDetalles #TablaTotalesItems tbody").append("<tr><td>TERMINOS PAREADOS</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td></tr>");
+                            }
+                        }
 
 
                         correctasTotal = 0;
@@ -1355,9 +1507,14 @@
 
                             }
                         }
+                        if (total > 0) {
+                            if ((correctasTotal * 100 / total) < 60) {
+                                $("#ResultadosDetalles #TablaTotalesItems tbody").append("<tr><td>COMPLETACION</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td  style='color: red;' >" + (correctasTotal * 100 / total).toFixed(2) + "%</td></tr>");
+                            } else {
+                                $("#ResultadosDetalles #TablaTotalesItems tbody").append("<tr><td>COMPLETACION</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td></tr>");
 
-                        $("#detalles table tbody").append("<tr><td>Completacion</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td><td>" + ((total - correctasTotal) * 100 / total).toFixed(2) + "%</td></tr>");
-
+                            }
+                        }
 
 
 
@@ -1375,10 +1532,22 @@
                                 }
 
                             }
-                            $("#detalles table tbody").append("<tr><td>" + ConceptosReferenciados[i] + "</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td><td>" + ((total - correctasTotal) * 100 / total).toFixed(2) + "%</td></tr>");
+                            if (total > 0) {
 
+                                if ((correctasTotal * 100 / total) < 60) {
+                                    $("#ResultadosDetalles #TablaTotales tbody").append("<tr><td>" + ConceptosReferenciados[i].toUpperCase() + "</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td style='color: red;' >" + (correctasTotal * 100 / total).toFixed(2) + "%</td></tr>");
+
+                                } else {
+                                    $("#ResultadosDetalles #TablaTotales tbody").append("<tr><td>" + ConceptosReferenciados[i].toUpperCase() + "</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td></tr>");
+
+                                }
+                            }
+                            // $("#ResultadosDetalles #TablaTotales tbody").append("<tr><td>" + ConceptosReferenciados[i].toUpperCase() + "</td><td>" + total + "</td><td>" + correctasTotal + "</td><td>" + (total - correctasTotal) + "</td><td>" + (correctasTotal * 100 / total).toFixed(2) + "%</td></tr>");
+                            // <td>" + ((total - correctasTotal) * 100 / total).toFixed(2) + "%</td> 
 
                         }
+                        /*
+                         */
                     }
 
 
@@ -1390,12 +1559,10 @@
                     });
                     $(this).next().fadeIn("fast", function() {
                     });
-
                     return false;
                 }
 
             });
-
         }
 
     </script>
@@ -1423,19 +1590,60 @@
     <div id="Resultados">
         <div id="TusResultados">TUS RESULTADOS</div><div id="CerrarResultados" >X</div>
         <div id="detalles" >
-            <table id='TablaTotales' >
+
+            <div class="MenuResultados" id="Porcentaje" >
+                <div id="test-circle5"></div>
+            </div>
+            <div class="MenuResultados" id="DetalleTotal" >
+
+                <ul>
+
+                </ul>
+
+            </div>
+            <div style="clear:both"></div>
+            <div id="ResultadosMenu">
+                <input type="button" class="BtnGenerar" id="DetalleResultados" value="VER DETALLES" />
+                <input type="button" class="BtnGenerar" id="VerCorrectas" value="RESPUESTAS CORRECTAS" />
+                <input type="button" class="active" id="RepetirTest" value="REPETIR TEST" />
+
+            </div>
+
+
+
+        </div>
+        <div id="ResultadosDetalles" >
+            <table class="TablaTotales" id='TablaTotalesItems' >
                 <thead>
-                <th>Item</th>
-                <th>Total</th>
-                <th>Correctas</th>
-                <th>Incorrectas</th>
-                <th>% Correctas</th>
-                <th>% Incorrectas</th>
+                <th>ITEM</th>
+                <th>TOTAL</th>
+                <th>CORRECTAS</th>
+                <th>INCORRECTAS</th>
+                <th>RENDIMIENTO</th>
                 </thead>
                 <tbody>
                 </tbody>
-            </table>
+            </table> 
 
+            <table class="TablaTotales" id='TablaTotales' >
+                <thead>
+                <th>CONCEPTO</th>
+                <th>TOTAL</th>
+                <th>CORRECTAS</th>
+                <th>INCORRECTAS</th>
+                <th>RENDIMIENTO</th>
+                </thead>
+                <tbody>
+                </tbody>
+            </table> 
+
+            <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" />
+        </div>
+        <div id="RespuestasCorrectas" >
+            <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" /> 
+            <div id="Correctas" >
+
+            </div>
 
         </div>
     </div>

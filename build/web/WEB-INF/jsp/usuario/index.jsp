@@ -10,10 +10,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
         <link rel="stylesheet" href="<c:url value="/resources/css/style.css" />"  />
-        <title>MisConceptos.cl</title>
+        <title>MIS CONCEPTOS</title>
 
         <script type="text/javascript" >
-
+//MIS CONCEPTOS
             function SeleccionOpcion(id) {
 
 
@@ -146,9 +146,8 @@
         ${correo}
     <header>
         <ul>
-            <li><a href="#">INICIO</a></li>
-            <li><a href="#">NOSOTROS</a></li>
-            <li><a href="#">CONTACTO</a></li>
+            <li><a href="index">INICIO</a></li>
+            <li><a href="<c:url value="/plataforma/nosotros" />">QUIENES SOMOS</a></li>
             <ul style="float:right;list-style-type:none;">
                 <li><a class="active" href="#">TUTORIAL</a></li>
             </ul>
@@ -164,7 +163,7 @@
 
             <article id="welcome">
                 <h1>MIS CONCEPTOS</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque tristique leo vitae dui ullamcorper scelerisque. Vestibulum vitae metus cursus, tempor urna sit amet, dapibus augue. Donec interdum porta auctor. Duis malesuada arcu nec risus elementum convallis. Maecenas a pharetra odio.</p>
+                <p>Plataforma de estudio, que permite a los alumnos y alumnas de cualquier área o nivel educativo, esquematizar la información explícita en el material teórico de estudio que considere relevante, mediante la asociación de conceptos y las características de cada uno de estos, para posteriormente poner a prueba los conocimientos del alumno mediante evaluaciones y que este logre determinar si no ha estudiado lo suficiente, o si su método de estudio no le está siendo productivo. </p>    
             </article>
 
             <article id="login">
