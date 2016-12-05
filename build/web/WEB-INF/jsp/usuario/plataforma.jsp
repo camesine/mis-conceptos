@@ -14,6 +14,10 @@
         <script src="<c:url value="/resources/js/tinymce/tinymce.min.js" />"></script>
         <script src="<c:url value="/resources/js/tinymce/init-tinymce.js" />"></script>
 
+        <script src="<c:url value="/resources/js/highcharts.js" />"></script>
+        <script src="<c:url value="/resources/js/exporting.js" />"></script>
+
+
 
         <link rel="stylesheet" href="<c:url value="/resources/css/material-design-iconic-font.min.css" />"  />
         <link rel="stylesheet" href="<c:url value="/resources/css/jquery.circliful.css" />"  />
@@ -539,7 +543,8 @@
 
 // GENERACION DE PREGUNTAS
 
-                $("#RepetirTest").click(function() {
+                $("#ResultadosMenu #RepetirTest").click(function() {
+                    
                     $("#CerrarResultados").click();
                     $("#b1").click();
                 });
@@ -694,43 +699,51 @@
                 });
 
 
-                $('#ResultadosMenu').on('click', '#VerCorrectas', function() {
+                $('#Resultados').on('click', '#VerCorrectas', function() {
 
                     $('#detalles').css("display", "none");
-
+                    $('#Estadisticas').css("display", "none");
+                    $('#ResultadosDetalles').css("display", "none");
+                    
                     $('#RespuestasCorrectas').fadeIn("fast", function() {
                     });
 
                 });
 
-                $('#RespuestasCorrectas').on('click', '#VerTotales', function() {
 
+                $('#Resultados').on('click', '#VerEstadisticas', function() {
+
+                    $('#detalles').css("display", "none");
                     $('#RespuestasCorrectas').css("display", "none");
+                    $('#ResultadosDetalles').css("display", "none");
+                    
+                    $('#Estadisticas').fadeIn("fast", function() {
+                    });
 
+                });
+                $('#Resultados').on('click', '#VerTotales', function() {
+
+                    $('#Estadisticas').css("display", "none");
+                    $('#RespuestasCorrectas').css("display", "none");
+                    $('#ResultadosDetalles').css("display", "none");
+                    
                     $('#detalles').fadeIn("fast", function() {
                     });
 
                 });
 
-
-                $('#ResultadosMenu').on('click', '#DetalleResultados', function() {
+                $('#Resultados').on('click', '#DetalleResultados', function() {
 
                     $('#detalles').css("display", "none");
-
+                    $('#Estadisticas').css("display", "none");
+                    $('#RespuestasCorrectas').css("display", "none");
+                    
                     $('#ResultadosDetalles').fadeIn("fast", function() {
                     });
 
                 });
 
 
-                $('#ResultadosDetalles').on('click', '#VerTotales', function() {
-
-                    $('#ResultadosDetalles').css("display", "none");
-
-                    $('#detalles').fadeIn("fast", function() {
-                    });
-
-                });
 
 
 
@@ -818,12 +831,14 @@
 
 
                     $('#detalles').css("display", "block");
-
+                    $('#Estadisticas').css("display","none");
+                    
                     $('#ResultadosDetalles').css("display", "none");
                     $('#TablaTotales tbody').html("");
                     $('#TablaTotalesItems tbody').html("");
                     $('#RespuestasCorrectas #Correctas').html("");
-
+                    $('#Estadisticas #GraficoEstadisticas').html("");
+                    
 
                 });
 
@@ -1291,9 +1306,6 @@
                         $(".ventana").css("display", "none");
                         //   $('#Contenedor').append("<div id='cargando'><img id='ImgCargando'  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>");
 
-
-
-
                         //    $('#ventanaResultados').find(".close").after(("<h1 id='TituloTest'>TUS RESULTADOS</h1>"));
 
                         // $("#detalles").html(localStorage.ListaRespuestas);
@@ -1307,20 +1319,20 @@
                         $('#RespuestasCorrectas #Correctas .pregunta').each(function(index, element) {
                             $(this).css("display", "block");
                             $(this).css("height", "auto");
-                            $(this).css("border-bottom", "1px solid black");
+                            $(this).css("border-bottom", "1px solid #ccc");
                             $(this).css("padding-bottom", "50px");
 
                             if ($(this).find(".TipoPregunta").val() == "SeleccionMultiple") {
                                 $('#RespuestasCorrectas #Correctas .pregunta').find("span").remove();
                                 var respuesta = $(this).find(".respuesta").val();
                                 var alternativas = $(this).find(".Alternativas .opcion p");
-                                
+
                                 $(alternativas).each(function(index, element) {
                                     $(this).css("font-family", "Agency FB");
                                     $(this).css("font-size", "20px");
                                     if ($(this).text() == respuesta) {
                                         $(this).css("color", "red");
-                           //             $(this).css("font-family", "Arial");
+                                        //             $(this).css("font-family", "Arial");
                                         $(this).css("font-weight", "bold");
                                         //    $(this).css("padding", "10px");
 
@@ -1371,8 +1383,8 @@
                                 preguntas = preguntas.find(".Completacion input");
                                 $(preguntas).each(function(index, element) {
                                     $(this).val($(this).attr("id"));
-                                   
-                                   
+
+
                                     $(this).css("color", "red");
                                     $(this).css("font-weight", "bold");
                                 })
@@ -1414,6 +1426,8 @@
                             }
 
                         }
+
+
 
 
 
@@ -1548,7 +1562,138 @@
                         }
                         /*
                          */
+                        $.ajax({
+                            type: 'POST',
+                            url: '<c:url value="/test/nuevo" />',
+                            data: {contenido_id: $('#Contenido').attr('value'), resultados: localStorage.ListaRespuestas}
+                        }).success(function(response) {
+
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '<c:url value="/test/buscar" />',
+                                data: {seleccionado: $('#Contenido').attr('value')}
+                            }).success(function(response) {
+
+                                var fechas = [];
+                                var correctas = [];
+                                var cantidades = [];
+                                var incorrectas = [];
+                                var maximo = 0;
+                                
+                                for (var i = response.length -1 ; i >= 0; i--) {
+                                    maximo = maximo + 1;
+                                    
+                                    var estadistica = response[i].resultados;
+                                    estadistica = JSON.parse(estadistica);
+                                    for (var j in estadistica) {
+                                        estadistica[j] = JSON.parse(estadistica[j])
+                                    }
+
+                                    var correctasTotal = 0;
+
+                                    for (var j in estadistica) {
+                                        if (estadistica[j].Correcto == true) {
+                                            correctasTotal = correctasTotal + 1;
+                                        }
+                                    }
+                                    
+                                    correctas.push(correctasTotal);
+                                    
+                                    fechas.push(response[i].fecha);
+                                    console.log(response[i].fecha)
+                                    cantidades.push(estadistica.length);
+                                    incorrectas.push(estadistica.length - correctasTotal );
+                                    
+                                    if(maximo == 7){
+                                        break;
+        }
+                                    
+                                }
+                                
+                              
+                              
+
+
+                                $(function() {
+                                    Highcharts.chart('GraficoEstadisticas', {
+                                        chart: {
+                                            type: 'column'
+                                        },
+                                        colors : ['#153e5a','#00C600','#dc1111'],
+                                        title: {
+                                            text: 'TUS ESTADISTICAS'
+                                        },
+                                        subtitle: {
+                                            text: $("#seleccion").text()
+                                        },
+                                        xAxis: {
+                                            
+                                            categories: fechas,
+                                            
+                                            
+                                            
+                                            crosshair: true
+                                        },
+                                        yAxis: {
+                                            min: 0,
+                                            title: {
+                                                text: 'Rainfall (resp)'
+                                            }
+                                        },
+                                        tooltip: {
+                                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                                            footerFormat: '</table>',
+                                            shared: true,
+                                            useHTML: true
+                                        },
+                                        plotOptions: {
+                                            column: {
+                                                pointPadding: 0.2,
+                                                borderWidth: 0
+                                            }
+                                        },
+                                        series: [{
+                                                name: 'TOTAL',
+                                                data: cantidades
+
+                                            }, {
+                                                name: 'CORRECTAS',
+                                                data: correctas
+
+                                            }, {
+                                                name: 'INCORRECTAS',
+                                                data: incorrectas
+
+                                            }]
+                                    });
+                                });
+
+
+                            });
+
+
+
+
+
+
+
+
+
+
+
+                        });
                     }
+
+
+
+
+
+
+
+
 
 
 
@@ -1605,6 +1750,7 @@
             <div id="ResultadosMenu">
                 <input type="button" class="BtnGenerar" id="DetalleResultados" value="VER DETALLES" />
                 <input type="button" class="BtnGenerar" id="VerCorrectas" value="RESPUESTAS CORRECTAS" />
+                <input type="button" class="BtnGenerar" id="VerEstadisticas" value="ESTADISTICAS" />
                 <input type="button" class="active" id="RepetirTest" value="REPETIR TEST" />
 
             </div>
@@ -1636,15 +1782,36 @@
                 <tbody>
                 </tbody>
             </table> 
-
+            <div id="ResultadosMenu">
             <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" />
+            <input type="button" class="BtnGenerar" id="VerCorrectas" value="RESPUESTAS CORRECTAS" />
+                <input type="button" class="BtnGenerar" id="VerEstadisticas" value="ESTADISTICAS" />
+                <input type="button" class="active" id="RepetirTest" value="REPETIR TEST" />
+            </div>
         </div>
         <div id="RespuestasCorrectas" >
+            <div id="ResultadosMenu">
             <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" /> 
+             <input type="button" class="BtnGenerar" id="DetalleResultados" value="VER DETALLES" />
+             <input type="button" class="BtnGenerar" id="VerEstadisticas" value="ESTADISTICAS" />
+                <input type="button" class="active" id="RepetirTest" value="REPETIR TEST" />
+            </div>
             <div id="Correctas" >
 
             </div>
 
+        </div>
+        <div id="Estadisticas" >
+            <div id="GraficoEstadisticas" >
+              
+            </div>
+            <div id="ResultadosMenu">
+            <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" />
+            <input type="button" class="BtnGenerar" id="DetalleResultados" value="VER DETALLES" />
+                <input type="button" class="BtnGenerar" id="VerCorrectas" value="RESPUESTAS CORRECTAS" />
+            
+            <input type="button" class="active" id="RepetirTest" value="REPETIR TEST" />
+            </div>
         </div>
     </div>
 

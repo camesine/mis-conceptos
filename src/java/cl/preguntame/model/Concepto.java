@@ -1,5 +1,5 @@
 package cl.preguntame.model;
-// Generated 15-01-2016 08:04:00 PM by Hibernate Tools 3.6.0
+// Generated 04-dic-2016 21:04:10 by Hibernate Tools 3.6.0
 
 
 import java.util.HashSet;

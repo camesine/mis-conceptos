@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15-01-2016 08:04:01 PM by Hibernate Tools 3.6.0 -->
+<!-- Generated 04-dic-2016 21:04:11 by Hibernate Tools 3.6.0 -->
 <hibernate-mapping>
     <class name="cl.preguntame.model.Contenido" table="contenido" catalog="preguntame">
         <id name="id" type="java.lang.Integer">
@@ -15,13 +15,19 @@
             <column name="nombre" length="100" not-null="true" />
         </property>
         <property name="texto" type="string">
-            <column name="texto" length="3000" not-null="false" />
+            <column name="texto" length="50000" />
         </property>
         <set name="conceptos" table="concepto" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="contenido_id" not-null="true" />
             </key>
             <one-to-many class="cl.preguntame.model.Concepto" />
+        </set>
+        <set name="tests" table="test" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="contenido_id" not-null="true" />
+            </key>
+            <one-to-many class="cl.preguntame.model.Test" />
         </set>
     </class>
 </hibernate-mapping>
