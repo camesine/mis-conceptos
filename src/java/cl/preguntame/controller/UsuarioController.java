@@ -55,6 +55,27 @@ public class UsuarioController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/loginFace", method = RequestMethod.POST)
+    public String LoginFace(HttpServletRequest req) {
+
+        UsuarioService acceso = new UsuarioService();
+
+        if (acceso.BuscarUsuario(req.getParameter("email")).size() == 1) {
+            req.getSession().setAttribute("correo", req.getParameter("email"));
+
+        } else {
+
+            TipoUsuario t = new TipoUsuario();
+            t.setId(1);
+            Usuario u = new Usuario(t, req.getParameter("email"), req.getParameter("name"), " -- ", req.getParameter("id"));
+            new UsuarioService().GuardarUsuario(u);
+            req.getSession().setAttribute("correo", req.getParameter("email"));
+        }
+
+        return "true";
+    }
+
     @RequestMapping("plataforma")
     public String plataforma(HttpServletRequest req, Map<String, Object> map) {
 
@@ -76,10 +97,9 @@ public class UsuarioController {
     public String Editar(HttpServletRequest req) {
 
         UsuarioService acceso = new UsuarioService();
-        
-        
+
         if (String.valueOf(acceso.BuscarUsuario(Integer.parseInt(req.getParameter("id"))).getContrasena()).equals(String.valueOf(req.getParameter("pass")))) {
-            
+
             Usuario u = new Usuario();
             u.setId(Integer.parseInt(req.getParameter("id")));
             u.setCorreo(req.getParameter("correo"));
@@ -93,7 +113,7 @@ public class UsuarioController {
             return "true";
 
         } else {
-            
+
             return "false";
         }
 

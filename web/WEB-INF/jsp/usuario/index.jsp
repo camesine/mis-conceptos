@@ -13,27 +13,146 @@
         <title>MIS CONCEPTOS</title>
 
         <script type="text/javascript" >
+
+            // Load the SDK asynchronously
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+
+
 //MIS CONCEPTOS
-            function SeleccionOpcion(id) {
-
-
-                $("#" + id).find('.Form').slideToggle();
-
-
-                $('#login .FormOpcion').each(function(index, element) {
-                    if ($(this).attr('id') != $("#" + id).attr('id')) {
-
-                        $(this).find('.Form').slideToggle();
-                    }
-                });
-
-
-            }
-
+            /*
+             function SeleccionOpcion(id) {
+             
+             
+             
+             
+             
+             
+             
+             $("#" + id).find('.Form').slideToggle();
+             
+             
+             $('#login .FormOpcion').each(function(index, element) {
+             if ($(this).attr('id') != $("#" + id).attr('id')) {
+             
+             $(this).find('.Form').slideToggle();
+             }
+             });
+             
+             
+             }
+             */
 
             $(document).ready(function() {
 
+
+                var app_id = "1829950200593943";
+                var scopes = 'public_profile,email';
+
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId: app_id,
+                        status: true,
+                        cookie: true,
+                        xfbml: true,
+                        version: 'v2.8'
+                    });
+
+
+
+                    FB.getLoginStatus(function(response) {
+                        statusChangeCallback(response, function() {
+
+                        });
+                    });
+
+                };
+
+                var statusChangeCallback = function(response, callback) {
+                    console.log('statusChangeCallback');
+                    console.log(response);
+
+                    if (response.status === 'connected') {
+                        getFacebookData();
+                    } else {
+                        callback(false);
+                    }
+                }
+
+                var checkLoginState = function(callback) {
+                    FB.getLoginStatus(function(response) {
+                        statusChangeCallback(response, function(data) {
+                            callback(data);
+                        });
+                    });
+                }
+
+                var getFacebookData = function() {
+                    FB.api('/me', {locale: 'en_US', fields: 'name, email'}, function(response) {
+
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '<c:url value="/usuario/loginFace" />',
+                            data: response, beforeSend: function() {
+                                $('#Contenedor').append("<div id='cargando'><img id='ImgCargando'  src='<c:url value="/resources/imagenes/loading-verde.gif" />' /></div>");
+                            }
+                        })
+                                .success(function(response) {
+
+
+                                    if (response == "true") {
+                                        $(location).attr('href', '<c:url value="/usuario/plataforma" />');
+                                    } else {
+                                        $('#Contenedor #cargando').remove();
+                                        $("#MensajeError").css("display", "block");
+
+                                    }
+
+
+                                });
+
+
+
+
+
+
+
+
+                    })
+                }
+
+                var facebookLogin = function() {
+                    checkLoginState(function(response) {
+                        if (!response) {
+                            FB.login(function(response) {
+                                if (response.status === 'connected') {
+                                    getFacebookData();
+                                }
+                            }, {scope: scopes});
+                        }
+                    });
+                }
+
+
+                $('#LoginFace').click(function() {
+                    facebookLogin();
+                });
+
+
                 $("#Registrar .Form").css("display", "none")
+
+                $('.message a').click(function() {
+                    $('#login .form div').animate({height: "toggle", opacity: "toggle"}, "slow");
+                });
 
                 $(document).keypress(function(e) {
 
@@ -71,6 +190,11 @@
                 });
 
 
+
+
+
+
+
                 $('#BtnRegistrar').click(function() {
 
                     var datos = {
@@ -93,8 +217,10 @@
                 })
 
 
-                $('#BtnLogin').click(function() {
 
+
+                $('#BtnLogin').click(function() {
+                
                     var datos = {
                         correo: $('#TxtCorreoLogin').val(),
                         pass: $('#TxtPassLogin').val()
@@ -108,8 +234,8 @@
                         }
                     })
                             .success(function(response) {
-
-
+                                
+                      
                                 if (response == "true") {
                                     $(location).attr('href', '<c:url value="/usuario/plataforma" />');
                                 } else {
@@ -167,6 +293,54 @@
             </article>
 
             <article id="login">
+                <div class="form" style="padding: 45px;box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);" >
+                    <div class="register-div" >
+                    <form class="register-form">
+                    
+                 
+                            <input type="text" name="TxtCorreoNuevo" id="TxtCorreoNuevo" value="" placeholder="Email">
+               
+                            <input type="text" name="TxtNombreNuevo" id="TxtNombreNuevo" value="" placeholder="Nombre">
+                 
+                            <input type="text" name="TxtApellidoNuevo" id="TxtApellidoNuevo" value="" placeholder="Apellido">
+                
+                            <input type="password" name="TxtPassNuevo" id="TxtPassNuevo"  value="" placeholder="Contraseña">
+                  
+                            <input type="password" name="TxtPassNuevo2" id="TxtPassNuevo2" value="" placeholder="Confirmacion contraseña">
+
+                      
+                        
+                    </form>
+                       <!--   <button  id="BtnRegistrar" >REGISTRAR</button> -->
+                        <input type="submit" id="BtnRegistrar" name="commit" value="REGISTRAR">
+                        <p class="message">Already registered? <a href="#">Sign In</a></p>
+                        </div>
+              <!--      <form>
+                      
+                        <input type="text" name="CorreoLogin" id="TxtCorreoLogin" value="" placeholder="E-mail">
+                      
+                        <input type="password" name="PassLogin" id="TxtPassLogin" value="" placeholder="******">
+                       <button id="BtnLogin" >ENTRAR</button> 
+                        <button>FACEBOOK</button>
+                        <p class="message">Not registered? <a href="#">Create an account</a></p>
+                    </form> -->
+              <div class="login-div" >
+                            <form class="login-form" >
+                           
+                            <input type="text" name="CorreoLogin" id="TxtCorreoLogin" value="" placeholder="E-mail">
+                          
+                            <input type="password" name="PassLogin" id="TxtPassLogin" value="" placeholder="******">
+                        </form>
+                        <input type="submit" id="BtnLogin" name="commit" value="ENTRAR">
+                        <button id="LoginFace" ><img style="height: 46px" src='<c:url value="/resources/imagenes/facebook.png" />' /></button>
+                        <p class="message">Not registered? <a href="#">Create an account</a></p>
+                        
+                   </div>
+            
+                </div>
+                <!--
+                <button id="LoginFace" >Con feibu</button>
+
                 <div id="Entrar" class="FormOpcion" >
                     <div id="BtnFormEntrar"  onclick="SeleccionOpcion('Entrar')" ><h1>INICIAR SESION</h1></div>
                     <div class="Form">
@@ -207,7 +381,7 @@
                     </div>
 
                 </div>
-
+                -->
             </article>
 
 
@@ -229,9 +403,9 @@
             <p class="footer-links">
                 <a href="#">INICIO</a>
                 ·
-               
+
                 <a href="#">NOSOTROS</a>
-               
+
             </p>
 
             <p class="footer-company-name">Mis conceptos&copy; 2016</p>

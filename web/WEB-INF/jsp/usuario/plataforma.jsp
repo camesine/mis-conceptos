@@ -39,6 +39,16 @@
 
         <script type="text/javascript">
 
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
             function Cconcepto(id) {
 
 
@@ -497,6 +507,96 @@
 
                 localStorage.clear();
 
+                var app_id = "1829950200593943";
+                var scopes = 'public_profile,email';
+
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId: app_id,
+                        status: true,
+                        cookie: true,
+                        xfbml: true,
+                        version: 'v2.8'
+                    });
+
+
+
+                    FB.getLoginStatus(function(response) {
+                        statusChangeCallback(response, function() {
+
+                        });
+                    });
+
+                };
+
+                var statusChangeCallback = function(response, callback) {
+                    // console.log('statusChangeCallback');
+                    // console.log(response);
+
+                    if (response.status === 'connected') {
+                        getFacebookData();
+                    } else {
+                        callback(false);
+                    }
+                }
+
+                var checkLoginState = function(callback) {
+                    FB.getLoginStatus(function(response) {
+                        statusChangeCallback(response, function(data) {
+                            callback(data);
+                        });
+                    });
+                }
+
+                var getFacebookData = function() {
+                    FB.api('/me', {locale: 'en_US', fields: 'name, email'}, function(response) {
+
+
+                    })
+                }
+
+                var facebookLogin = function() {
+                    checkLoginState(function(response) {
+                        if (!response) {
+                            FB.login(function(response) {
+                                if (response.status === 'connected') {
+                                    getFacebookData();
+                                }
+                            }, {scope: scopes});
+                        }
+                    });
+                }
+
+
+                $('#LoginFace').click(function() {
+                    facebookLogin();
+
+                });
+
+
+
+
+                var FacebookLogout = function() {
+                        
+                        
+                        
+                        
+                       FB.login(function(response){
+                     if(response.status === 'connected' || response.status === "unknown"){
+                     console.log(response)
+                     FB.logout(function(response){
+                     $(location).attr('href', '<c:url value="/usuario/logout" />');
+                     })   
+                     }  
+                     }); 
+                
+                 
+                 
+               
+
+
+                }
+
                 $('#BtnNuevoContenido').click(function() {
 
                     $.ajax({
@@ -544,7 +644,7 @@
 // GENERACION DE PREGUNTAS
 
                 $("#ResultadosMenu #RepetirTest").click(function() {
-                    
+
                     $("#CerrarResultados").click();
                     $("#b1").click();
                 });
@@ -704,7 +804,7 @@
                     $('#detalles').css("display", "none");
                     $('#Estadisticas').css("display", "none");
                     $('#ResultadosDetalles').css("display", "none");
-                    
+
                     $('#RespuestasCorrectas').fadeIn("fast", function() {
                     });
 
@@ -716,7 +816,7 @@
                     $('#detalles').css("display", "none");
                     $('#RespuestasCorrectas').css("display", "none");
                     $('#ResultadosDetalles').css("display", "none");
-                    
+
                     $('#Estadisticas').fadeIn("fast", function() {
                     });
 
@@ -726,7 +826,7 @@
                     $('#Estadisticas').css("display", "none");
                     $('#RespuestasCorrectas').css("display", "none");
                     $('#ResultadosDetalles').css("display", "none");
-                    
+
                     $('#detalles').fadeIn("fast", function() {
                     });
 
@@ -737,7 +837,7 @@
                     $('#detalles').css("display", "none");
                     $('#Estadisticas').css("display", "none");
                     $('#RespuestasCorrectas').css("display", "none");
-                    
+
                     $('#ResultadosDetalles').fadeIn("fast", function() {
                     });
 
@@ -812,6 +912,10 @@
 
 
 
+                $("#BtnCerrarSesion").click(function() {
+                    FacebookLogout();
+                });
+
 
 
                 $('#CerrarResultados').click(function() {
@@ -831,14 +935,14 @@
 
 
                     $('#detalles').css("display", "block");
-                    $('#Estadisticas').css("display","none");
-                    
+                    $('#Estadisticas').css("display", "none");
+
                     $('#ResultadosDetalles').css("display", "none");
                     $('#TablaTotales tbody').html("");
                     $('#TablaTotalesItems tbody').html("");
                     $('#RespuestasCorrectas #Correctas').html("");
                     $('#Estadisticas #GraficoEstadisticas').html("");
-                    
+
 
                 });
 
@@ -1089,7 +1193,7 @@
         <ul style="float:right;list-style-type:none;">
 
             <li><a href="#">TUTORIAL</a></li>
-            <li><a class="active" href="logout">CERRAR SESION</a></li>
+            <li><a class="active" id="BtnCerrarSesion"  >CERRAR SESION</a></li>
 
         </ul>
     </ul>
@@ -1326,6 +1430,7 @@
                                 $('#RespuestasCorrectas #Correctas .pregunta').find("span").remove();
                                 var respuesta = $(this).find(".respuesta").val();
                                 var alternativas = $(this).find(".Alternativas .opcion p");
+                                $(this).find(".Alternativas .opcion p").css("background-color", "white");
 
                                 $(alternativas).each(function(index, element) {
                                     $(this).css("font-family", "Agency FB");
@@ -1580,10 +1685,10 @@
                                 var cantidades = [];
                                 var incorrectas = [];
                                 var maximo = 0;
-                                
-                                for (var i = response.length -1 ; i >= 0; i--) {
+
+                                for (var i = response.length - 1; i >= 0; i--) {
                                     maximo = maximo + 1;
-                                    
+
                                     var estadistica = response[i].resultados;
                                     estadistica = JSON.parse(estadistica);
                                     for (var j in estadistica) {
@@ -1597,22 +1702,22 @@
                                             correctasTotal = correctasTotal + 1;
                                         }
                                     }
-                                    
+
                                     correctas.push(correctasTotal);
-                                    
+
                                     fechas.push(response[i].fecha);
                                     console.log(response[i].fecha)
                                     cantidades.push(estadistica.length);
-                                    incorrectas.push(estadistica.length - correctasTotal );
-                                    
-                                    if(maximo == 7){
+                                    incorrectas.push(estadistica.length - correctasTotal);
+
+                                    if (maximo == 7) {
                                         break;
-        }
-                                    
+                                    }
+
                                 }
-                                
-                              
-                              
+
+
+
 
 
                                 $(function() {
@@ -1620,7 +1725,7 @@
                                         chart: {
                                             type: 'column'
                                         },
-                                        colors : ['#153e5a','#00C600','#dc1111'],
+                                        colors: ['#153e5a', '#00C600', '#dc1111'],
                                         title: {
                                             text: 'TUS ESTADISTICAS'
                                         },
@@ -1628,11 +1733,7 @@
                                             text: $("#seleccion").text()
                                         },
                                         xAxis: {
-                                            
                                             categories: fechas,
-                                            
-                                            
-                                            
                                             crosshair: true
                                         },
                                         yAxis: {
@@ -1783,17 +1884,17 @@
                 </tbody>
             </table> 
             <div id="ResultadosMenu">
-            <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" />
-            <input type="button" class="BtnGenerar" id="VerCorrectas" value="RESPUESTAS CORRECTAS" />
+                <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" />
+                <input type="button" class="BtnGenerar" id="VerCorrectas" value="RESPUESTAS CORRECTAS" />
                 <input type="button" class="BtnGenerar" id="VerEstadisticas" value="ESTADISTICAS" />
                 <input type="button" class="active" id="RepetirTest" value="REPETIR TEST" />
             </div>
         </div>
         <div id="RespuestasCorrectas" >
             <div id="ResultadosMenu">
-            <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" /> 
-             <input type="button" class="BtnGenerar" id="DetalleResultados" value="VER DETALLES" />
-             <input type="button" class="BtnGenerar" id="VerEstadisticas" value="ESTADISTICAS" />
+                <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" /> 
+                <input type="button" class="BtnGenerar" id="DetalleResultados" value="VER DETALLES" />
+                <input type="button" class="BtnGenerar" id="VerEstadisticas" value="ESTADISTICAS" />
                 <input type="button" class="active" id="RepetirTest" value="REPETIR TEST" />
             </div>
             <div id="Correctas" >
@@ -1803,14 +1904,14 @@
         </div>
         <div id="Estadisticas" >
             <div id="GraficoEstadisticas" >
-              
+
             </div>
             <div id="ResultadosMenu">
-            <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" />
-            <input type="button" class="BtnGenerar" id="DetalleResultados" value="VER DETALLES" />
+                <input type="button" class="BtnGenerar" id="VerTotales" value="VER TOTALES" />
+                <input type="button" class="BtnGenerar" id="DetalleResultados" value="VER DETALLES" />
                 <input type="button" class="BtnGenerar" id="VerCorrectas" value="RESPUESTAS CORRECTAS" />
-            
-            <input type="button" class="active" id="RepetirTest" value="REPETIR TEST" />
+
+                <input type="button" class="active" id="RepetirTest" value="REPETIR TEST" />
             </div>
         </div>
     </div>

@@ -29,6 +29,7 @@
                 <prop key="index">indexController</prop>
                 <prop key="/usuario/nuevo">usuarioController</prop>
                 <prop key="/usuario/login">usuarioController</prop>
+                <prop key="/usuario/loginFace">usuarioController</prop>
                 <prop key="/usuario/index">usuarioController</prop>
                 <prop key="/usuario/plataforma">usuarioController</prop>
                 <prop key="/usuario/logout">usuarioController</prop>

@@ -118,13 +118,106 @@ ul li:hover > ul {
     width:65%;
 
 }
+//OTRO INICIO
+
+#login .form {
+padding: 45px !important;
+}
+#login  .form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+#login #BtnLogin {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+#login  #BtnLogin:hover,#login  #BtnLogin:active,#login  #BtnLogin:focus {
+  background: #43A047;
+}
+
+
+#login #BtnRegistrar {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #4CAF50;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+#login  #BtnRegistrar:hover,#login  #BtnRegistrar:active,#login  #BtnRegistrar:focus {
+  background: #43A047;
+}
+
+
+#login #LoginFace {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: white;
+  width: 100%;
+  border: 0;
+  padding: 0px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+
+
+
+#login  .form button:hover,.form button:active,.form button:focus {
+  background: #43A047;
+}
+#login .form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 20px;
+}
+#login .form .message a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+#login  .form .register-form {
+//  display: none;
+}
+#login  div .register-div {
+  display: none;
+}
+
 /* FORMULARIO INICIO */
 #login{
     background: white;
-    margin-top: 30px;
+    margin-top: 50px;
     width:35%;
     text-align:center;
     font-family: 'Agency FB';
+
 
 }
 
@@ -142,7 +235,7 @@ ul li:hover > ul {
     font-family: 'Agency FB';
     font-size:30px;	
 }
-
+/*
 #Entrar{
     margin:0px;
     width:100%;
@@ -303,7 +396,7 @@ ul li:hover > ul {
 #login .lt-ie9 input[type=text], .lt-ie9 input[type=password] {
     line-height: 34px;
 }
-
+*/
 /*----------------------------------------------------------------------*/
 
 section{
@@ -569,7 +662,7 @@ ul{
     padding:0px;	
 }
 
-input[type=text]{
+#art1 input[type=text]{
     padding: 3px 6px;
     font-size: 15px;
     text-align: left;
@@ -861,7 +954,7 @@ a.close{
 }
 
 #ColumnaNumero{
-    width: 20px; 
+    width: 23px; 
     padding-left: 5px;
 }
 
