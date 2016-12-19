@@ -121,93 +121,93 @@ ul li:hover > ul {
 //OTRO INICIO
 
 #login .form {
-padding: 45px !important;
+    padding: 45px !important;
 }
 #login  .form input {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
 }
 
 #login #BtnLogin {
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background: #4CAF50;
-  width: 100%;
-  border: 0;
-  padding: 15px;
-  color: #FFFFFF;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
 }
 #login  #BtnLogin:hover,#login  #BtnLogin:active,#login  #BtnLogin:focus {
-  background: #43A047;
+    background: #43A047;
 }
 
 
 #login #BtnRegistrar {
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background: #4CAF50;
-  width: 100%;
-  border: 0;
-  padding: 15px;
-  color: #FFFFFF;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #4CAF50;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
 }
 #login  #BtnRegistrar:hover,#login  #BtnRegistrar:active,#login  #BtnRegistrar:focus {
-  background: #43A047;
+    background: #43A047;
 }
 
 
 #login #LoginFace {
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background: white;
-  width: 100%;
-  border: 0;
-  padding: 0px;
-  color: #FFFFFF;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: white;
+    width: 100%;
+    border: 0;
+    padding: 0px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
 }
 
 
 
 
 #login  .form button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+    background: #43A047;
 }
 #login .form .message {
-  margin: 15px 0 0;
-  color: #b3b3b3;
-  font-size: 20px;
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 20px;
 }
 #login .form .message a {
-  color: #4CAF50;
-  text-decoration: none;
+    color: #4CAF50;
+    text-decoration: none;
 }
 #login  .form .register-form {
-//  display: none;
+    //  display: none;
 }
 #login  div .register-div {
-  display: none;
+    display: none;
 }
 
 /* FORMULARIO INICIO */
@@ -1044,8 +1044,9 @@ p.tooltip:hover {
 } 
 
 p.tooltip span {
+    margin: 10px;
     text-justify: auto;
-    max-width: 600px;
+    max-width: 932px;
     white-space: normal;
     height: auto;
     font-family: 'Arial';
@@ -1282,7 +1283,7 @@ td.err {
 
 
 #CerrarResultados{
-        border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     cursor: pointer;
     text-align: center;
     font-weight: bold;
@@ -1514,7 +1515,7 @@ td.err {
 }
 
 #CerrarMapa{
-       border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     cursor: pointer;
     text-align: center;
     font-weight: bold;
@@ -1562,7 +1563,7 @@ td.err {
 
 
 #CerrarEditor{
-     border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     cursor: pointer;
     text-align: center;
     font-weight: bold;
@@ -1590,7 +1591,7 @@ td.err {
     font-size:15px;
     text-align:justify;
     width: 400px;
-    height: 100px;
+    height: 180px;
     border-radius:2px;
     position: absolute;
     box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
@@ -1602,7 +1603,7 @@ td.err {
     font-weight: bold;
 }
 #CerrarError{
-      border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     cursor: pointer;
     text-align: center;
     font-weight: bold;
@@ -1707,12 +1708,12 @@ td.err {
 
 /* The contact form */
 
-.footer-distributed form{
+.footer-distributed #contacto_form{
     display: inline-block;
 }
 
-.footer-distributed form input,
-.footer-distributed form textarea{
+.footer-distributed #contacto_form input,
+.footer-distributed #contacto_form textarea{
     display: block;
     border-radius: 3px;
     box-sizing: border-box;
@@ -1744,17 +1745,17 @@ td.err {
 }
 
 
-.footer-distributed form input{
+.footer-distributed #contacto_form input{
     height: 55px;
     margin-bottom: 15px;
 }
 
-.footer-distributed form textarea{
+.footer-distributed #contacto_form textarea{
     height: 100px;
     margin-bottom: 20px;
 }
 
-.footer-distributed form button{
+.footer-distributed #contacto_form button{
     border-radius: 3px;
     background-color:  #33383b;
     color: #ffffff;
@@ -1932,7 +1933,7 @@ td.err {
 }
 
 #RespuestasCorrectas #ResultadosMenu{
-        height: 97px;
+    height: 97px;
     background-color: #f0f0f0;
     margin-bottom: 29px;
     margin-right: auto;
@@ -1969,7 +1970,7 @@ td.err {
     margin-top: 10px;
     width: 1200px;
     margin-left: 50px;
-    
+
 }
 
 #Estadisticas{
@@ -2013,4 +2014,21 @@ td.err {
     width: auto !important;
     margin-left: auto;
     margin-right: auto;
+}
+
+#Enviado {
+    border-radius: 3px;
+    border: 1px solid black;
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 200px;
+    background-color: #36b936;
+    display: none;
+    
+}
+#Enviado p {
+    margin: 0px;
+    color: white !important;   
 }

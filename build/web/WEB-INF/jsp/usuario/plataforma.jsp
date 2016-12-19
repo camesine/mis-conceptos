@@ -35,7 +35,7 @@
 
 
 
-        <title>MisConceptos.cl</title>
+        <title>MIS CONCEPTOS - PLATAFORMA</title>
 
         <script type="text/javascript">
 
@@ -577,41 +577,62 @@
 
 
                 var FacebookLogout = function() {
-                        
-                        
-                        
-                        
-                       FB.login(function(response){
-                     if(response.status === 'connected' || response.status === "unknown"){
-                     console.log(response)
-                     FB.logout(function(response){
-                     $(location).attr('href', '<c:url value="/usuario/logout" />');
-                     })   
-                     }  
-                     }); 
-                
-                 
-                 
-               
+
+
+
+
+                    FB.login(function(response) {
+                        if (response.status === 'connected' || response.status === "unknown") {
+                            console.log(response)
+                            FB.logout(function(response) {
+                                $(location).attr('href', '<c:url value="/usuario/logout" />');
+                            })
+                        }
+                    });
+
+
+
+
 
 
                 }
 
                 $('#BtnNuevoContenido').click(function() {
 
+                    if ($('#TxtNuevaMateria').val() != "") {
+                        $.ajax({
+                            type: 'POST',
+                            url: '<c:url value="/contenido/nuevo" />',
+                            data: {nombre: $('#TxtNuevaMateria').val(), usuario_id: ${usuario.id}},
+                        })
+                                .success(function(response) {
+
+                                    $('#ListaContenidos').prepend("<li><a id=" + response + "  onclick='SeleccionarContenido(" + response + ")' >" + ($('#TxtNuevaMateria').val()).toUpperCase() + "</a></li>");
+
+                                });
+
+                    } else {
+                        $("#MensajeError").css("z-index", "1");
+                        $("#MensajeError").css("display", "block");
+                    }
+                });
+
+
+                $('#EnviarContacto').click(function() {
+
                     $.ajax({
                         type: 'POST',
-                        url: '<c:url value="/contenido/nuevo" />',
-                        data: {nombre: $('#TxtNuevaMateria').val(), usuario_id: ${usuario.id}},
+                        url: '<c:url value="/plataforma/email" />',
+                        data: {email_contacto: $('#email_contacto').val(), mensaje_contacto :$('#mensaje_contacto').val()},
                     })
                             .success(function(response) {
-
-                                $('#ListaContenidos').prepend("<li><a id=" + response + "  onclick='SeleccionarContenido(" + response + ")' >" + ($('#TxtNuevaMateria').val()).toUpperCase() + "</a></li>");
-
+                                
+                                $("#Enviado").slideToggle();
                             });
 
 
                 });
+
 
                 $("#b3").click(function() {
 
@@ -1186,10 +1207,6 @@
                     <input id="TxtNuevaMateria" type="text"  /> </li>
             </ul></li>
 
-        <li><a href="">MAPAS CONCEPTUALES</a></li>
-        <li><a href="">INFORMES</a></li>
-
-
         <ul style="float:right;list-style-type:none;">
 
             <li><a href="#">TUTORIAL</a></li>
@@ -1265,13 +1282,14 @@
 
         <p>Contacto</p>
 
-        <form action="#" method="post">
 
-            <input type="text" name="email" placeholder="Email" />
-            <textarea name="message" placeholder="Mensaje"></textarea>
-            <button>Send</button>
+        <div id="contacto_form" >
 
-        </form>
+            <input type="text" id="email_contacto" placeholder="Email" value="${correo}"  />
+            <textarea id="mensaje_contacto" placeholder="Mensaje"></textarea>
+            <button id="EnviarContacto">ENVIAR</button>
+            <div id="Enviado" ><p>Envio exitoso!</p></div>
+        </div>
 
     </div>
 
@@ -1934,7 +1952,12 @@
 </div>
 
 <div id="MensajeError"><div id="TusResultados">ERROR</div><div id="CerrarError" >X</div>
-    <p></p>
+    <p>POSIBLES CAUSAS:</p>
+    <ul style="margin-left: 30px" >
+        <li> -      Campos vacios</li>
+        <li> -      Mencion explicita del concepto referenciado</li>
+    </ul>
+    
 </div>
 
 

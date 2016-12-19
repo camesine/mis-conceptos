@@ -51,7 +51,7 @@ public class Generador {
         for (int j = 0; j < ListaDefiniciones.size(); j++) {
 
             SeleccionDefinicionConcepto pregunta = new SeleccionDefinicionConcepto();
-            pregunta.setEnunciado(ListaDefiniciones.get(j).getConcepto().getNombre() + ": ");
+            pregunta.setEnunciado("DEFINICION DE " + ListaDefiniciones.get(j).getConcepto().getNombre().toUpperCase() + ": ");
             pregunta.setDefCorrecta(ListaDefiniciones.get(j));
 
             Definicion[] opciones = new Definicion[4];
@@ -118,7 +118,7 @@ public class Generador {
         for (int i = 0; i < ListaDefiniciones.size(); i++) {
 
             SeleccionConceptoDefinicion pregunta = new SeleccionConceptoDefinicion();
-            pregunta.setEnunciado("Concepto de la definicion " + ListaDefiniciones.get(i).getDetalle() + ": ");
+            pregunta.setEnunciado("IDENTIFICAR CONCEPTO: \" " + ListaDefiniciones.get(i).getDetalle() + "\"");
             pregunta.setConceptoCorrecto(ListaDefiniciones.get(i).getConcepto());
 
             Concepto[] opciones = new Concepto[4];
@@ -182,7 +182,7 @@ public class Generador {
         for (int j = 0; j < ListaCaracteristicas.size(); j++) {
 
             SeleccionCaracteristicaConcepto pregunta = new SeleccionCaracteristicaConcepto();
-            pregunta.setEnunciado("Caracteristica de " + ListaCaracteristicas.get(j).getConcepto().getNombre() + ": ");
+            pregunta.setEnunciado("CARACTERISTICA DE " + ListaCaracteristicas.get(j).getConcepto().getNombre().toUpperCase() + ": ");
             pregunta.setCaCorrecta(ListaCaracteristicas.get(j));
 
             Caracteristica[] opciones = new Caracteristica[4];
@@ -250,7 +250,7 @@ public class Generador {
         for (int i = 0; i < ListaCaracteristicas.size(); i++) {
 
             SeleccionConceptoCaracteristica pregunta = new SeleccionConceptoCaracteristica();
-            pregunta.setEnunciado("Concepto de la caracteristica " + ListaCaracteristicas.get(i).getDetalle() + ": ");
+            pregunta.setEnunciado("IDENTIFICAR CONCEPTO: \"" + ListaCaracteristicas.get(i).getDetalle() + "\"");
             pregunta.setConceptoCorrecto(ListaCaracteristicas.get(i).getConcepto());
 
             Concepto[] opciones = new Concepto[4];
@@ -314,7 +314,7 @@ public class Generador {
         for (int j = 0; j < ListaObservaciones.size(); j++) {
 
             SeleccionObservacionConcepto pregunta = new SeleccionObservacionConcepto();
-            pregunta.setEnunciado("Observacion de " + ListaObservaciones.get(j).getConcepto().getNombre() + ": ");
+            pregunta.setEnunciado("IDENTIFICAR OBSERVACION DE " + ListaObservaciones.get(j).getConcepto().getNombre().toUpperCase() + ": ");
             pregunta.setObsCorrecta(ListaObservaciones.get(j));
 
             Observacion[] opciones = new Observacion[4];
@@ -382,7 +382,7 @@ public class Generador {
         for (int i = 0; i < ListaObservaciones.size(); i++) {
 
             SeleccionConceptoObservacion pregunta = new SeleccionConceptoObservacion();
-            pregunta.setEnunciado("Concepto de la observacion " + ListaObservaciones.get(i).getDetalle() + ": ");
+            pregunta.setEnunciado("IDENTIFICAR CONCEPTO: \"" + ListaObservaciones.get(i).getDetalle() + "\"");
             pregunta.setConceptoCorrecto(ListaObservaciones.get(i).getConcepto());
 
             Concepto[] opciones = new Concepto[4];
@@ -699,7 +699,7 @@ public class Generador {
 
             }
 
-            etiqueta = "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='Completacion' /> <p id='Enunciado'>Completar el enunciado. </p> <input type='hidden' class='ConceptoReferenciado' value='" + ConceptosReferenciados.get(i) + "' /> <p class='Completacion'> " + etiqueta + " </p></div> ";
+            etiqueta = "<div class='pregunta'><input type='hidden' class='TipoPregunta' value='Completacion' /> <p id='Enunciado'>COMPLETAR ENUNCIADO </p> <input type='hidden' class='ConceptoReferenciado' value='" + ConceptosReferenciados.get(i) + "' /> <p class='Completacion'> " + etiqueta + " </p></div> ";
 
             EtiquetaFinal = EtiquetaFinal + " " + etiqueta;
             //     System.out.println(etiqueta);

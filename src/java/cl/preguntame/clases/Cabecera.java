@@ -57,7 +57,7 @@ public class Cabecera extends PdfPageEventHelper {
             table.addCell(encabezado);
             table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
             
-            table.addCell(String.format("Pagina % 010d de ", writer.getPageNumber()));
+            table.addCell(String.format("Pagina % 01d de ", writer.getPageNumber()));
 
             PdfPCell cell = new PdfPCell(Image.getInstance(total));
 

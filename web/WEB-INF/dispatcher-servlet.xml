@@ -66,6 +66,7 @@
                 <prop key="/contenido/eliminar">contenidoController</prop>
                 <prop key="/contenido/editarNombre">contenidoController</prop>
                 <prop key="/plataforma/nosotros">plataformaController</prop>
+                <prop key="/plataforma/email">plataformaController</prop>
                 <prop key="/test/nuevo">testController</prop>
                 <prop key="/test/buscar">testController</prop>
             </props>

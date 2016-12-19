@@ -418,13 +418,13 @@
 
             <p>Contacto</p>
 
-            <form action="#" method="post">
+              <div id="contacto_form" >
 
-                <input type="text" name="email" placeholder="Email" />
-                <textarea name="message" placeholder="Mensaje"></textarea>
-                <button>Send</button>
-
-            </form>
+            <input type="text" id="email_contacto" placeholder="Email"/>
+            <textarea id="mensaje_contacto" placeholder="Mensaje"></textarea>
+            <button id="EnviarContacto">ENVIAR</button>
+            <div id="Enviado" ><p>Envio exitoso!</p></div>
+        </div>
 
         </div>
 

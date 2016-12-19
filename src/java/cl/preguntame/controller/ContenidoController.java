@@ -8,12 +8,14 @@ import cl.preguntame.model.Concepto;
 import cl.preguntame.model.Contenido;
 import cl.preguntame.model.Definicion;
 import cl.preguntame.model.Observacion;
+import cl.preguntame.model.Relacion;
 import cl.preguntame.model.Usuario;
 import cl.preguntame.service.CaracteristicaService;
 import cl.preguntame.service.ConceptoService;
 import cl.preguntame.service.ContenidoService;
 import cl.preguntame.service.DefinicionService;
 import cl.preguntame.service.ObservacionService;
+import cl.preguntame.service.RelacionService;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -173,7 +175,9 @@ public class ContenidoController {
 
         ObservacionService AccesoObservacion = new ObservacionService();
         List<Observacion> ListaObservaciones = AccesoObservacion.BuscarObservacionContenido(Integer.parseInt(req.getParameter("contenido")));
-
+        
+        
+        
         res.setContentType("application/pdf");
         Document Informe = new Document();
         PdfWriter writer = PdfWriter.getInstance(Informe, res.getOutputStream());
@@ -245,5 +249,7 @@ public class ContenidoController {
 
         Informe.close();
     }
+    
+    }
 
-}
+
