@@ -652,7 +652,7 @@ public class Generador {
             enunciados.add(ListaObservaciones.get(i).getDetalle());
         }
 
-        POSModel model = new POSModelLoader().load(new File("C:\\Users\\Hector\\Documents\\GitHub\\preguntame\\es-pos-maxent.bin"));
+        POSModel model = new POSModelLoader().load(new File("C:\\Users\\Hector\\Documents\\GitHub\\misconceptos\\es-pos-maxent.bin"));
 
         POSTaggerME tagger = new POSTaggerME(model);
 

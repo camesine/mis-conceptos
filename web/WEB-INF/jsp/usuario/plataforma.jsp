@@ -1259,7 +1259,7 @@
 
     <div class="footer-left">
 
-        <h3>Company<span>logo</span></h3>
+        <h3>Mis<span>conceptos</span></h3>
 
         <p class="footer-links">
             <a href="#">INICIO</a>
